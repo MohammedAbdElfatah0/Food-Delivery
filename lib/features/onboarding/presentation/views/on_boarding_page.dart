@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery/core/Colors/color_manager.dart';
 import 'package:food_delivery/core/contents/images.dart';
 import 'package:food_delivery/core/style/app_text_style.dart';
-import 'package:food_delivery/core/style/app_width_size.dart';
+import 'package:food_delivery/core/style/app_size.dart';
 
 class OnBoardingPage extends StatelessWidget {
   const OnBoardingPage({super.key});
