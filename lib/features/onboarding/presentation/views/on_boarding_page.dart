@@ -1,116 +1,119 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/core/Colors/color_manager.dart';
-import 'package:food_delivery/core/contents/images.dart';
-import 'package:food_delivery/core/style/app_text_style.dart';
-import 'package:food_delivery/core/style/app_size.dart';
+import 'package:food_delivery/core/router/contents_router.dart';
+import 'package:food_delivery/features/onboarding/domain/entities_model.dart';
+import 'package:food_delivery/features/onboarding/domain/repositories/on_boarding_mock_data.dart';
+import 'package:food_delivery/features/onboarding/presentation/widget/custom_header.dart';
+import 'package:food_delivery/features/onboarding/presentation/widget/custom_navigator_on_boarding.dart';
+import '../cubit/on_boarding_cubit.dart';
 
-class OnBoardingPage extends StatelessWidget {
+class OnBoardingPage extends StatefulWidget {
   const OnBoardingPage({super.key});
+
+  @override
+  State<OnBoardingPage> createState() => _OnBoardingPageState();
+}
+
+class _OnBoardingPageState extends State<OnBoardingPage> {
+  late PageController _pageController; //controller in page view
+  final List<OnBoardingEntity> onboardingData =
+      EntitiesData.onboardingData; //from domain local
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: AssetImage(
-              ImageResources.imageOnBoarding[0],
-            ), ////todo  0 ->  change
-          ),
-        ),
-        child: Stack(
-          children: [
-            Positioned(
-              bottom: 50,
-              right: 40,
-              height: AppSize.getHeight(context: context, value: 0.75),
-              width: AppSize.getWidth(context: context, value: 0.8),
-              child: Container(
-                padding: EdgeInsets.all(8),
-                height: 100,
+      body: BlocConsumer<OnBoardingCubit, OnBoardingState>(
+        listener: (context, state) {
+          if (state is OnBoardingStep) {
+            _pageController.animateToPage(
+              state.step,
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.easeInCubic,
+            );
+          } else if (state is OnBoardingFinished) {
+            // Navigate to the main app screen
+            Navigator.pushReplacementNamed(context, ContentsRouter.home);
+          }
+        },
+        builder: (context, state) {
+          final cubit = context.read<OnBoardingCubit>(); //give data
+
+          int currentStep =
+              state is OnBoardingStep
+                  ? state.step
+                  : 0; //why not value but using state -> value is private or encryption
+
+          return PageView.builder(
+            controller: _pageController,
+            itemCount: onboardingData.length, //3
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final data = onboardingData[index];
+              return Container(
                 decoration: BoxDecoration(
-                  color: ColorManager.primary,
-                  borderRadius: BorderRadius.circular(25),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage(data.image),
+                  ),
                 ),
-                alignment: Alignment.bottomCenter,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      spacing: 12,
-                      children: [
-                        Text(
-                          "We serve incomparable delicacies",
-                          style: AppTextStyle.header4.copyWith(
-                            color: ColorManager.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-
-                        Text(
-                          "All the best restaurants with their top menu waiting for you, they cant’t wait for your order!!",
-                          style: AppTextStyle.bodySmall.copyWith(
-                            color: ColorManager.white,
-                            fontWeight: FontWeight.bold,
-                            height: 1,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-
-                        //todo:: implement
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.maximize_outlined,
-                              size: 40,
-                              color: ColorManager.grey,
-                            ),
-                            Icon(
-                              Icons.maximize_outlined,
-                              size: 40,
-                              color: ColorManager.white,
-                            ),
-                            Icon(
-                              Icons.maximize_outlined,
-                              size: 40,
-                              color: ColorManager.grey,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text(
-                          "skip",
-                          style: AppTextStyle.header6.copyWith(
-                            color: ColorManager.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        Text(
-                          "next",
-                          style: AppTextStyle.header6.copyWith(
-                            color: ColorManager.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ],
+                child: Container(
+                  margin: EdgeInsets.only(
+                    top: 320,
+                    bottom: 50,
+                    left: 40,
+                    right: 40,
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 21,
+                    vertical: 18,
+                  ),
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        offset: Offset(5, 5),
+                        blurRadius: 200,
+                        blurStyle: BlurStyle.inner,
+                      ),
+                    ],
+                    color: ColorManager.primary,
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Title and Subtitle
+                      CustomHeader(data: data),
+                      CustomNavigatorOnBoarding(
+                        cubit: cubit,
+                        onboardingData: onboardingData,
+                        currentStep: currentStep,
+                        index: index,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ),
-          ],
-        ),
+              );
+            },
+          );
+        },
       ),
     );
   }
 }
+
+
+
+

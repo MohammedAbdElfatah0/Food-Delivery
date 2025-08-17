@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_delivery/core/Colors/color_manager.dart';
+import 'package:food_delivery/core/router/navigator_route.dart';
+import 'package:food_delivery/features/onboarding/presentation/cubit/on_boarding_cubit.dart';
 import 'package:food_delivery/features/onboarding/presentation/views/on_boarding_page.dart';
 
 class MyApp extends StatelessWidget {
@@ -6,9 +10,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: OnBoardingPage(),
+    return BlocProvider(
+      create: (context) => OnBoardingCubit(),
+      child: MaterialApp(
+        title: "Food Delivery App",
+        onGenerateRoute: NavigatorRoute.generateRoute,
+        theme: ThemeData(
+          primaryColor: ColorManager.primary, // Assuming you have ColorManager
+        ),
+        debugShowCheckedModeBanner: false,
+        home: OnBoardingPage(),
+      ),
     );
   }
 }
