@@ -45,7 +45,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             );
           } else if (state is OnBoardingFinished) {
             // Navigate to the main app screen
-            Navigator.pushReplacementNamed(context, ContentsRouter.home);
+            Navigator.pushReplacementNamed(context, ContentsRouter.login);//todo token when sign in go home 
           }
         },
         builder: (context, state) {
@@ -113,7 +113,3 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     );
   }
 }
-
-
-
-

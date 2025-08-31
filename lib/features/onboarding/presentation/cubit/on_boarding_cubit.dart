@@ -16,6 +16,6 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
 
   void skip(BuildContext context) {
     //route
-    Navigator.pushReplacementNamed(context, ContentsRouter.home);
+    Navigator.pushReplacementNamed(context, ContentsRouter.login);
   }
 }

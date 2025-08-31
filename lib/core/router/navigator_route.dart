@@ -17,12 +17,9 @@ class NavigatorRoute {
           builder: (_) => HomePage(),
           settings: settings,
         );
-        case ContentsRouter.login:
-        return MaterialPageRoute(
-          builder: (_) => Login(),
-          settings: settings,
-        );
-        //*register
+      case ContentsRouter.login:
+        return MaterialPageRoute(builder: (_) => Login(), settings: settings);
+      //*register
       default:
         return MaterialPageRoute(
           builder:
