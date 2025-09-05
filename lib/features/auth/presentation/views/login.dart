@@ -6,6 +6,7 @@ import 'package:food_delivery/core/style/app_size.dart';
 import 'package:food_delivery/core/style/app_text_style.dart';
 import 'package:food_delivery/features/auth/presentation/widget/custom_header_auth.dart';
 import 'package:food_delivery/features/auth/presentation/widget/custom_test_form_filed.dart';
+import 'package:food_delivery/features/auth/presentation/widget/header.dart';
 import '../widget/custom_divider.dart';
 import '../widget/custom_method_sign_in.dart';
 import '../widget/custom_text_register.dart';
@@ -20,9 +21,7 @@ class Login extends StatefulWidget {
 //TODO::opition google /facebook apple
 //TODO :: rebuild validation
 
-Widget _header(String text) {
-  return Text(text);
-}
+
 
 class _LoginState extends State<Login> {
   @override
@@ -56,7 +55,7 @@ class _LoginState extends State<Login> {
                   subText: TextString.headerSubLogin,
                 ),
                 AppSize.applyPadding(height: 12),
-                _header(TextString.headerEmail),
+                header(TextString.headerEmail),
                 CustomTextFormField(
                   controller: _emailEditingController,
                   focusNode: _emailFocusNode,
@@ -75,7 +74,7 @@ class _LoginState extends State<Login> {
                   },
                 ),
                 AppSize.applyPadding(height: 10),
-                _header(TextString.headerPassword),
+                header(TextString.headerPassword),
                 CustomTextFormField(
                   controller: _passwordEditingController,
                   focusNode: _passwordFocusNode,
