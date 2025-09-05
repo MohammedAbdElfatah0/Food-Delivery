@@ -29,8 +29,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       borderRadius: BorderRadius.circular(8),
       gapPadding: 8,
       borderSide: BorderSide(
-        color: error ? ColorManager.error : ColorManager.grey,
-        width: 1,
+        color: error ? ColorManager.error : ColorManager.black,
+        width: 1.25,
       ),
     );
   }
@@ -47,6 +47,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
         hintText: widget.hint,
+        hintStyle: TextStyle(color: ColorManager.grey, fontSize: 14),
         border: _outLineInPutBorder(),
         focusedBorder: _outLineInPutBorder(),
         errorBorder: _outLineInPutBorder(error: true),

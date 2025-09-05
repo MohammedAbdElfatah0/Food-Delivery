@@ -4,6 +4,8 @@ class TextString {
   static const String submit = "submit";
   static const String getStart = "Get Start";
   static const String antherMethodSignin = "or Sign in with";
+  static const String login = "login";
+
   static const String headerLogin = "Login to your\naccount.";
   static const String headerSubLogin = "Please sign in to your account ";
   static const String headerEmail = "Email Address";
@@ -11,6 +13,9 @@ class TextString {
   static const String headerRegisterConfirmPassword = "Confirm Password";
   static const String headerRegisterUserName = "Name";
   static const String headerForgetPassword = "Forget Password";
-  static const String headerRegisterAccount = "Don't have an account ?";
+  static const String headerDoNotHaveAccount = "Don't have an account ? ";
   static const String register = "Register";
+  static const String headerRegister = "Create your new\naccount";
+  static const String headerSubRegister =
+      "Create an account to start looking for the food\nyou like";
 }

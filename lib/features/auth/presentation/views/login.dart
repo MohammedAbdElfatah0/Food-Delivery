@@ -7,6 +7,7 @@ import 'package:food_delivery/core/style/app_text_style.dart';
 import 'package:food_delivery/features/auth/presentation/widget/custom_header_auth.dart';
 import 'package:food_delivery/features/auth/presentation/widget/custom_test_form_filed.dart';
 import 'package:food_delivery/features/auth/presentation/widget/header.dart';
+import '../widget/custom_button_auth.dart';
 import '../widget/custom_divider.dart';
 import '../widget/custom_method_sign_in.dart';
 import '../widget/custom_text_register.dart';
@@ -20,8 +21,6 @@ class Login extends StatefulWidget {
 //TODO::connect firebase or api
 //TODO::opition google /facebook apple
 //TODO :: rebuild validation
-
-
 
 class _LoginState extends State<Login> {
   @override
@@ -114,7 +113,8 @@ class _LoginState extends State<Login> {
                 AppSize.applyPadding(height: 4),
                 Align(
                   alignment: Alignment.center,
-                  child: GestureDetector(
+                  child: CustomButtonAuth(
+                    text: TextString.submit,
                     onTap: () {
                       FocusScope.of(context).unfocus();
 
@@ -122,6 +122,7 @@ class _LoginState extends State<Login> {
                           _formKey.currentState?.validate() ?? false;
 
                       if (!isValid) {
+                        //TODO:::refactor message error :::
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Pls enter all filed')),
                         );
@@ -133,23 +134,6 @@ class _LoginState extends State<Login> {
                         ContentsRouter.home,
                       );
                     },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 140,
-                        vertical: 16,
-                      ),
-                      decoration: BoxDecoration(
-                        color: ColorManager.primary,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        TextString.submit,
-                        style: AppTextStyle.bodyMedium.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: ColorManager.white,
-                        ),
-                      ),
-                    ),
                   ),
                 ),
 
