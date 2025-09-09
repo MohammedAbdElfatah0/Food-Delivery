@@ -86,7 +86,7 @@ class _LoginState extends State<Login> {
                     if (value == null || value.isEmpty) {
                       return "pls enter password";
                     }
-                    if (value.length < 6) {
+                    if (value.length < 8) {
                       return "inValid Password";
                     }
                     return null;
@@ -99,6 +99,10 @@ class _LoginState extends State<Login> {
                     TextButton(
                       onPressed: () {
                         //todo:: navigator to forget screen
+                        //for check user exist or not
+                        Navigator.pushNamed(
+                            context, ContentsRouter.forgetPassword);
+                       
                       },
                       child: Text(
                         TextString.headerForgetPassword,

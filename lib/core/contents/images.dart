@@ -4,4 +4,5 @@ class ImageResources {
     "assets/images/onBoarding2.png",
     "assets/images/onBoarding3.png",
   ];
+  static const String success = "assets/images/IllustrationSuccess.png";
 }

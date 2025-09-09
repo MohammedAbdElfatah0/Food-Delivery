@@ -112,8 +112,8 @@ class _RegisterState extends State<Register> {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
                     }
-                    if (value.length < 6) {
-                      return 'Username must be at least 6 characters long';
+                    if (value.length < 8) {
+                      return 'Username must be at least 8 characters long';
                     }
                     return null;
                   },
@@ -130,8 +130,8 @@ class _RegisterState extends State<Register> {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your confirm password';
                     }
-                    if (value.length < 6) {
-                      return 'Username must be at least 6 characters long';
+                    if (value.length < 8) {
+                      return 'Username must be at least 8 characters long';
                     }
                     if (value != _passwordTextEditingController.text) {
                       return 'Passwords do not match';

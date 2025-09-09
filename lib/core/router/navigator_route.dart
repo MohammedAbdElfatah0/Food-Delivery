@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/router/contents_router.dart';
+import 'package:food_delivery/features/auth/presentation/views/forget_password.dart';
 import 'package:food_delivery/features/auth/presentation/views/login.dart';
+import 'package:food_delivery/features/auth/presentation/views/otp_view.dart';
 import 'package:food_delivery/features/auth/presentation/views/register.dart';
+import 'package:food_delivery/features/auth/presentation/views/reset_password.dart';
 import 'package:food_delivery/features/home/presentation/home_page.dart';
 import 'package:food_delivery/features/onboarding/presentation/views/on_boarding_page.dart';
 
@@ -23,6 +26,18 @@ class NavigatorRoute {
       case ContentsRouter.register:
         return MaterialPageRoute(
           builder: (_) => Register(),
+          settings: settings,
+        );
+      case ContentsRouter.forgetPassword:
+        return MaterialPageRoute(
+          builder: (_) => ForgetPassword(),
+          settings: settings,
+        );
+      case ContentsRouter.otpView:
+        return MaterialPageRoute(builder: (_) => OtpView(), settings: settings);
+      case ContentsRouter.resetPassword:
+        return MaterialPageRoute(
+          builder: (_) => ResetPassword(),
           settings: settings,
         );
       default:
