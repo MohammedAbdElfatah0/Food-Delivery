@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/contents/text_string.dart';
+import 'package:food_delivery/features/auth/data/repositories/firebase_auth_repositories.dart';
 import 'package:food_delivery/features/auth/presentation/widget/custom_button_auth.dart';
 import 'package:food_delivery/features/auth/presentation/widget/custom_divider.dart';
 import 'package:food_delivery/features/auth/presentation/widget/custom_header_auth.dart';
@@ -17,16 +18,6 @@ class Register extends StatefulWidget {
   }
 }
 
-//TODO : build ui
-/***
- * 1-header
- * 2-text form filed
- * 3button 
- * 4-text button
- * 5-divider
- * 6-method sign in custom
- */
-
 class _RegisterState extends State<Register> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameTextEditingController =
@@ -42,6 +33,40 @@ class _RegisterState extends State<Register> {
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
   final FocusNode _confirmPasswordFocusNode = FocusNode();
+
+  void Function()? register() => () async {
+    //validation here and navigation to login screen
+    FocusScope.of(context).unfocus();
+
+    final isValid = _formKey.currentState?.validate() ?? false;
+
+    if (!isValid) {
+      //TODO:::refactor message error :::
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Pls enter all filed')));
+      return;
+    }
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => const Center(child: CircularProgressIndicator()),
+    );
+    try {
+      await FirebaseAuthRepositories().register(
+        _nameTextEditingController.text.trim(),
+        _emailTextEditingController.text.trim(),
+        _passwordTextEditingController.text.trim(),
+      );
+      Navigator.pop(context);
+    } on Exception catch (e) {
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Registration failed: ${e.toString()}')),
+      );
+    }
+  };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,25 +174,7 @@ class _RegisterState extends State<Register> {
                   Align(
                     alignment: Alignment.center,
                     child: CustomButtonAuth(
-                      onTap: () {
-                        //validation here and navigation to login screen
-                        FocusScope.of(context).unfocus();
-
-                        final isValid =
-                            _formKey.currentState?.validate() ?? false;
-
-                        if (!isValid) {
-                          //TODO:::refactor message error :::
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Pls enter all filed'),
-                            ),
-                          );
-                          return;
-                        }
-
-                        Navigator.pop(context);
-                      },
+                      onTap: register(),
                       text: TextString.submit,
                     ),
                   ),
