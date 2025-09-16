@@ -6,6 +6,8 @@ class TextString {
   static const String antherMethodSignin = "or Sign in with";
   static const String login = "login";
   static const String continues = "Continue";
+  static const String passwordResetMessage = "Must be at least 8 character";
+  static const String confirmPasswordResetMessage = "Both password must match";
 
   static const String headerLogin = "Login to your\naccount.";
   static const String headerSubLogin = "Please sign in to your account ";

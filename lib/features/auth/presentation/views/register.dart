@@ -6,7 +6,6 @@ import 'package:food_delivery/features/auth/presentation/widget/custom_header_au
 import 'package:food_delivery/features/auth/presentation/widget/custom_test_form_filed.dart';
 import 'package:food_delivery/features/auth/presentation/widget/custom_text_login.dart';
 import 'package:food_delivery/features/auth/presentation/widget/header.dart';
-import '../../../../core/style/app_size.dart';
 import '../widget/custom_method_sign_in.dart';
 
 class Register extends StatefulWidget {
@@ -47,131 +46,140 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomHeaderAuth(
-                  text: TextString.headerRegister,
-                  subText: TextString.headerSubRegister,
-                ),
-                AppSize.applyPadding(height: 8),
-                header(TextString.headerRegisterUserName),
-                CustomTextFormField(
-                  controller: _nameTextEditingController,
-                  focusNode: _nameFocusNode,
-                  hint: TextString.headerRegisterUserName,
-                  onFieldSubmitted:
-                      (p0) =>
-                          FocusScope.of(context).requestFocus(_emailFocusNode),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your username';
-                    }
-                    if (value.length < 3) {
-                      return 'Username must be at least 3 characters long';
-                    }
-                    return null;
-                  },
-                ),
-                AppSize.applyPadding(height: 4),
-                header(TextString.headerEmail),
-                CustomTextFormField(
-                  controller: _emailTextEditingController,
-                  focusNode: _emailFocusNode,
-                  hint: TextString.headerEmail,
-                  onFieldSubmitted:
-                      (p0) => FocusScope.of(
-                        context,
-                      ).requestFocus(_passwordFocusNode),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    if (!value.contains("@")) {
-                      return 'Please enter a valid email address';
-                    }
-                    return null;
-                  },
-                ),
-                AppSize.applyPadding(height: 4),
-                header(TextString.headerPassword),
-                CustomTextFormField(
-                  controller: _passwordTextEditingController,
-                  focusNode: _passwordFocusNode,
-                  hint: TextString.headerPassword,
-                  isPassword: true,
-                  onFieldSubmitted:
-                      (p0) => FocusScope.of(
-                        context,
-                      ).requestFocus(_confirmPasswordFocusNode),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    if (value.length < 8) {
-                      return 'Username must be at least 8 characters long';
-                    }
-                    return null;
-                  },
-                ),
-                AppSize.applyPadding(height: 4),
-                header(TextString.headerRegisterConfirmPassword),
-                CustomTextFormField(
-                  controller: _confirmPasswordTextEditingController,
-                  focusNode: _confirmPasswordFocusNode,
-                  hint: TextString.headerRegisterConfirmPassword,
-                  isPassword: true,
-                  onFieldSubmitted: (p0) => FocusScope.of(context).unfocus(),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your confirm password';
-                    }
-                    if (value.length < 8) {
-                      return 'Username must be at least 8 characters long';
-                    }
-                    if (value != _passwordTextEditingController.text) {
-                      return 'Passwords do not match';
-                    }
-                    return null;
-                  },
-                ),
-                AppSize.applyPadding(height: 8),
-                Align(
-                  alignment: Alignment.center,
-                  child: CustomButtonAuth(
-                    onTap: () {
-                      //validation here and navigation to login screen
-                      FocusScope.of(context).unfocus();
-
-                      final isValid =
-                          _formKey.currentState?.validate() ?? false;
-
-                      if (!isValid) {
-                        //TODO:::refactor message error :::
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Pls enter all filed')),
-                        );
-                        return;
-                      }
-
-                      Navigator.pop(context);
-                    },
-                    text: TextString.submit,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomHeaderAuth(
+                    text: TextString.headerRegister,
+                    subText: TextString.headerSubRegister,
                   ),
-                ),
-                AppSize.applyPadding(height: 4),
-                CustomDivider(),
-                AppSize.applyPadding(height: 4),
-                AppSize.applyPadding(height: 8),
-                CustomMethodSignIn(),
-                AppSize.applyPadding(height: 8),
-                CustomTextLogin(),
-                AppSize.applyPadding(height: 8),
-              ],
+                  SizedBox(height: 12),
+                  header(TextString.headerRegisterUserName),
+                  SizedBox(height: 8),
+                  CustomTextFormField(
+                    controller: _nameTextEditingController,
+                    focusNode: _nameFocusNode,
+                    hint: TextString.headerRegisterUserName,
+                    onFieldSubmitted:
+                        (p0) => FocusScope.of(
+                          context,
+                        ).requestFocus(_emailFocusNode),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your username';
+                      }
+                      if (value.length < 3) {
+                        return 'Username must be at least 3 characters long';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 14),
+
+                  header(TextString.headerEmail),
+                  SizedBox(height: 8),
+                  CustomTextFormField(
+                    controller: _emailTextEditingController,
+                    focusNode: _emailFocusNode,
+                    hint: TextString.headerEmail,
+                    onFieldSubmitted:
+                        (p0) => FocusScope.of(
+                          context,
+                        ).requestFocus(_passwordFocusNode),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      if (!value.contains("@")) {
+                        return 'Please enter a valid email address';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 14),
+                  header(TextString.headerPassword),
+                  SizedBox(height: 8),
+                  CustomTextFormField(
+                    controller: _passwordTextEditingController,
+                    focusNode: _passwordFocusNode,
+                    hint: TextString.headerPassword,
+                    isPassword: true,
+                    onFieldSubmitted:
+                        (p0) => FocusScope.of(
+                          context,
+                        ).requestFocus(_confirmPasswordFocusNode),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      if (value.length < 8) {
+                        return 'Username must be at least 8 characters long';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 14),
+                  header(TextString.headerRegisterConfirmPassword),
+                  SizedBox(height: 8),
+                  CustomTextFormField(
+                    controller: _confirmPasswordTextEditingController,
+                    focusNode: _confirmPasswordFocusNode,
+                    hint: TextString.headerRegisterConfirmPassword,
+                    isPassword: true,
+                    onFieldSubmitted: (p0) => FocusScope.of(context).unfocus(),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your confirm password';
+                      }
+                      if (value.length < 8) {
+                        return 'Username must be at least 8 characters long';
+                      }
+                      if (value != _passwordTextEditingController.text) {
+                        return 'Passwords do not match';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 24),
+                  Align(
+                    alignment: Alignment.center,
+                    child: CustomButtonAuth(
+                      onTap: () {
+                        //validation here and navigation to login screen
+                        FocusScope.of(context).unfocus();
+
+                        final isValid =
+                            _formKey.currentState?.validate() ?? false;
+
+                        if (!isValid) {
+                          //TODO:::refactor message error :::
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Pls enter all filed'),
+                            ),
+                          );
+                          return;
+                        }
+
+                        Navigator.pop(context);
+                      },
+                      text: TextString.submit,
+                    ),
+                  ),
+                  SizedBox(height: 24),
+                  CustomDivider(),
+                  SizedBox(height: 24),
+                  CustomMethodSignIn(),
+                  SizedBox(height: 32),
+                  CustomTextLogin(),
+                  SizedBox(height: 14),
+                ],
+              ),
             ),
           ),
         ),

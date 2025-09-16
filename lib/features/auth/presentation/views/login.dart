@@ -42,113 +42,120 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomHeaderAuth(
-                  text: TextString.headerLogin,
-                  subText: TextString.headerSubLogin,
-                ),
-                AppSize.applyPadding(height: 12),
-                header(TextString.headerEmail),
-                CustomTextFormField(
-                  controller: _emailEditingController,
-                  focusNode: _emailFocusNode,
-                  hint: TextString.headerEmail,
-                  onFieldSubmitted: (value) {
-                    FocusScope.of(context).requestFocus(_passwordFocusNode);
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'pls enter email';
-                    }
-                    if (!value.contains("@")) {
-                      return "Enter a valid email";
-                    }
-                    return null;
-                  },
-                ),
-                AppSize.applyPadding(height: 10),
-                header(TextString.headerPassword),
-                CustomTextFormField(
-                  controller: _passwordEditingController,
-                  focusNode: _passwordFocusNode,
-                  hint: TextString.headerPassword,
-                  isPassword: true,
-                  onFieldSubmitted: (value) {
-                    FocusScope.of(context).unfocus();
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "pls enter password";
-                    }
-                    if (value.length < 8) {
-                      return "inValid Password";
-                    }
-                    return null;
-                  },
-                ),
-                AppSize.applyPadding(height: 4),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        //todo:: navigator to forget screen
-                        //for check user exist or not
-                        Navigator.pushNamed(
-                            context, ContentsRouter.forgetPassword);
-                       
-                      },
-                      child: Text(
-                        TextString.headerForgetPassword,
-                        style: AppTextStyle.bodyMedium.copyWith(
-                          color: ColorManager.primary,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                AppSize.applyPadding(height: 4),
-                Align(
-                  alignment: Alignment.center,
-                  child: CustomButtonAuth(
-                    text: TextString.submit,
-                    onTap: () {
-                      FocusScope.of(context).unfocus();
-
-                      final isValid =
-                          _formKey.currentState?.validate() ?? false;
-
-                      if (!isValid) {
-                        //TODO:::refactor message error :::
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Pls enter all filed')),
-                        );
-                        return;
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 72),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomHeaderAuth(
+                    text: TextString.headerLogin,
+                    subText: TextString.headerSubLogin,
+                  ),
+                  SizedBox(height: 32),
+                  header(TextString.headerEmail),
+                  SizedBox(height: 8),
+                  CustomTextFormField(
+                    controller: _emailEditingController,
+                    focusNode: _emailFocusNode,
+                    hint: TextString.headerEmail,
+                    onFieldSubmitted: (value) {
+                      FocusScope.of(context).requestFocus(_passwordFocusNode);
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'pls enter email';
                       }
-
-                      Navigator.pushReplacementNamed(
-                        context,
-                        ContentsRouter.home,
-                      );
+                      if (!value.contains("@")) {
+                        return "Enter a valid email";
+                      }
+                      return null;
                     },
                   ),
-                ),
+                  SizedBox(height: 24),
+                  header(TextString.headerPassword),
+                  SizedBox(height: 8),
+                  CustomTextFormField(
+                    controller: _passwordEditingController,
+                    focusNode: _passwordFocusNode,
+                    hint: TextString.headerPassword,
+                    isPassword: true,
+                    onFieldSubmitted: (value) {
+                      FocusScope.of(context).unfocus();
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "pls enter password";
+                      }
+                      if (value.length < 8) {
+                        return "inValid Password";
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          //todo:: navigator to forget screen
+                          //for check user exist or not
+                          Navigator.pushNamed(
+                            context,
+                            ContentsRouter.forgetPassword,
+                          );
+                        },
+                        child: Text(
+                          TextString.headerForgetPassword,
+                          style: AppTextStyle.bodyMedium.copyWith(
+                            color: ColorManager.primary,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 24),
+                  Align(
+                    alignment: Alignment.center,
+                    child: CustomButtonAuth(
+                      text: TextString.submit,
+                      onTap: () {
+                        FocusScope.of(context).unfocus();
 
-                AppSize.applyPadding(height: 8),
-                CustomDivider(),
-                AppSize.applyPadding(height: 8),
-                CustomMethodSignIn(),
-                AppSize.applyPadding(height: 8),
-                CustomTextRegister(),
-                AppSize.applyPadding(height: 8),
-              ],
+                        final isValid =
+                            _formKey.currentState?.validate() ?? false;
+
+                        if (!isValid) {
+                          //TODO:::refactor message error :::
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Pls enter all filed'),
+                            ),
+                          );
+                          return;
+                        }
+
+                        Navigator.pushReplacementNamed(
+                          context,
+                          ContentsRouter.home,
+                        );
+                      },
+                    ),
+                  ),
+
+                  SizedBox(height: 24),
+                  CustomDivider(),
+                  SizedBox(height: 24),
+                  CustomMethodSignIn(),
+                  SizedBox(height: 32),
+                  CustomTextRegister(),
+                  AppSize.applyPadding(height: 8),
+                ],
+              ),
             ),
           ),
         ),

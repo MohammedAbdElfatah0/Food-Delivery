@@ -130,104 +130,106 @@ class _OtpViewState extends State<OtpView> with SingleTickerProviderStateMixin {
     final double paddingHorizontal = screenWidth * 0.05;
 
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: paddingHorizontal,
-          vertical: 32,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomAppBar(text: TextString.submit),
-            CustomHeaderAuth(
-              text: TextString.emailVerify,
-              subText: "${TextString.subEmailVerify} \n$email",
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: List.generate(4, (index) {
-                return ScaleTransition(
-                  scale:
-                      _isCorrect
-                          ? _scaleAnimation
-                          : AlwaysStoppedAnimation(1.0),
-                  child: AnimatedContainer(
-                    duration: Duration(milliseconds: 300),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color:
-                            _isError
-                                ? Colors.red
-                                : (_isCorrect ? Colors.green : Colors.grey),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: SizedBox(
-                      width: fieldWidth,
-                      child: TextField(
-                        controller: _controllers[index],
-                        focusNode: _focusNodes[index],
-                        keyboardType: TextInputType.number,
-                        textAlign: TextAlign.center,
-                        maxLength: 1,
-                        decoration: InputDecoration(
-                          counterText: '',
-                          border: InputBorder.none,
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: paddingHorizontal,
+            vertical: 32,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomAppBar(text: TextString.submit),
+              CustomHeaderAuth(
+                text: TextString.emailVerify,
+                subText: "${TextString.subEmailVerify} \n$email",
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: List.generate(4, (index) {
+                  return ScaleTransition(
+                    scale:
+                        _isCorrect
+                            ? _scaleAnimation
+                            : AlwaysStoppedAnimation(1.0),
+                    child: AnimatedContainer(
+                      duration: Duration(milliseconds: 300),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color:
+                              _isError
+                                  ? Colors.red
+                                  : (_isCorrect ? Colors.green : Colors.grey),
+                          width: 2,
                         ),
-                        onChanged: (value) {
-                          if (value.length == 1 && index < 3) {
-                            FocusScope.of(
-                              context,
-                            ).requestFocus(_focusNodes[index + 1]);
-                          } else if (value.isEmpty && index > 0) {
-                            FocusScope.of(
-                              context,
-                            ).requestFocus(_focusNodes[index - 1]);
-                          }
-                        },
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: SizedBox(
+                        width: fieldWidth,
+                        child: TextField(
+                          controller: _controllers[index],
+                          focusNode: _focusNodes[index],
+                          keyboardType: TextInputType.number,
+                          textAlign: TextAlign.center,
+                          maxLength: 1,
+                          decoration: InputDecoration(
+                            counterText: '',
+                            border: InputBorder.none,
+                          ),
+                          onChanged: (value) {
+                            if (value.length == 1 && index < 3) {
+                              FocusScope.of(
+                                context,
+                              ).requestFocus(_focusNodes[index + 1]);
+                            } else if (value.isEmpty && index > 0) {
+                              FocusScope.of(
+                                context,
+                              ).requestFocus(_focusNodes[index - 1]);
+                            }
+                          },
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+              ),
+              SizedBox(height: 20),
+              // Timer and Resend OTP
+              if (!_canResend)
+                Padding(
+                  padding: EdgeInsets.only(bottom: 10),
+                  child: Text(
+                    'Resend OTP in ${_secondsRemaining}s',
+                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                  ),
+                ),
+              if (_canResend)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Center(
+                    child: GestureDetector(
+                      onTap: _resendOTP,
+                      child: Text(
+                        'Resend OTP',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
                       ),
                     ),
                   ),
-                );
-              }),
-            ),
-            SizedBox(height: 20),
-            // Timer and Resend OTP
-            if (!_canResend)
-              Padding(
-                padding: EdgeInsets.only(bottom: 10),
-                child: Text(
-                  'Resend OTP in ${_secondsRemaining}s',
-                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                ),
+              // CustomButtonAuth
+              Center(
+                child: CustomButtonAuth(
+                  onTap: _verifyOTP,
+                  text: TextString.verifyAccount,
                 ),
               ),
-            if (_canResend)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: Center(
-                  child: GestureDetector(
-                    onTap: _resendOTP,
-                    child: Text(
-                      'Resend OTP',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.blue,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            // CustomButtonAuth
-            Center(
-              child: CustomButtonAuth(
-                onTap: _verifyOTP,
-                text: TextString.verifyAccount,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

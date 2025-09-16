@@ -36,60 +36,62 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-        child: Column(
-          children: [
-            Expanded(
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    CustomHeaderAuth(
-                      text: TextString.headerForgetPassword,
-                      subText: TextString.headerSubForgetPassword,
-                    ),
-                    AppSize.applyPadding(height: 10),
-                    CustomTextFormField(
-                      controller: _emailController,
-                      focusNode: _emailFocusNode,
-                      hint: TextString.headerEmail,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'pls enter email';
-                        }
-                        if (!value.contains("@")) {
-                          return "Enter a valid email";
-                        }
-                        return null;
-                      },
-                    ),
-                    AppSize.applyPadding(height: 10),
-                  ],
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+          child: Column(
+            children: [
+              Expanded(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      CustomHeaderAuth(
+                        text: TextString.headerForgetPassword,
+                        subText: TextString.headerSubForgetPassword,
+                      ),
+                      AppSize.applyPadding(height: 10),
+                      CustomTextFormField(
+                        controller: _emailController,
+                        focusNode: _emailFocusNode,
+                        hint: TextString.headerEmail,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'pls enter email';
+                          }
+                          if (!value.contains("@")) {
+                            return "Enter a valid email";
+                          }
+                          return null;
+                        },
+                      ),
+                      AppSize.applyPadding(height: 10),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            CustomButtonAuth(
-              onTap: () {
-                if (!_formKey.currentState!.validate()) {
-                  return;
-                }
-                //if user is exist and //* true
-                Navigator.pop(context);
-                showModalBottomSheet(
-                  context: context,
-                  builder: (context) {
-                    return BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 3, sigmaY: 4),
-                      //TODO::send data to bottom sheet
-                      child: ForgotPasswordBottomSheet(),
-                    );
-                  },
-                );
-              },
-              text: TextString.continues,
-            ),
-          ],
+              CustomButtonAuth(
+                onTap: () {
+                  if (!_formKey.currentState!.validate()) {
+                    return;
+                  }
+                  //if user is exist and //* true
+                  Navigator.pop(context);
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 3, sigmaY: 4),
+                        //TODO::send data to bottom sheet
+                        child: ForgotPasswordBottomSheet(),
+                      );
+                    },
+                  );
+                },
+                text: TextString.continues,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -18,6 +18,7 @@ class CustomShowBottomSheet extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset(ImageResources.success),
+          SizedBox(height: 8),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -41,6 +42,7 @@ class CustomShowBottomSheet extends StatelessWidget {
               ),
             ],
           ),
+          SizedBox(height: 8),
           CustomButtonAuth(
             onTap: () {
               Navigator.pushNamedAndRemoveUntil(
@@ -51,6 +53,7 @@ class CustomShowBottomSheet extends StatelessWidget {
             },
             text: TextString.verifyAccount,
           ),
+          SizedBox(height: 8),
         ],
       ),
     );

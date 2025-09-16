@@ -28,85 +28,91 @@ class _ResetPasswordState extends State<ResetPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomAppBar(text: TextString.resetPassword),
-                      AppSize.applyPadding(height: 12),
-                      CustomHeaderAuth(
-                        text: TextString.resetPassword,
-                        subText: TextString.subResetPassword,
-                      ),
-                      AppSize.applyPadding(height: 4),
-                      header(TextString.headerPassword),
-                      CustomTextFormField(
-                        controller: _newPasswordController,
-                        focusNode: _newPasswordFocusNode,
-                        hint: TextString.headerPassword,
-                        isPassword: true,
-                        onFieldSubmitted:
-                            (p0) => FocusScope.of(
-                              context,
-                            ).requestFocus(_confirmPasswordFocusNode),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          if (value.length < 8) {
-                            return 'Username must be at least 8 characters long';
-                          }
-                          return null;
-                        },
-                      ),
-                      header(TextString.continues),
-                      AppSize.applyPadding(height: 4),
-                      header(TextString.headerRegisterConfirmPassword),
-                      CustomTextFormField(
-                        controller: _confirmPasswordController,
-                        focusNode: _confirmPasswordFocusNode,
-                        hint: TextString.headerRegisterConfirmPassword,
-                        isPassword: true,
-                        onFieldSubmitted:
-                            (p0) => FocusScope.of(context).unfocus(),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          if (value.length < 8) {
-                            return 'Username must be at least 8 characters long';
-                          }
-                          return null;
-                        },
-                      ),
-                      header(TextString.continues),
-                      AppSize.applyPadding(height: 16),
-                    ],
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomAppBar(text: TextString.resetPassword),
+                        AppSize.applyPadding(height: 12),
+                        CustomHeaderAuth(
+                          text: TextString.resetPassword,
+                          subText: TextString.subResetPassword,
+                        ),
+                        AppSize.applyPadding(height: 4),
+                        header(TextString.headerPassword),
+                        SizedBox(height: 8),
+                        CustomTextFormField(
+                          controller: _newPasswordController,
+                          focusNode: _newPasswordFocusNode,
+                          hint: TextString.headerPassword,
+                          isPassword: true,
+                          onFieldSubmitted:
+                              (p0) => FocusScope.of(
+                                context,
+                              ).requestFocus(_confirmPasswordFocusNode),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your password';
+                            }
+                            if (value.length < 8) {
+                              return 'Username must be at least 8 characters long';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: 8),
+                        header(TextString.passwordResetMessage),
+                        AppSize.applyPadding(height: 4),
+                        header(TextString.headerRegisterConfirmPassword),
+                        SizedBox(height: 8),
+                        CustomTextFormField(
+                          controller: _confirmPasswordController,
+                          focusNode: _confirmPasswordFocusNode,
+                          hint: TextString.headerRegisterConfirmPassword,
+                          isPassword: true,
+                          onFieldSubmitted:
+                              (p0) => FocusScope.of(context).unfocus(),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your password';
+                            }
+                            if (value.length < 8) {
+                              return 'Username must be at least 8 characters long';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: 8),
+                        header(TextString.confirmPasswordResetMessage),
+                        AppSize.applyPadding(height: 16),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              CustomButtonAuth(
-                onTap: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder:
-                        (context) => BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 1, sigmaY: 2),
-                          child: CustomShowBottomSheet(),
-                        ),
-                  );
-                  //TODO :: buttom Sheet
-                },
-                text: TextString.verifyAccount,
-              ),
-            ],
+                CustomButtonAuth(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder:
+                          (context) => BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 1, sigmaY: 2),
+                            child: CustomShowBottomSheet(),
+                          ),
+                    );
+                    //TODO :: buttom Sheet
+                  },
+                  text: TextString.verifyAccount,
+                ),
+              ],
+            ),
           ),
         ),
       ),

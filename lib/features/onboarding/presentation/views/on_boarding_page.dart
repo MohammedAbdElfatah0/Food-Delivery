@@ -45,7 +45,10 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             );
           } else if (state is OnBoardingFinished) {
             // Navigate to the main app screen
-            Navigator.pushReplacementNamed(context, ContentsRouter.login);//todo token when sign in go home 
+            Navigator.pushReplacementNamed(
+              context,
+              ContentsRouter.login,
+            ); //todo token when sign in go home
           }
         },
         builder: (context, state) {
@@ -71,7 +74,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 ),
                 child: Container(
                   margin: EdgeInsets.only(
-                    top: 320,
+                    top: MediaQuery.of(context).size.height * 0.6,
                     bottom: 50,
                     left: 40,
                     right: 40,

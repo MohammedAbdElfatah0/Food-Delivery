@@ -15,9 +15,7 @@ class CustomTextRegister extends StatelessWidget {
       children: [
         RichText(
           text: TextSpan(
-            style: AppTextStyle.bodyMedium.copyWith(
-              fontWeight: FontWeight.w500,
-            ),
+            style: AppTextStyle.bodyLarge.copyWith(fontWeight: FontWeight.w500),
             children: [
               TextSpan(
                 text: TextString.headerDoNotHaveAccount,

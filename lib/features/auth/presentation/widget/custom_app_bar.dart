@@ -12,12 +12,12 @@ class CustomAppBar extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back, size: 28),
         ),
         Spacer(),
         Text(
           text,
-          style: AppTextStyle.bodyLarge.copyWith(fontWeight: FontWeight.w600),
+          style: AppTextStyle.header5.copyWith(fontWeight: FontWeight.w600),
         ),
         Spacer(flex: 2),
       ],
