@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/contents/text_string.dart';
 import 'package:food_delivery/features/auth/data/repositories/firebase_auth_repositories.dart';
@@ -35,30 +38,47 @@ class _RegisterState extends State<Register> {
   final FocusNode _confirmPasswordFocusNode = FocusNode();
 
   void Function()? register() => () async {
-    //validation here and navigation to login screen
     FocusScope.of(context).unfocus();
-
     final isValid = _formKey.currentState?.validate() ?? false;
 
     if (!isValid) {
-      //TODO:::refactor message error :::
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Pls enter all filed')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter all fields correctly')),
+      );
       return;
     }
+
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (_) => const Center(child: CircularProgressIndicator()),
     );
+
     try {
-      await FirebaseAuthRepositories().register(
+      final user = await FirebaseAuthRepositories().register(
         _nameTextEditingController.text.trim(),
         _emailTextEditingController.text.trim(),
         _passwordTextEditingController.text.trim(),
       );
-     
+
+      // Reload the user to ensure state is updated
+      if (user != null) {
+        await FirebaseAuth.instance.currentUser?.reload();
+        log("User reloaded: ${user.id}");
+      }
+
+      Navigator.pop(context); // إغلاق الـ loading
+
+      // Fallback navigation
+      if (context.mounted) {
+        Navigator.of(context).pop();
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Registration successful! Welcome!')),
+      );
+
+      // Navigator.of(context);
     } on Exception catch (e) {
       Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(
@@ -66,7 +86,6 @@ class _RegisterState extends State<Register> {
       );
     }
   };
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

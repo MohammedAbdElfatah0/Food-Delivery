@@ -1,8 +1,11 @@
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/features/auth/data/repositories/firebase_auth_repositories.dart';
-import 'package:food_delivery/features/auth/domain/entities/user_entity.dart'; // افترضت إن UserEntity هنا
+import 'package:food_delivery/features/auth/domain/entities/user_entity.dart';
+
+import '../../../core/router/contents_router.dart'; // افترضت إن UserEntity هنا
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -39,7 +42,17 @@ class HomePage extends StatelessWidget {
               Text('ID: ${user.id}'),
               ElevatedButton(
                 onPressed: () async {
+                  log("Attempting to sign out...");
                   await firebaseAuthRepositories.logOut();
+                  log("Sign out completed.");
+                  // Fallback navigation لو الـ Stream مش حدث
+                  if (context.mounted) {
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      ContentsRouter.auth, // رجّع للـ auth route
+                      (route) => false,
+                    );
+                  }
                 },
                 child: Text("signOut"),
               ),
