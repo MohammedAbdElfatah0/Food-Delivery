@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       create: (context) => OnBoardingCubit(),
       child: MaterialApp(
         title: "Food Delivery App",
-        initialRoute: ContentsRouter.onBoarding,
+        initialRoute: ContentsRouter.auth,
         onGenerateRoute: NavigatorRoute.generateRoute,
         theme: ThemeData(
           scaffoldBackgroundColor: ColorManager.white,

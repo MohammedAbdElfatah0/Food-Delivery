@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/router/contents_router.dart';
+import 'package:food_delivery/features/auth/presentation/views/auth.dart';
 import 'package:food_delivery/features/auth/presentation/views/forget_password.dart';
 import 'package:food_delivery/features/auth/presentation/views/login.dart';
 import 'package:food_delivery/features/auth/presentation/views/otp_view.dart';
@@ -11,6 +12,11 @@ import 'package:food_delivery/features/onboarding/presentation/views/on_boarding
 class NavigatorRoute {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case ContentsRouter.auth:
+        return MaterialPageRoute(
+          builder: (_) => Auth(),
+          settings: settings,
+        );
       case ContentsRouter.onBoarding:
         return MaterialPageRoute(
           builder: (_) => OnBoardingPage(),

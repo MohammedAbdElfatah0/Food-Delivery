@@ -21,32 +21,24 @@ class FirebaseAuthRepositories extends AuthRepositories {
   }
 
   @override
-  Future<UserEntity?> register(
-    String name,
-    String email,
-    String password,
-  ) async {
-    return _auth
-        .createUserWithEmailAndPassword(email: email, password: password)
-        .then((userCredential) async {
-          final user = userCredential.user;
-          if (user != null) {
-            await user.updateDisplayName(name);
-            await user.reload();
-            return UserEntity(
-              id: user.uid,
-              name: name,
-              email: user.email ?? '',
-            );
-          }
-          return null;
-        })
-        .catchError((error) {
-          // Handle errors here
-          print('Error during registration: $error');
-          throw Exception(error.message);
-        });
+  Future<UserEntity> register(String name, String email, String password) async {
+  try {
+    UserCredential cred = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    User? user = cred.user;
+    if (user != null) {
+      // تحديث الـ name
+      await user.updateDisplayName(name);
+      // Reload عشان الـ Stream يلتقط التغييرات
+      await user.reload();
+    }
+    return UserEntity(id: user!.uid , name: name, email: email);
+  } catch (e) {
+    rethrow;
   }
+}
 
   @override
   Future<UserEntity?> signIn(String email, String password) async {

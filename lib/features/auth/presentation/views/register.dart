@@ -58,7 +58,7 @@ class _RegisterState extends State<Register> {
         _emailTextEditingController.text.trim(),
         _passwordTextEditingController.text.trim(),
       );
-      Navigator.pop(context);
+     
     } on Exception catch (e) {
       Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(

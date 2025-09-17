@@ -6,4 +6,5 @@ class ContentsRouter {
   static const String forgetPassword = "/forgetPassword";
   static const String resetPassword = "/resetPassword";
   static const String otpView = "/OTPVerification";
+  static const String auth = "/auth";
 }

@@ -44,7 +44,7 @@ class _LoginState extends State<Login> {
   final FocusNode _passwordFocusNode = FocusNode();
 
   Future<void> logIn() async {
-    print("Logging in...");
+    log(":::::::::::::::startLog::::::::::::");
     FocusScope.of(context).unfocus();
 
     final isValid = _formKey.currentState?.validate() ?? false;
@@ -56,35 +56,40 @@ class _LoginState extends State<Login> {
       return;
     }
 
-    // Show loading dialog
+    log(":::::::::::::::Loading::::::::::::");
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (_) => const Center(child: CircularProgressIndicator()),
     );
 
+    log(":::::::::::::::firebase::::::::::::");
     try {
+      log(":::::::::::::::call firebase::::::::::::");
       final user = await FirebaseAuthRepositories().signIn(
         _emailEditingController.text.trim(),
         _passwordEditingController.text.trim(),
       );
 
-      // Close loading dialog
-      Navigator.pop(context);
-
-      // Check if sign-in was successful
+      // Reload the user to ensure state is updated
       if (user != null) {
-        Navigator.pushReplacementNamed(context, ContentsRouter.home);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Sign-in failed. Please try again.')),
+        await FirebaseAuth.instance.currentUser?.reload(); // اضافة للتأكيد
+        log("User reloaded: ${user.id} ${user.name}");
+      }
+
+      Navigator.pop(context); // إغلاق الـ loading
+
+      // Fallback navigation إذا الـ Stream مش حدث
+      if (context.mounted) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          ContentsRouter.home, // تأكد إن الـ route ده موجود في NavigatorRoute
+          (route) => false,
         );
       }
     } catch (e) {
-      // Close loading dialog
+      log(":::::::::::::::pop Loading::::::::::::");
       Navigator.pop(context);
-
-      // Show error message
       String errorMessage = 'An error occurred. Please try again.';
       if (e is FirebaseAuthException) {
         switch (e.code) {
@@ -101,7 +106,6 @@ class _LoginState extends State<Login> {
             errorMessage = 'Sign-in failed: ${e.message}';
         }
       }
-
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(errorMessage)));
@@ -110,6 +114,7 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    log(":::::::::::::::::::::::::::::::::LOGIN:::::::::::::::::::::::::");
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
