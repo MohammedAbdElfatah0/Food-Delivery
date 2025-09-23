@@ -28,7 +28,7 @@ class NavigatorRoute {
           settings: settings,
         );
       case ContentsRouter.login:
-        return MaterialPageRoute(builder: (_) => Login(), settings: settings);
+        return MaterialPageRoute(builder: (_) => LoginScreen(), settings: settings);
       case ContentsRouter.register:
         return MaterialPageRoute(
           builder: (_) => Register(),
