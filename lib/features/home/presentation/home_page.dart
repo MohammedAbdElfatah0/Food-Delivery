@@ -1,11 +1,8 @@
 import 'dart:developer';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/features/auth/data/repositories/firebase_auth_repositories.dart';
 import 'package:food_delivery/features/auth/domain/entities/user_entity.dart';
-
-import '../../../core/router/contents_router.dart'; // افترضت إن UserEntity هنا
+import '../../../core/router/contents_router.dart'; 
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -19,19 +16,16 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(leading: const Text("Home")),
       body: FutureBuilder<UserEntity?>(
         future:
-            firebaseAuthRepositories.getCurrentUser(), // جلب بيانات المستخدم
+            firebaseAuthRepositories.getCurrentUser(),
         builder: (context, snapshot) {
-          // لو البيانات لسه بتتحمل
+         //TODO::rebuild ui loadin in file helper
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
           // لو فيه خطأ
+         //TODO::rebuild ui loadin in file Error
           if (snapshot.hasError) {
             return const Center(child: Text('خطأ في جلب بيانات المستخدم'));
-          }
-          // لو مفيش مستخدم مسجل دخول
-          if (!snapshot.hasData || snapshot.data == null) {
-            return const Center(child: Text('ما فيش مستخدم مسجل دخول'));
           }
           // لو البيانات جت بنجاح
           final user = snapshot.data!;
@@ -41,15 +35,15 @@ class HomePage extends StatelessWidget {
               Text('الإيميل: ${user.email.isEmpty ? 'غير متوفر' : user.email}'),
               Text('ID: ${user.id}'),
               ElevatedButton(
+                //rebuild logic sign out to cubit 
                 onPressed: () async {
                   log("Attempting to sign out...");
                   await firebaseAuthRepositories.logOut();
                   log("Sign out completed.");
-                  // Fallback navigation لو الـ Stream مش حدث
                   if (context.mounted) {
                     Navigator.pushNamedAndRemoveUntil(
                       context,
-                      ContentsRouter.auth, // رجّع للـ auth route
+                      ContentsRouter.auth, 
                       (route) => false,
                     );
                   }

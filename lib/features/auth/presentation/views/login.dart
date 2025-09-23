@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/Colors/color_manager.dart';
 import 'package:food_delivery/core/contents/text_string.dart';
+import 'package:food_delivery/core/helper/validation_text_field.dart';
 import 'package:food_delivery/core/router/contents_router.dart';
 import 'package:food_delivery/core/style/app_size.dart';
 import 'package:food_delivery/core/style/app_text_style.dart';
@@ -139,15 +140,7 @@ class _LoginState extends State<Login> {
                     onFieldSubmitted: (value) {
                       FocusScope.of(context).requestFocus(_passwordFocusNode);
                     },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'pls enter email';
-                      }
-                      if (!value.contains("@")) {
-                        return "Enter a valid email";
-                      }
-                      return null;
-                    },
+                    validator: ValidationTextField.email(),
                   ),
                   SizedBox(height: 24),
                   header(TextString.headerPassword),
@@ -160,15 +153,7 @@ class _LoginState extends State<Login> {
                     onFieldSubmitted: (value) {
                       FocusScope.of(context).unfocus();
                     },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "pls enter password";
-                      }
-                      if (value.length < 8) {
-                        return "inValid Password";
-                      }
-                      return null;
-                    },
+                    validator: ValidationTextField.password(),
                   ),
                   SizedBox(height: 24),
                   Row(

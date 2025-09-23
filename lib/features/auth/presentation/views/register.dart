@@ -10,6 +10,7 @@ import 'package:food_delivery/features/auth/presentation/widget/custom_header_au
 import 'package:food_delivery/features/auth/presentation/widget/custom_test_form_filed.dart';
 import 'package:food_delivery/features/auth/presentation/widget/custom_text_login.dart';
 import 'package:food_delivery/features/auth/presentation/widget/header.dart';
+import '../../../../core/helper/validation_text_field.dart';
 import '../widget/custom_method_sign_in.dart';
 
 class Register extends StatefulWidget {
@@ -113,15 +114,7 @@ class _RegisterState extends State<Register> {
                         (p0) => FocusScope.of(
                           context,
                         ).requestFocus(_emailFocusNode),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your username';
-                      }
-                      if (value.length < 3) {
-                        return 'Username must be at least 3 characters long';
-                      }
-                      return null;
-                    },
+                    validator: ValidationTextField.name(),
                   ),
                   SizedBox(height: 14),
 
@@ -135,15 +128,7 @@ class _RegisterState extends State<Register> {
                         (p0) => FocusScope.of(
                           context,
                         ).requestFocus(_passwordFocusNode),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
-                      }
-                      if (!value.contains("@")) {
-                        return 'Please enter a valid email address';
-                      }
-                      return null;
-                    },
+                    validator: ValidationTextField.email(),
                   ),
                   SizedBox(height: 14),
                   header(TextString.headerPassword),
@@ -157,15 +142,7 @@ class _RegisterState extends State<Register> {
                         (p0) => FocusScope.of(
                           context,
                         ).requestFocus(_confirmPasswordFocusNode),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your password';
-                      }
-                      if (value.length < 8) {
-                        return 'Username must be at least 8 characters long';
-                      }
-                      return null;
-                    },
+                    validator: ValidationTextField.password(),
                   ),
                   SizedBox(height: 14),
                   header(TextString.headerRegisterConfirmPassword),
@@ -176,18 +153,9 @@ class _RegisterState extends State<Register> {
                     hint: TextString.headerRegisterConfirmPassword,
                     isPassword: true,
                     onFieldSubmitted: (p0) => FocusScope.of(context).unfocus(),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your confirm password';
-                      }
-                      if (value.length < 8) {
-                        return 'Username must be at least 8 characters long';
-                      }
-                      if (value != _passwordTextEditingController.text) {
-                        return 'Passwords do not match';
-                      }
-                      return null;
-                    },
+                    validator: ValidationTextField.confirmPassword(
+                      _passwordTextEditingController,
+                    ),
                   ),
                   SizedBox(height: 24),
                   Align(

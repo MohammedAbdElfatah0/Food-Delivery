@@ -1,12 +1,11 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:food_delivery/core/helper/validation_text_field.dart';
 import 'package:food_delivery/features/auth/presentation/widget/custom_app_bar.dart';
 import 'package:food_delivery/features/auth/presentation/widget/custom_button_auth.dart';
 import 'package:food_delivery/features/auth/presentation/widget/custom_header_auth.dart';
 import 'package:food_delivery/features/auth/presentation/widget/custom_test_form_filed.dart';
 import 'package:food_delivery/features/auth/presentation/widget/header.dart';
-
 import '../../../../core/contents/text_string.dart';
 import '../../../../core/style/app_size.dart';
 import '../widget/custom_show_botton_sheet.dart';
@@ -25,6 +24,16 @@ class _ResetPasswordState extends State<ResetPassword> {
   final TextEditingController _newPasswordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+
+  @override
+  void dispose() {
+    _newPasswordFocusNode.dispose();
+    _confirmPasswordFocusNode.dispose();
+    _newPasswordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,15 +67,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                               (p0) => FocusScope.of(
                                 context,
                               ).requestFocus(_confirmPasswordFocusNode),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your password';
-                            }
-                            if (value.length < 8) {
-                              return 'Username must be at least 8 characters long';
-                            }
-                            return null;
-                          },
+                          validator: ValidationTextField.password(),
                         ),
                         SizedBox(height: 8),
                         header(TextString.passwordResetMessage),
@@ -80,15 +81,9 @@ class _ResetPasswordState extends State<ResetPassword> {
                           isPassword: true,
                           onFieldSubmitted:
                               (p0) => FocusScope.of(context).unfocus(),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your password';
-                            }
-                            if (value.length < 8) {
-                              return 'Username must be at least 8 characters long';
-                            }
-                            return null;
-                          },
+                          validator: ValidationTextField.confirmPassword(
+                            _newPasswordController,
+                          ),
                         ),
                         SizedBox(height: 8),
                         header(TextString.confirmPasswordResetMessage),
@@ -99,15 +94,16 @@ class _ResetPasswordState extends State<ResetPassword> {
                 ),
                 CustomButtonAuth(
                   onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder:
-                          (context) => BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 1, sigmaY: 2),
-                            child: CustomShowBottomSheet(),
-                          ),
-                    );
-                    //TODO :: buttom Sheet
+                    if (_formKey.currentState!.validate()) {
+                      showModalBottomSheet(
+                        context: context,
+                        builder:
+                            (context) => BackdropFilter(
+                              filter: ImageFilter.blur(sigmaX: 1, sigmaY: 2),
+                              child: CustomShowBottomSheet(),
+                            ),
+                      );
+                    }
                   },
                   text: TextString.verifyAccount,
                 ),

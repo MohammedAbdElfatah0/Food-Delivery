@@ -4,7 +4,6 @@ import 'package:food_delivery/firebase_options.dart';
 import 'package:food_delivery/my_app.dart';
 
 void main() async {
-  print(":::::::::::::::::::::::::::MAIN::::::::::::::::::::::::::::::");
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform
