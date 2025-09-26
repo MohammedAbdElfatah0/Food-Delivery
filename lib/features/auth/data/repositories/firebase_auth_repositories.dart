@@ -31,9 +31,7 @@ class FirebaseAuthRepositories extends AuthRepositories {
           .createUserWithEmailAndPassword(email: email, password: password);
       User? user = cred.user;
       if (user != null) {
-        // تحديث الـ name
         await user.updateDisplayName(name);
-        // Reload عشان الـ Stream يلتقط التغييرات
         await user.reload();
       }
       return UserEntity(id: user!.uid, name: name, email: email);
@@ -54,6 +52,7 @@ class FirebaseAuthRepositories extends AuthRepositories {
       await user.reload();
       return UserEntity(id: user.uid, name: user.displayName!, email: email);
     } on FirebaseAuthException catch (e) {
+      //todo ::
       switch (e.code) {
         case 'user-not-found':
           throw Exception('No user found with this email.');

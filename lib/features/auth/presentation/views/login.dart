@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/core/Colors/color_manager.dart';
@@ -56,7 +55,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    log(":::::::::::::::::::::::::::::::::LOGIN:::::::::::::::::::::::::");
     return Scaffold(
       body: BlocListener<LoginCubit, LoginState>(
         listener: (context, state) {
