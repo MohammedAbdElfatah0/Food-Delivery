@@ -57,4 +57,14 @@ class ValidationTextField {
       return null;
     };
   }
+
+  
+  static String? Function(DateTime?)? birthday() {
+    return (value) {
+      if (value == null) return 'Please select birthday';
+      final age = DateTime.now().year - value.year;  // Rough check; full in use case
+      if (age < 18) return 'You must be at least 18 years old';
+      return null;
+    };
+  }
 }

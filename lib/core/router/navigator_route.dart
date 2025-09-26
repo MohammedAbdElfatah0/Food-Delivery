@@ -4,8 +4,8 @@ import 'package:food_delivery/features/auth/presentation/views/auth.dart';
 import 'package:food_delivery/features/auth/presentation/views/forget_password.dart';
 import 'package:food_delivery/features/auth/log_in/presentation/view/login.dart';
 import 'package:food_delivery/features/auth/presentation/views/otp_view.dart';
-import 'package:food_delivery/features/auth/presentation/views/register.dart';
 import 'package:food_delivery/features/auth/presentation/views/reset_password.dart';
+import 'package:food_delivery/features/auth/register/presentation/view/register_screen.dart';
 import 'package:food_delivery/features/home/presentation/home_page.dart';
 import 'package:food_delivery/features/onboarding/presentation/views/on_boarding_page.dart';
 
@@ -13,10 +13,7 @@ class NavigatorRoute {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case ContentsRouter.auth:
-        return MaterialPageRoute(
-          builder: (_) => Auth(),
-          settings: settings,
-        );
+        return MaterialPageRoute(builder: (_) => Auth(), settings: settings);
       case ContentsRouter.onBoarding:
         return MaterialPageRoute(
           builder: (_) => OnBoardingPage(),
@@ -28,10 +25,13 @@ class NavigatorRoute {
           settings: settings,
         );
       case ContentsRouter.login:
-        return MaterialPageRoute(builder: (_) => LoginScreen(), settings: settings);
+        return MaterialPageRoute(
+          builder: (_) => LoginScreen(),
+          settings: settings,
+        );
       case ContentsRouter.register:
         return MaterialPageRoute(
-          builder: (_) => Register(),
+          builder: (_) => RegisterPage(),
           settings: settings,
         );
       case ContentsRouter.forgetPassword:

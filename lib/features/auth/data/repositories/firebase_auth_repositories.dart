@@ -20,51 +20,7 @@ class FirebaseAuthRepositories extends AuthRepositories {
     return Future.value(null);
   }
 
-  @override
-  Future<UserEntity> register(
-    String name,
-    String email,
-    String password,
-  ) async {
-    try {
-      UserCredential cred = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
-      User? user = cred.user;
-      if (user != null) {
-        await user.updateDisplayName(name);
-        await user.reload();
-      }
-      return UserEntity(id: user!.uid, name: name, email: email);
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  @override
-  Future<UserEntity> signIn(String email, String password) async {
-    try {
-      final userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-      final user = userCredential.user;
-      if (user == null) {
-        throw Exception('User not found');
-      }
-      await user.reload();
-      return UserEntity(id: user.uid, name: user.displayName!, email: email);
-    } on FirebaseAuthException catch (e) {
-      //todo ::
-      switch (e.code) {
-        case 'user-not-found':
-          throw Exception('No user found with this email.');
-        case 'wrong-password':
-          throw Exception('Incorrect password. Please try again.');
-        case 'invalid-email':
-          throw Exception('Invalid email format.');
-        default:
-          throw Exception('Sign-in failed: ${e.message}');
-      }
-    }
-  }
+  
 
   @override
   Future<void> logOut() {
