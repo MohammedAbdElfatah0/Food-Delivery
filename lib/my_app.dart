@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/core/Colors/color_manager.dart';
 import 'package:food_delivery/core/router/contents_router.dart';
 import 'package:food_delivery/core/router/navigator_route.dart';
-import 'package:food_delivery/features/auth/data/repositories/firebase_auth_repositories.dart';
-import 'package:food_delivery/features/auth/domain/usecases/login_usecase.dart';
-import 'package:food_delivery/features/auth/presentation/cubit/login/login_cubit.dart';
+import 'package:food_delivery/features/auth/log_in/data/repository/firebase_log_in_repository.dart';
+import 'package:food_delivery/features/auth/log_in/domain/use_case/login_usecase.dart';
+import 'package:food_delivery/features/auth/log_in/presentation/cubit/login/login_cubit.dart';
 import 'package:food_delivery/features/onboarding/presentation/cubit/on_boarding_cubit.dart';
 
 class MyApp extends StatelessWidget {
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create:
               (context) => LoginCubit(
-                signInUseCase: SignInUseCase(FirebaseAuthRepositories()),
+                logInUseCase: LogInInUseCase(FirebaseLogInRepository()),
               ),
         ),
       ],
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         onGenerateRoute: NavigatorRoute.generateRoute,
         theme: ThemeData(
           scaffoldBackgroundColor: ColorManager.white,
-          primaryColor: ColorManager.primary, 
+          primaryColor: ColorManager.primary,
         ),
         debugShowCheckedModeBanner: false,
       ),
