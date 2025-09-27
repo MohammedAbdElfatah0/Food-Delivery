@@ -38,7 +38,10 @@ class RegisterCubit extends Cubit<RegisterState> {
       );
       if (user != null) {
         Navigator.of(context).pop();
-        emit(RegisterSuccess(user));
+        user.fold(
+          (failure) => emit(RegisterFailure('Registration failed:${failure.message}')),
+          (user) => emit(RegisterSuccess(user!)),
+        );
       } else {
         emit(RegisterFailure('Registration failed'));
       }

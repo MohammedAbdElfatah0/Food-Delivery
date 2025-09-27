@@ -1,3 +1,5 @@
+import 'package:dartz/dartz.dart';
+import 'package:food_delivery/core/utils/error/failures.dart';
 import 'package:food_delivery/features/auth/register/data/firebase/register_firebase_data_source.dart';
 import 'package:food_delivery/features/auth/register/domain/entity/register_entity.dart';
 import 'package:food_delivery/features/auth/register/domain/repository/register_repository.dart';
@@ -8,7 +10,7 @@ class RegisterRepositoryImpl implements RegisterRepository {
   RegisterRepositoryImpl(this._dataSource);
 
   @override
-  Future<RegisterEntity?> register({
+  Future<Either<Failure, RegisterEntity>> register({
     required String name,
     required String email,
     required String password,
@@ -20,13 +22,15 @@ class RegisterRepositoryImpl implements RegisterRepository {
       final age = _calculateAge(
         birthday,
       ); // Placeholder; compute in use case and pass if repo needs it
-      return await _dataSource.register(
-        name: name,
-        email: email,
-        password: password,
-        birthday: birthday,
-        gender: gender,
-        age: age,
+      return Right(
+        (await _dataSource.register(
+          name: name,
+          email: email,
+          password: password,
+          birthday: birthday,
+          gender: gender,
+          age: age,
+        )) as RegisterEntity,
       );
     } catch (e) {
       rethrow;
