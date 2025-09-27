@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery/features/auth/log_in/presentation/view/login.dart';
 import 'package:food_delivery/features/home/presentation/home_page.dart';
-import 'package:food_delivery/features/onboarding/presentation/views/on_boarding_page.dart';
 
 class Auth extends StatelessWidget {
   const Auth({super.key});
@@ -21,7 +21,7 @@ class Auth extends StatelessWidget {
           if (snapshot.data?.uid != null) {
             return const HomePage();
           } else {
-            return const OnBoardingPage();
+            return const LoginScreen();
           }
         }
       },
