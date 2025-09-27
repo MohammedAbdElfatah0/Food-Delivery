@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_delivery/core/Colors/color_manager.dart';
 import 'package:food_delivery/core/contents/text_string.dart';
-import 'package:food_delivery/core/helper/validation_text_field.dart';
+import 'package:food_delivery/core/utils/helper/validation_text_field.dart';
 import 'package:food_delivery/features/auth/presentation/widget/custom_button_auth.dart';
 import 'package:food_delivery/features/auth/presentation/widget/custom_divider.dart';
 import 'package:food_delivery/features/auth/presentation/widget/custom_header_auth.dart';
@@ -129,6 +130,7 @@ class _RegisterState extends State<Register> {
                       FormField<DateTime>(
                         initialValue: cubit.birthday,
                         validator: ValidationTextField.birthday(),
+
                         builder: (field) {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,12 +138,32 @@ class _RegisterState extends State<Register> {
                               InkWell(
                                 onTap: () async {
                                   final selected = await showDatePicker(
+                                    fieldHintText: "enter birthday",
                                     context: context,
                                     initialDate: DateTime.now().subtract(
                                       const Duration(days: 365 * 20),
                                     ),
                                     firstDate: DateTime(1900),
                                     lastDate: DateTime.now(),
+                                    builder: (context, child) {
+                                      return Theme(
+                                        data: Theme.of(context).copyWith(
+                                          colorScheme: ColorScheme.light(
+                                            primary: ColorManager.primary,
+                                            onPrimary: Colors.white,
+                                            onSurface: Colors.black,
+                                            onSecondary: ColorManager.grey,
+                                          ),
+                                          textButtonTheme: TextButtonThemeData(
+                                            style: TextButton.styleFrom(
+                                              foregroundColor:
+                                                  ColorManager.primary,
+                                            ),
+                                          ),
+                                        ),
+                                        child: child!,
+                                      );
+                                    },
                                   );
                                   if (selected != null) {
                                     cubit.updateBirthday(selected);
@@ -156,8 +178,8 @@ class _RegisterState extends State<Register> {
                                     border: Border.all(
                                       color:
                                           field.hasError
-                                              ? Colors.red
-                                              : Colors.grey,
+                                              ? ColorManager.error
+                                              : ColorManager.grey,
                                     ),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
@@ -168,8 +190,8 @@ class _RegisterState extends State<Register> {
                                     style: TextStyle(
                                       color:
                                           cubit.birthday == null
-                                              ? Colors.grey
-                                              : Colors.black,
+                                              ? ColorManager.grey
+                                              : ColorManager.black,
                                     ),
                                   ),
                                 ),
@@ -193,6 +215,10 @@ class _RegisterState extends State<Register> {
                       header('Gender'),
                       const SizedBox(height: 8),
                       DropdownButtonFormField<String>(
+                        elevation: 4,
+
+                        focusColor: ColorManager.white,
+                        dropdownColor: ColorManager.white,
                         value: cubit.gender,
                         hint: const Text('Select Gender'),
                         items:
@@ -220,14 +246,6 @@ class _RegisterState extends State<Register> {
                             if (widget._formKey.currentState?.validate() ??
                                 false) {
                               cubit.register(context);
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    'Please enter all fields correctly',
-                                  ),
-                                ),
-                              );
                             }
                           },
                           text: TextString.submit,

@@ -1,8 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/core/Colors/color_manager.dart';
 import 'package:food_delivery/core/contents/text_string.dart';
-import 'package:food_delivery/core/helper/validation_text_field.dart';
+import 'package:food_delivery/core/utils/helper/validation_text_field.dart';
 import 'package:food_delivery/core/router/contents_router.dart';
 import 'package:food_delivery/core/style/app_size.dart';
 import 'package:food_delivery/core/style/app_text_style.dart';
@@ -26,7 +28,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailEditingController = TextEditingController();
-  final TextEditingController _passwordEditingController = TextEditingController();
+  final TextEditingController _passwordEditingController =
+      TextEditingController();
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
 
@@ -42,13 +45,9 @@ class _LoginScreenState extends State<LoginScreen> {
   void _signIn() {
     if (_formKey.currentState?.validate() ?? false) {
       FocusScope.of(context).unfocus();
-      context.read<LoginCubit>().signIn(
-            _emailEditingController.text.trim(),
-            _passwordEditingController.text.trim(),
-          );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter all fields correctly')),
+      context.read<LoginCubit>().logIn(
+        _emailEditingController.text.trim(),
+        _passwordEditingController.text.trim(),
       );
     }
   }
@@ -72,9 +71,13 @@ class _LoginScreenState extends State<LoginScreen> {
               (route) => false,
             );
           } else if (state is LoginFailure) {
+            log("message ${state.errorMessage}");
             Navigator.pop(context); // Close loading dialog
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.errorMessage)),
+              SnackBar(
+                content: Text(state.errorMessage),
+                // duration: Duration(minutes: 2),
+              ),
             );
           }
         },

@@ -11,11 +11,14 @@ class LoginCubit extends Cubit<LoginState> {
 
   LoginCubit({required this.logInUseCase}) : super(LoginInitial());
 
-  Future<void> signIn(String email, String password) async {
+  Future<void> logIn(String email, String password) async {
     emit(LoginLoading());
     try {
       final user = await logInUseCase(email, password);
-      emit(LoginSuccess(user));
+       user.fold(
+      (failure) => emit(LoginFailure(errorMessage:  failure.message)), // هتوصل الرسالة للـ UI
+      (user) => emit(LoginSuccess(user)),
+    );
     } catch (e) {
       emit(LoginFailure(errorMessage: e.toString()));
     }

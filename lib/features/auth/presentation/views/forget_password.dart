@@ -5,7 +5,7 @@ import 'package:food_delivery/features/auth/presentation/widget/custom_button_au
 import 'package:food_delivery/features/auth/presentation/widget/custom_header_auth.dart';
 import 'package:food_delivery/features/auth/presentation/widget/custom_show_model_bottom_sheet.dart';
 import 'package:food_delivery/features/auth/presentation/widget/custom_test_form_filed.dart';
-import '../../../../core/helper/validation_text_field.dart';
+import '../../../../core/utils/helper/validation_text_field.dart';
 import '../../../../core/style/app_size.dart';
 
 class ForgetPassword extends StatefulWidget {

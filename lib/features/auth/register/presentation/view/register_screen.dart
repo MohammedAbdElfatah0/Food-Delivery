@@ -15,7 +15,7 @@ class RegisterPage extends StatelessWidget {
       create:
           (_) => RegisterCubit(
             RegisterUserUseCase(
-              FirebaseRegisterRepositoryImpl(
+              RegisterRepositoryImpl(
                 FirebaseRegisterDataSource(),
               ), // Simple injection; use get_it for prod
             ),

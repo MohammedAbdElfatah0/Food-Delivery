@@ -31,6 +31,7 @@ dependencies:
   bloc: ^9.0.0
   cloud_firestore: ^6.0.2
   cupertino_icons: ^1.0.8
+  dartz: ^0.10.1
   equatable: ^2.0.7
   firebase_auth: ^6.0.2
   firebase_core: ^4.1.0

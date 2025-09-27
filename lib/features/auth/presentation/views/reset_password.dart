@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:food_delivery/core/helper/validation_text_field.dart';
+import 'package:food_delivery/core/utils/helper/validation_text_field.dart';
 import 'package:food_delivery/features/auth/presentation/widget/custom_app_bar.dart';
 import 'package:food_delivery/features/auth/presentation/widget/custom_button_auth.dart';
 import 'package:food_delivery/features/auth/presentation/widget/custom_header_auth.dart';
