@@ -1,14 +1,14 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/utils/helper/validation_text_field.dart';
-import 'package:food_delivery/features/auth/presentation/widget/custom_app_bar.dart';
-import 'package:food_delivery/features/auth/presentation/widget/custom_button_auth.dart';
-import 'package:food_delivery/features/auth/presentation/widget/custom_header_auth.dart';
-import 'package:food_delivery/features/auth/presentation/widget/custom_test_form_filed.dart';
-import 'package:food_delivery/features/auth/presentation/widget/header.dart';
+import 'package:food_delivery/features/auth/widget/custom_app_bar.dart';
+import 'package:food_delivery/features/auth/widget/custom_button_auth.dart';
+import 'package:food_delivery/features/auth/widget/custom_header_auth.dart';
+import 'package:food_delivery/features/auth/widget/custom_test_form_filed.dart';
+import 'package:food_delivery/features/auth/widget/header.dart';
 import '../../../../core/contents/text_string.dart';
 import '../../../../core/style/app_size.dart';
-import '../widget/custom_show_botton_sheet.dart';
+import '../../widget/custom_show_botton_sheet.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({super.key});

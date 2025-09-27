@@ -62,4 +62,30 @@ class FirebaseLogInRepository extends LogInRepository {
       return Left(ServerFailure('Unexpected error: ${e.toString()}'));
     }
   }
+  @override
+Future<Either<Failure, LogInEntity>> getCurrentUser() async {
+  try {
+    final User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      return Right(
+        LogInEntity(
+          id: user.uid,
+          name: user.displayName ?? '',
+          email: user.email ?? '',
+        ),
+      );
+    } else {
+      return Left(
+      FirebaseFailure( "No user is currently signed in."),
+      );
+    }
+  } catch (e) {
+    return Left(
+      FirebaseFailure(e.toString()),
+    );
+  }
+}
+
+
 }

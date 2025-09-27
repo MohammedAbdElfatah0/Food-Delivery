@@ -20,15 +20,8 @@ class FirebaseAuthRepositories extends AuthRepositories {
     return Future.value(null);
   }
 
-  
-
   @override
   Future<void> logOut() {
     return _auth.signOut();
-  }
-
-  @override
-  Stream<User?> isLogIn() {
-    return _auth.authStateChanges();
   }
 }

@@ -1,10 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/contents/text_string.dart';
-import 'package:food_delivery/features/auth/presentation/widget/custom_button_auth.dart';
-import 'package:food_delivery/features/auth/presentation/widget/custom_header_auth.dart';
-import 'package:food_delivery/features/auth/presentation/widget/custom_show_model_bottom_sheet.dart';
-import 'package:food_delivery/features/auth/presentation/widget/custom_test_form_filed.dart';
+import 'package:food_delivery/features/auth/widget/custom_button_auth.dart';
+import 'package:food_delivery/features/auth/widget/custom_header_auth.dart';
+import 'package:food_delivery/features/auth/widget/custom_show_model_bottom_sheet.dart';
+import 'package:food_delivery/features/auth/widget/custom_test_form_filed.dart';
 import '../../../../core/utils/helper/validation_text_field.dart';
 import '../../../../core/style/app_size.dart';
 

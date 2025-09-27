@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery/core/contents/images.dart';
 import 'package:food_delivery/core/contents/text_string.dart';
 import 'package:food_delivery/core/router/contents_router.dart';
-import 'package:food_delivery/features/auth/presentation/widget/custom_button_auth.dart';
-import '../../../../core/Colors/color_manager.dart';
-import '../../../../core/style/app_text_style.dart';
+import 'package:food_delivery/features/auth/widget/custom_button_auth.dart';
+import '../../../core/Colors/color_manager.dart';
+import '../../../core/style/app_text_style.dart';
 
 class CustomShowBottomSheet extends StatelessWidget {
   const CustomShowBottomSheet({super.key});

@@ -2,9 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_delivery/core/contents/text_string.dart';
-import 'package:food_delivery/features/auth/presentation/widget/custom_app_bar.dart';
-import 'package:food_delivery/features/auth/presentation/widget/custom_button_auth.dart';
-import 'package:food_delivery/features/auth/presentation/widget/custom_header_auth.dart';
+import 'package:food_delivery/features/auth/widget/custom_app_bar.dart';
+import 'package:food_delivery/features/auth/widget/custom_button_auth.dart';
+import 'package:food_delivery/features/auth/widget/custom_header_auth.dart';
 import '../../../../core/router/contents_router.dart';
 
 class OtpView extends StatefulWidget {

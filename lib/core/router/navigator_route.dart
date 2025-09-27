@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/router/contents_router.dart';
 import 'package:food_delivery/features/auth/presentation/views/auth.dart';
-import 'package:food_delivery/features/auth/presentation/views/forget_password.dart';
+import 'package:food_delivery/features/auth/forget_password/presentation/forget_password.dart';
 import 'package:food_delivery/features/auth/log_in/presentation/view/login.dart';
-import 'package:food_delivery/features/auth/presentation/views/otp_view.dart';
-import 'package:food_delivery/features/auth/presentation/views/reset_password.dart';
+import 'package:food_delivery/features/auth/otp/presentation/otp_view.dart';
+import 'package:food_delivery/features/auth/reset_password/presentation/reset_password.dart';
 import 'package:food_delivery/features/auth/register/presentation/view/register_screen.dart';
 import 'package:food_delivery/features/home/presentation/home_page.dart';
 import 'package:food_delivery/features/onboarding/presentation/views/on_boarding_page.dart';

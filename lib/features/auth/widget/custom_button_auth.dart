@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-import '../../../../core/Colors/color_manager.dart';
-import '../../../../core/style/app_text_style.dart';
+import '../../../core/Colors/color_manager.dart';
+import '../../../core/style/app_text_style.dart';
 
 class CustomButtonAuth extends StatelessWidget {
   const CustomButtonAuth({super.key, required this.onTap, required this.text});
