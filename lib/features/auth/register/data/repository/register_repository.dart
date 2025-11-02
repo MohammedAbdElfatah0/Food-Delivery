@@ -18,19 +18,16 @@ class RegisterRepositoryImpl implements RegisterRepository {
     required String gender,
   }) async {
     try {
-      // Age calculated in use case, but passed if needed; here we assume use case handles it
       final age = _calculateAge(
         birthday,
-      ); // Placeholder; compute in use case and pass if repo needs it
-      return Right(
-        (await _dataSource.register(
-          name: name,
-          email: email,
-          password: password,
-          birthday: birthday,
-          gender: gender,
-          age: age,
-        )) as RegisterEntity,
+      );
+      return _dataSource.register(
+        name: name,
+        email: email,
+        password: password,
+        birthday: birthday,
+        gender: gender,
+        age: age,
       );
     } catch (e) {
       rethrow;

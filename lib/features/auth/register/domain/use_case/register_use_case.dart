@@ -8,7 +8,7 @@ class RegisterUserUseCase {
 
   RegisterUserUseCase(this._repository);
 
-  Future<Either<Failure, RegisterEntity?>> execute({
+  Future<Either<Failure, RegisterEntity>> execute({
     required String name,
     required String email,
     required String password,
@@ -17,17 +17,14 @@ class RegisterUserUseCase {
   }) async {
     final age = _calculateAge(birthday);
     if (age < 12) {
-      Left(FirebaseFailure("User must be at least 12 years old"));
+      return Left(FirebaseFailure("User must be at least 12 years old"));
     }
-    return Right(
-      _repository.register(
-            name: name,
-            email: email,
-            password: password,
-            birthday: birthday,
-            gender: gender,
-          )
-          as RegisterEntity?,
+    return _repository.register(
+      name: name,
+      email: email,
+      password: password,
+      birthday: birthday,
+      gender: gender,
     );
   }
 

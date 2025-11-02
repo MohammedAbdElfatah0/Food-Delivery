@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
     final FirebaseAuthRepositories firebaseAuthRepositories =
         FirebaseAuthRepositories();
 
-    log(":::::::::::::::::::HOME::::::::::::::::::::::");
+
     return Scaffold(
       appBar: AppBar(title: const Text('home page'), centerTitle: true),
       body: SafeArea(

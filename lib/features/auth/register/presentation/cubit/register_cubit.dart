@@ -27,24 +27,35 @@ class RegisterCubit extends Cubit<RegisterState> {
       emit(RegisterFailure('Please select birthday and gender'));
       return;
     }
+    if (nameController.text.trim().isEmpty ||
+        emailController.text.trim().isEmpty ||
+        passwordController.text.isEmpty ||
+        confirmPasswordController.text.isEmpty) {
+      emit(RegisterFailure('All fields are required'));
+      return;
+    }
+    if (passwordController.text != confirmPasswordController.text) {
+      emit(RegisterFailure('Passwords do not match'));
+      return;
+    }
     emit(RegisterLoading());
     try {
-      final user = await _useCase.execute(
+      final result = await _useCase.execute(
         name: nameController.text.trim(),
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
         birthday: birthday!,
         gender: gender!,
       );
-      if (user != null) {
-        Navigator.of(context).pop();
-        user.fold(
-          (failure) => emit(RegisterFailure('Registration failed:${failure.message}')),
-          (user) => emit(RegisterSuccess(user!)),
-        );
-      } else {
-        emit(RegisterFailure('Registration failed'));
-      }
+      result.fold(
+        (failure) => emit(
+          RegisterFailure('Registration failed: ${failure.message}'),
+        ),
+        (user) {
+          Navigator.of(context).pop();
+          emit(RegisterSuccess(user));
+        },
+      );
     } catch (e) {
       emit(RegisterFailure(e.toString()));
     }
