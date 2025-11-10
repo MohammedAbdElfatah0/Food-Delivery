@@ -5,4 +5,14 @@ class ImageResources {
     "assets/images/onBoarding3.png",
   ];
   static const String success = "assets/images/IllustrationSuccess.png";
+  static const String appBar = "assets/images/appBar.png";
+  static const String logo = "assets/images/logo.jpg";
+  //todo static const String splashLogo = "assets/images/splash_logo.png";
+  static const String ordinaryBurgers = "assets/images/ordinary_burgers.png";
+  //List of food images
+  static const List<String> foodImages = [burger, pizza, drink, taco];
+  static const String burger = "assets/images/burger.png";
+  static const String pizza = "assets/images/pizza.png";
+  static const String drink = "assets/images/drink.png";
+  static const String taco = "assets/images/taco.png";
 }
