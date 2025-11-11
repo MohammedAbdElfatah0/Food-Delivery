@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery/core/router/contents_router.dart';
 import 'package:food_delivery/firebase_options.dart';
 import 'package:food_delivery/my_app.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import 'core/shared/shared_preference.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  final sharedPref = await SharedPreferences.getInstance();
-  final seenOnBoarding = sharedPref.getBool("seenOnBoarding") ?? false;
+  await AppPreferences.instance.init();
+  final seenOnBoarding = AppPreferences.instance.seenOnBoarding;
   String start;
   if (!seenOnBoarding) {
     start = ContentsRouter.onBoarding;

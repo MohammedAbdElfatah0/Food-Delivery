@@ -1,59 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery/core/Colors/color_manager.dart';
-
-import '../../../../core/style/app_text_style.dart';
 
 class LocationButton extends StatelessWidget {
-  const LocationButton({super.key});
+  final String city;
+  final VoidCallback onTap;
+
+  const LocationButton({super.key, required this.city, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      borderRadius: BorderRadius.circular(8), // تأثير الضغط دائري
-      onTap: () {
-        // هنا تكتب الكود اللي يحصل لما يضغط الزر
-        print('Location button pressed');
-        // ممكن تفتح BottomSheet أو PopupMenu لاختيار المدينة
-      },
+      borderRadius: BorderRadius.circular(16),
+      onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   'Your Location',
-                  style: AppTextStyle.bodyMedium.copyWith(
-                    color: ColorManager.white,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontFamily: 'Cairo',
                   ),
                 ),
                 SizedBox(width: 4),
                 Icon(
-                  Icons.arrow_drop_down,
-                  size: 16,
-                  color: ColorManager.white,
+                  Icons.keyboard_arrow_down_rounded,
+                  color: Colors.white,
+                  size: 18,
                 ),
               ],
             ),
-
-            const SizedBox(height: 4),
-
-            // السطر الثاني: أيقونة الموقع + اسم المدينة
+            SizedBox(height: 4),
             Row(
-              mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(
-                  Icons.location_on_outlined,
-                  color: ColorManager.white,
-                  size: 18,
-                ),
-                SizedBox(width: 4),
+                Icon(Icons.location_on, color: Colors.white, size: 20),
+                SizedBox(width: 6),
                 Text(
-                  'New York City',
-                  style: AppTextStyle.bodyMedium.copyWith(
-                    color: ColorManager.white,
+                  city,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Cairo',
                   ),
                 ),
               ],

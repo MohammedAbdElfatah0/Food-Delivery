@@ -34,6 +34,7 @@ class HomePage extends StatelessWidget {
             _buildCategoryList(),
             const SizedBox(height: 20),
             _buildGridView(context),
+            const SizedBox(height: 20),
           ],
         ),
       ),
@@ -68,6 +69,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  //todo when buttom of ant item the category change with using bloc it's best
   Widget _buildCategoryList() {
     return SizedBox(
       height: 100,
@@ -112,6 +114,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  //todo give detials of category
   Widget _buildGridView(BuildContext context) {
     return GridView.builder(
       shrinkWrap: true,
