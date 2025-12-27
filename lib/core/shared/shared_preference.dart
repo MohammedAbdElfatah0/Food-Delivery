@@ -3,19 +3,18 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppPreferences {
-  // Singleton عشان ما يتعملش غير مرة واحدة في حياة التطبيق
+  // Singleton pattern
   AppPreferences._();
   static final AppPreferences instance = AppPreferences._();
 
   late SharedPreferences _prefs;
 
-  // اول مرة تشتغل → تحمل الـ prefs
   Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
   }
 
   // ============ Selected City ============
-  String get selectedCity => _prefs.getString('selected_city') ?? 'القاهرة';
+  String get selectedCity => _prefs.getString('selected_city') ?? 'Cairo';
 
   Future<void> setSelectedCity(String city) async {
     await _prefs.setString('selected_city', city);
