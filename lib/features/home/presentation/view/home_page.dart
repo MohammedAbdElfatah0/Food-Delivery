@@ -87,8 +87,15 @@ class HomePage extends StatelessWidget {
                   width: 100,
                   height: 90,
                   decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: ColorManager.grey.withAlpha(35),
+                        blurRadius: 10,
+                        offset: const Offset(4, 4),
+                      ),
+                    ],
                     color:
-                        index == 1
+                        index == 0 //TODO change whene selected category
                             ? ColorManager.white
                             : ColorManager.primary.withAlpha(50),
                     borderRadius: BorderRadius.circular(12.0),

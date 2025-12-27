@@ -10,7 +10,6 @@ class CustomGridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: _buildContainerDecoration(),
-
       child: Column(
         spacing: 10,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -31,6 +30,13 @@ class CustomGridItem extends StatelessWidget {
   }
 
   BoxDecoration _buildContainerDecoration() => BoxDecoration(
+    boxShadow: [
+      BoxShadow(
+        color: ColorManager.grey.withAlpha(45),
+        blurRadius: 15,
+        offset: const Offset(0, 5),
+      ),
+    ],
     color: ColorManager.white,
     borderRadius: BorderRadius.circular(25),
   );

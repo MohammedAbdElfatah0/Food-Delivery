@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:food_delivery/core/colors/color_manager.dart';
+
 class CustomBottomNavBar extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTap;
@@ -15,23 +17,36 @@ class CustomBottomNavBar extends StatelessWidget {
     return BottomAppBar(
       shape: const CircularNotchedRectangle(),
       clipBehavior: Clip.antiAlias,
-      notchMargin: 4,
+      notchMargin: 5,
       padding: EdgeInsets.zero,
+      elevation: 0,
+      color: Color(0xfffcfcfc),
       child: SizedBox(
         height: kBottomNavigationBarHeight,
         child: BottomNavigationBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
           currentIndex: currentIndex,
           onTap: onTap,
           type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.blue,
-          items:  [
-            BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.houseChimney), label: 'Home'),
+          selectedItemColor: ColorManager.primary,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(FontAwesomeIcons.houseChimney),
+              label: 'Home',
+            ),
             BottomNavigationBarItem(
               icon: Icon(FontAwesomeIcons.bagShopping),
               label: 'Cart',
             ),
-            BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.commentDots), label: 'Chat'),
-            BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.user), label: 'Profile'),
+            BottomNavigationBarItem(
+              icon: Icon(FontAwesomeIcons.commentDots),
+              label: 'Chat',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(FontAwesomeIcons.user),
+              label: 'Profile',
+            ),
           ],
         ),
       ),
