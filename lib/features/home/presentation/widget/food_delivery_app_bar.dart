@@ -23,7 +23,7 @@ class FoodDeliveryAppBar extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(top: 62.0),
           child: Column(
-            spacing: 32,
+            spacing: 8,
             children: [
               CustomAppBar(),
 
