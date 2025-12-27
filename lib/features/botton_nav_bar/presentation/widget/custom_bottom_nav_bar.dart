@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class CustomBottomNavBar extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTap;
@@ -24,14 +24,14 @@ class CustomBottomNavBar extends StatelessWidget {
           onTap: onTap,
           type: BottomNavigationBarType.fixed,
           selectedItemColor: Colors.blue,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          items:  [
+            BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.houseChimney), label: 'Home'),
             BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart),
+              icon: Icon(FontAwesomeIcons.bagShopping),
               label: 'Cart',
             ),
-            BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+            BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.commentDots), label: 'Chat'),
+            BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.user), label: 'Profile'),
           ],
         ),
       ),

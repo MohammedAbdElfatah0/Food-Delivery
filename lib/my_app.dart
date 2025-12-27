@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         initialRoute: start,
         onGenerateRoute: NavigatorRoute.generateRoute,
         theme: ThemeData(
-          scaffoldBackgroundColor: ColorManager.white,
+          scaffoldBackgroundColor: Color(0xFffcfcfc),
           primaryColor: ColorManager.primary,
         ),
         debugShowCheckedModeBanner: false,
