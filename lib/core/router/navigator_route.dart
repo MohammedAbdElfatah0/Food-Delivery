@@ -6,6 +6,7 @@ import 'package:food_delivery/features/auth/log_in/presentation/view/login.dart'
 import 'package:food_delivery/features/auth/otp/presentation/otp_view.dart';
 import 'package:food_delivery/features/auth/reset_password/presentation/reset_password.dart';
 import 'package:food_delivery/features/auth/register/presentation/view/register_screen.dart';
+import 'package:food_delivery/features/botton_nav_bar/presentation/views/main_page.dart';
 import 'package:food_delivery/features/home/presentation/view/home_page.dart';
 import 'package:food_delivery/features/onboarding/presentation/views/on_boarding_page.dart';
 
@@ -22,6 +23,11 @@ class NavigatorRoute {
       case ContentsRouter.home:
         return MaterialPageRoute(
           builder: (_) => HomePage(),
+          settings: settings,
+        );
+        case ContentsRouter.main:
+        return MaterialPageRoute(
+          builder: (_) => MainScreen(),
           settings: settings,
         );
       case ContentsRouter.login:
@@ -46,6 +52,7 @@ class NavigatorRoute {
           builder: (_) => ResetPassword(),
           settings: settings,
         );
+      //TODO::: when production app delete default
       default:
         return MaterialPageRoute(
           builder:

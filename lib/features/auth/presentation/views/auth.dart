@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/features/auth/log_in/presentation/view/login.dart';
-import 'package:food_delivery/features/home/presentation/view/home_page.dart';
+import 'package:food_delivery/features/botton_nav_bar/presentation/views/main_page.dart';
 
 class Auth extends StatelessWidget {
   const Auth({super.key});
@@ -19,7 +19,7 @@ class Auth extends StatelessWidget {
           return Center(child: Text('Something went wrong: ${snapshot.error}'));
         } else {
           if (snapshot.data?.uid != null) {
-            return const HomePage();
+            return const MainScreen();
           } else {
             return const LoginScreen();
           }

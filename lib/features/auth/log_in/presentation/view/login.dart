@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Navigator.pop(context); // Close loading dialog
             Navigator.pushNamedAndRemoveUntil(
               context,
-              ContentsRouter.home,
+              ContentsRouter.main,
               (route) => false,
             );
           } else if (state is LoginFailure) {
