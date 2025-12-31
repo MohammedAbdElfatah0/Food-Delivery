@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/core/Colors/color_manager.dart';
 import 'package:food_delivery/core/router/navigator_route.dart';
@@ -31,6 +32,13 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           scaffoldBackgroundColor: Color(0xFffcfcfc),
           primaryColor: ColorManager.primary,
+          appBarTheme: const AppBarTheme(
+            systemOverlayStyle: SystemUiOverlayStyle(
+              statusBarIconBrightness:
+                  Brightness.light, // White icons on Android
+              statusBarBrightness: Brightness.dark, // White icons on iOS
+            ),
+          ),
         ),
         debugShowCheckedModeBanner: false,
       ),

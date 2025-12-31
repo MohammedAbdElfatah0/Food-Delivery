@@ -7,6 +7,7 @@ import 'package:food_delivery/features/auth/otp/presentation/otp_view.dart';
 import 'package:food_delivery/features/auth/reset_password/presentation/reset_password.dart';
 import 'package:food_delivery/features/auth/register/presentation/view/register_screen.dart';
 import 'package:food_delivery/features/botton_nav_bar/presentation/views/main_page.dart';
+import 'package:food_delivery/features/home/presentation/view/details_card.dart';
 import 'package:food_delivery/features/home/presentation/view/home_page.dart';
 import 'package:food_delivery/features/onboarding/presentation/views/on_boarding_page.dart';
 
@@ -25,7 +26,7 @@ class NavigatorRoute {
           builder: (_) => HomePage(),
           settings: settings,
         );
-        case ContentsRouter.main:
+      case ContentsRouter.main:
         return MaterialPageRoute(
           builder: (_) => MainScreen(),
           settings: settings,
@@ -50,6 +51,11 @@ class NavigatorRoute {
       case ContentsRouter.resetPassword:
         return MaterialPageRoute(
           builder: (_) => ResetPassword(),
+          settings: settings,
+        );
+      case ContentsRouter.detailsCard:
+        return MaterialPageRoute(
+          builder: (_) => DetailsCard(),
           settings: settings,
         );
       //TODO::: when production app delete default
