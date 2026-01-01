@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/colors/color_manager.dart';
 import 'package:food_delivery/core/style/app_text_style.dart';
+import 'package:food_delivery/core/utils/helper/format_price.dart';
 import 'package:food_delivery/features/home/presentation/widget/food_item_image.dart';
 
 class CustomGridItem extends StatelessWidget {
@@ -65,7 +66,7 @@ class CustomGridItem extends StatelessWidget {
     mainAxisAlignment: MainAxisAlignment.start,
     children: [
       Text(
-        '\$15.99',
+        '\$${2500.withComma}',
         style: AppTextStyle.bodyLarge.copyWith(
           color: ColorManager.primary,
           fontWeight: FontWeight.bold,

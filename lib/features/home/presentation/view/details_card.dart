@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:food_delivery/core/colors/color_manager.dart';
 import 'package:food_delivery/core/contents/images.dart';
 import 'package:food_delivery/core/style/app_text_style.dart';
+import 'package:food_delivery/core/utils/helper/format_price.dart';
 import 'package:food_delivery/features/home/presentation/cubit/cart/cart.cubit.dart';
 import 'package:food_delivery/features/home/presentation/widget/botton_bar_detail_card.dart';
 
@@ -92,7 +93,7 @@ class DetailsCard extends StatelessWidget {
   Widget _price({required int price}) {
     //todo change state price
     return Text(
-      "\$ $price",
+      "\$ ${price.withComma}",
       style: AppTextStyle.header5.copyWith(
         color: ColorManager.primary,
         fontWeight: FontWeight.bold,
