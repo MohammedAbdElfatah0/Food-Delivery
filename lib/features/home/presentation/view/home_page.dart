@@ -96,7 +96,8 @@ class HomePage extends StatelessWidget {
                       ),
                     ],
                     color:
-                        index == 0 //TODO change whene selected category
+                        index ==
+                                0 //TODO change whene selected category
                             ? ColorManager.white
                             : ColorManager.primary.withAlpha(50),
                     borderRadius: BorderRadius.circular(12.0),
@@ -138,10 +139,16 @@ class HomePage extends StatelessWidget {
       itemBuilder: (context, index) {
         // return CustomGridItem(category: categories[index]);
         return GestureDetector(
-          onTap: (){
-            Navigator.pushNamed(context, ContentsRouter.detailsCard);
+          onTap: () {
+            //form api will give all info
+            Navigator.pushNamed(
+              context,
+              ContentsRouter.detailsCard,
+              arguments: {"price": 2500},
+            );
           },
-          child: const CustomGridItem());
+          child: const CustomGridItem(),
+        );
       },
     );
   }

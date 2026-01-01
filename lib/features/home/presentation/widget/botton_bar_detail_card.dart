@@ -7,7 +7,7 @@ import 'package:food_delivery/core/utils/helper/format_price.dart';
 import 'package:food_delivery/features/home/presentation/cubit/cart/cart.cubit.dart';
 
 class BottonBarDetailCard extends StatelessWidget {
-  const BottonBarDetailCard({super.key});
+  const BottonBarDetailCard({super.key,});
 
   @override
   Widget build(BuildContext context) {

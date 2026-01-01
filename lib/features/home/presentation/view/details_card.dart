@@ -12,8 +12,12 @@ class DetailsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //it's model of cart todo:::
+    final Map<String, dynamic> arg =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+
     return BlocProvider(
-      create: (context) => CartCubit(price: 500),
+      create: (context) => CartCubit(price: arg['price']),
       child: Scaffold(
         body: CustomScrollView(
           slivers: [
@@ -58,7 +62,7 @@ class DetailsCard extends StatelessWidget {
                     SizedBox(height: MediaQuery.sizeOf(context).height * 0.008),
                     _header(),
                     SizedBox(height: MediaQuery.sizeOf(context).height * 0.008),
-                    _price(),
+                    _price(price: arg['price']),
                     SizedBox(height: MediaQuery.sizeOf(context).height * 0.016),
                     _detailsWork(context),
                     SizedBox(height: MediaQuery.sizeOf(context).height * 0.032),
@@ -85,9 +89,10 @@ class DetailsCard extends StatelessWidget {
     );
   }
 
-  Widget _price() {
+  Widget _price({required int price}) {
+    //todo change state price
     return Text(
-      "\$1110",
+      "\$ $price",
       style: AppTextStyle.header5.copyWith(
         color: ColorManager.primary,
         fontWeight: FontWeight.bold,
