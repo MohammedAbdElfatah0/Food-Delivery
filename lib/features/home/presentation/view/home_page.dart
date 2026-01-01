@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/colors/color_manager.dart';
 import 'package:food_delivery/core/contents/images.dart';
+import 'package:food_delivery/core/router/contents_router.dart';
 import 'package:food_delivery/core/style/app_text_style.dart';
 import 'package:food_delivery/features/home/presentation/widget/food_delivery_app_bar.dart';
 
@@ -136,7 +137,11 @@ class HomePage extends StatelessWidget {
       ),
       itemBuilder: (context, index) {
         // return CustomGridItem(category: categories[index]);
-        return const CustomGridItem();
+        return GestureDetector(
+          onTap: (){
+            Navigator.pushNamed(context, ContentsRouter.detailsCard);
+          },
+          child: const CustomGridItem());
       },
     );
   }

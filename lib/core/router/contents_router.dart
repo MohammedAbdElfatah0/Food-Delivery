@@ -8,4 +8,5 @@ class ContentsRouter {
   static const String resetPassword = "/resetPassword";
   static const String otpView = "/OTPVerification";
   static const String auth = "/auth";
+  static const String detailsCard = "/details card";
 }
