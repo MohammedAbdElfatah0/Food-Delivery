@@ -22,6 +22,7 @@ class BottonBarDetailCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  //cubit connected with cart
                   _addNewEntry(state, context),
                   _totalPrice(price: state.totalprice),
                 ],
