@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:food_delivery/core/colors/color_manager.dart';
 import 'package:food_delivery/core/contents/images.dart';
 import 'package:food_delivery/core/style/app_text_style.dart';
+import 'package:food_delivery/features/home/presentation/cubit/cart/cart.cubit.dart';
 import 'package:food_delivery/features/home/presentation/widget/botton_bar_detail_card.dart';
 
 class DetailsCard extends StatelessWidget {
@@ -10,62 +12,68 @@ class DetailsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          //app bar
-          SliverAppBar(
-            expandedHeight: MediaQuery.sizeOf(context).height * 0.36,
-            pinned: true,
-            backgroundColor: ColorManager.white,
-            leading: BackButton(
-              onPressed: () => Navigator.pop(context),
-              color: ColorManager.white,
-            ),
-            actions: [
-              Padding(
-                padding: EdgeInsets.only(right: 12),
-                child: GestureDetector(
-                  onTap: () {
-                    //make it red or white
-                  },
-                  child: Icon(Icons.favorite_border, color: ColorManager.white),
+    return BlocProvider(
+      create: (context) => CartCubit(price: 500),
+      child: Scaffold(
+        body: CustomScrollView(
+          slivers: [
+            //app bar
+            SliverAppBar(
+              expandedHeight: MediaQuery.sizeOf(context).height * 0.36,
+              pinned: true,
+              backgroundColor: ColorManager.white,
+              leading: BackButton(
+                onPressed: () => Navigator.pop(context),
+                color: ColorManager.white,
+              ),
+              actions: [
+                Padding(
+                  padding: EdgeInsets.only(right: 12),
+                  child: GestureDetector(
+                    onTap: () {
+                      //make it red or white
+                    },
+                    child: Icon(
+                      Icons.favorite_border,
+                      color: ColorManager.white,
+                    ),
+                  ),
+                ),
+              ],
+              //add animation hero
+              flexibleSpace: FlexibleSpaceBar(
+                background: Image.asset(
+                  ImageResources.ordinaryBurgers,
+                  fit: BoxFit.cover,
+                  filterQuality: FilterQuality.medium,
                 ),
               ),
-            ],
-            //add animation hero
-            flexibleSpace: FlexibleSpaceBar(
-              background: Image.asset(
-                ImageResources.ordinaryBurgers,
-                fit: BoxFit.cover,
-                filterQuality: FilterQuality.medium,
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsetsGeometry.symmetric(horizontal: 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: MediaQuery.sizeOf(context).height * 0.008),
+                    _header(),
+                    SizedBox(height: MediaQuery.sizeOf(context).height * 0.008),
+                    _price(),
+                    SizedBox(height: MediaQuery.sizeOf(context).height * 0.016),
+                    _detailsWork(context),
+                    SizedBox(height: MediaQuery.sizeOf(context).height * 0.032),
+                    _description(),
+                    SizedBox(height: MediaQuery.sizeOf(context).height * 0.032),
+
+                    // Spacer(),
+                  ],
+                ),
               ),
             ),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsetsGeometry.symmetric(horizontal: 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: MediaQuery.sizeOf(context).height * 0.008),
-                  _header(),
-                  SizedBox(height: MediaQuery.sizeOf(context).height * 0.008),
-                  _price(),
-                  SizedBox(height: MediaQuery.sizeOf(context).height * 0.016),
-                  _detailsWork(context),
-                  SizedBox(height: MediaQuery.sizeOf(context).height * 0.032),
-                  _description(),
-                  SizedBox(height: MediaQuery.sizeOf(context).height * 0.032),
-                  // Spacer(),
-                  
-                ],
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
+        bottomNavigationBar: BottonBarDetailCard(),
       ),
-      bottomNavigationBar:BottonBarDetailCard() ,
     );
   }
 
