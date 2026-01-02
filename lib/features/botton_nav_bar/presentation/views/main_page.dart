@@ -25,7 +25,7 @@ class _MainScreenState extends State<MainScreen> {
       child: BlocBuilder<ChangePageCubit, int>(
         builder: (context, stateIndex) {
           return Scaffold(
-            body: PageView(
+            body: PageView(  
               controller: _pageController,
               onPageChanged:
                   (index) => context.read<ChangePageCubit>().changePage(index),

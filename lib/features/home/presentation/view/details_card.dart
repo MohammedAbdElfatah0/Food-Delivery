@@ -8,15 +8,20 @@ import 'package:food_delivery/core/utils/helper/format_price.dart';
 import 'package:food_delivery/features/home/presentation/cubit/cart/cart.cubit.dart';
 import 'package:food_delivery/features/home/presentation/widget/botton_bar_detail_card.dart';
 
-class DetailsCard extends StatelessWidget {
+class DetailsCard extends StatefulWidget {
   const DetailsCard({super.key});
 
+  @override
+  State<DetailsCard> createState() => _DetailsCardState();
+}
+
+class _DetailsCardState extends State<DetailsCard> {
+  bool islove = false;
   @override
   Widget build(BuildContext context) {
     //it's model of cart todo:::
     final Map<String, dynamic> arg =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-
     return BlocProvider(
       create: (context) => CartCubit(price: arg['price']),
       child: Scaffold(
@@ -37,10 +42,12 @@ class DetailsCard extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () {
                       //make it red or white
+                      islove = !islove;
+                      setState(() {});
                     },
                     child: Icon(
-                      Icons.favorite_border,
-                      color: ColorManager.white,
+                      FontAwesomeIcons.solidHeart,
+                      color: islove ? ColorManager.error : ColorManager.white,
                     ),
                   ),
                 ),
@@ -155,6 +162,4 @@ class DetailsCard extends StatelessWidget {
       ],
     );
   }
-
-  //todo button add cart
 }
