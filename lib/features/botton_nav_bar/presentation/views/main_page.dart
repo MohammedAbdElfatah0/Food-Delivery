@@ -22,10 +22,13 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ChangePageCubit(),
-      child: BlocBuilder<ChangePageCubit, int>(
+      child: BlocConsumer<ChangePageCubit, int>(
+        listener: (context, index) {
+          _pageController.jumpToPage(index);
+        },
         builder: (context, stateIndex) {
           return Scaffold(
-            body: PageView(  
+            body: PageView(
               controller: _pageController,
               onPageChanged:
                   (index) => context.read<ChangePageCubit>().changePage(index),

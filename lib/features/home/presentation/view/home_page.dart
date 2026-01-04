@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:food_delivery/core/colors/color_manager.dart';
 import 'package:food_delivery/core/contents/images.dart';
 import 'package:food_delivery/core/router/contents_router.dart';
@@ -28,7 +29,13 @@ class HomePage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const FoodDeliveryAppBar(),
+            AnnotatedRegion<SystemUiOverlayStyle>(
+              value: SystemUiOverlayStyle(
+                statusBarIconBrightness: Brightness.light, // Android
+                statusBarBrightness: Brightness.light, // iOS
+              ),
+              child: const FoodDeliveryAppBar(),
+            ),
             const SizedBox(height: 20),
             _buildCategoryHeader(context),
             const SizedBox(height: 10),

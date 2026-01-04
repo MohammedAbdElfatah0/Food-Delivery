@@ -15,4 +15,5 @@ class ImageResources {
   static const String pizza = "assets/images/pizza.png";
   static const String drink = "assets/images/drink.png";
   static const String taco = "assets/images/taco.png";
+  static const String emptyCart = "assets/images/searchCart.png";
 }

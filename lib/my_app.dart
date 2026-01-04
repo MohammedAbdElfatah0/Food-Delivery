@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
             systemOverlayStyle: SystemUiOverlayStyle(
               statusBarIconBrightness:
                   Brightness.light, // White icons on Android
-              statusBarBrightness: Brightness.dark, // White icons on iOS
+              statusBarBrightness: Brightness.light, // White icons on iOS
             ),
           ),
         ),
