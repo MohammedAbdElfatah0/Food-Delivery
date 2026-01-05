@@ -15,10 +15,12 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
     emit(OnBoardingStep(_currentStep));
   }
 
-  void skip(BuildContext context) async {
+  Future<void> skip(BuildContext context) async {
     //route
 
     await AppPreferences.instance.setSeenOnBoarding(true);
-    Navigator.pushReplacementNamed(context, ContentsRouter.login);
+    if (context.mounted) {
+      Navigator.pushReplacementNamed(context, ContentsRouter.login);
+    }
   }
 }

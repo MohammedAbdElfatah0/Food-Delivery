@@ -12,7 +12,8 @@ import 'package:food_delivery/features/home/presentation/view/home_page.dart';
 import 'package:food_delivery/features/onboarding/presentation/views/on_boarding_page.dart';
 
 class NavigatorRoute {
-  static Route<dynamic> generateRoute(RouteSettings settings) {
+  // ignore: body_might_complete_normally_nullable
+  static Route<dynamic>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case ContentsRouter.auth:
         return MaterialPageRoute(builder: (_) => Auth(), settings: settings);
@@ -57,16 +58,6 @@ class NavigatorRoute {
         return MaterialPageRoute(
           builder: (_) => DetailsCard(),
           settings: settings,
-        );
-      //TODO::: when production app delete default
-      default:
-        return MaterialPageRoute(
-          builder:
-              (_) => Scaffold(
-                body: Center(
-                  child: Text('No route defined for ${settings.name}'),
-                ),
-              ),
         );
     }
   }

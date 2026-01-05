@@ -219,7 +219,7 @@ class _RegisterState extends State<Register> {
 
                         focusColor: ColorManager.white,
                         dropdownColor: ColorManager.white,
-                        value: cubit.gender,
+                        initialValue: cubit.gender,
                         hint: const Text('Select Gender'),
                         items:
                             ['Male', 'Female', 'Other']

@@ -4,13 +4,13 @@ abstract class Failure {
 }
 
 class FirebaseFailure extends Failure {
-  FirebaseFailure(String message) : super(message);
+  FirebaseFailure(super.message);
 }
 
 class ServerFailure extends Failure {
-  ServerFailure(String message) : super(message);
+  ServerFailure(super.message);
 }
 
 class OfflineFailure extends Failure {
-  OfflineFailure(String message) : super(message);
+  OfflineFailure(super.message);
 }

@@ -62,7 +62,6 @@ class HomePage extends StatelessWidget {
           TextButton(
             onPressed: () {
               // TODO: Implement show all functionality
-              print('Show all categories');
             },
             child: Text(
               'Show all',
