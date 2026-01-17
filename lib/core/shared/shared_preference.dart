@@ -2,6 +2,8 @@
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'shared_preference_key.dart';
+
 class AppPreferences {
   // Singleton pattern
   AppPreferences._();
@@ -13,16 +15,26 @@ class AppPreferences {
     _prefs = await SharedPreferences.getInstance();
   }
 
-  // ============ Selected City ============
-  String get selectedCity => _prefs.getString('selected_city') ?? 'Cairo';
+  Future<void> setString({
+    required SharedPreferenceKey key,
+    required String value,
+  }) => _prefs.setString(key.name, value);
 
-  Future<void> setSelectedCity(String city) async {
-    await _prefs.setString('selected_city', city);
-  }
+  String getString({
+    required SharedPreferenceKey key,
+    String defaultValue = '',
+  }) => _prefs.getString(key.name) ?? defaultValue;
 
-  //=========== onboarding
-  bool get seenOnBoarding => _prefs.getBool('seen_on_boarding') ?? false;
-  Future<void> setSeenOnBoarding(bool value) async {
-    await _prefs.setBool('seen_on_boarding', value);
-  }
+  Future<void> setBool({
+    required SharedPreferenceKey key,
+    required bool value,
+  }) => _prefs.setBool(key.name, value);
+  bool getBool({required SharedPreferenceKey key, bool defaultValue = false}) =>
+      _prefs.getBool(key.name) ?? defaultValue;
+
+  //*remove key
+  Future<void> remove({required SharedPreferenceKey key}) =>
+      _prefs.remove(key.name);
+  //*clear all data
+  Future<void> clear() => _prefs.clear();
 }

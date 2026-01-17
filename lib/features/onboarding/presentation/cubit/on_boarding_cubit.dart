@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/router/contents_router.dart';
+import 'package:food_delivery/core/shared/shared_preference_key.dart';
 
 import '../../../../core/shared/shared_preference.dart';
 
@@ -18,7 +19,10 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
   Future<void> skip(BuildContext context) async {
     //route
 
-    await AppPreferences.instance.setSeenOnBoarding(true);
+    await AppPreferences.instance.setBool(
+      key: SharedPreferenceKey.seenOnBoarding,
+      value: true,
+    );
     if (context.mounted) {
       Navigator.pushReplacementNamed(context, ContentsRouter.login);
     }

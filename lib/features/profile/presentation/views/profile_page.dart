@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_delivery/core/colors/color_manager.dart';
 import 'package:food_delivery/core/contents/images.dart';
+import 'package:food_delivery/core/router/contents_router.dart';
+import 'package:food_delivery/core/shared/shared_preference.dart';
+import 'package:food_delivery/core/shared/shared_preference_key.dart';
 import 'package:food_delivery/core/style/app_text_style.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -64,7 +68,7 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
-              _logOut(),
+              _logOut(context),
             ],
           ),
         ),
@@ -135,10 +139,72 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _logOut() {
+  Widget _logOut(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () async {
+        // Show confirmation dialog
+        showDialog(
+          context: context,
+          builder:
+              (BuildContext context) => AlertDialog(
+                title: Text(
+                  'Sign Out',
+                  style: AppTextStyle.header4.copyWith(
+                    color: ColorManager.primary,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                content: Text(
+                  'Are you sure you want to sign out?',
+                  style: AppTextStyle.bodyLarge.copyWith(
+                    color: ColorManager.black,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      'Cancel',
+                      style: AppTextStyle.bodyMedium.copyWith(
+                        color: ColorManager.error,
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () async {
+                      // Sign out from Firebase
+                      await FirebaseAuth.instance.signOut();
 
+                      // Clear all local data from SharedPreferences
+                      //!Fix this line : onboarding data still there after sign out
+
+                      await AppPreferences.instance.clear();
+                      await AppPreferences.instance.setBool(
+                        key:SharedPreferenceKey.seenOnBoarding,
+                        value: true,
+                      );
+                      // Navigate to login page (adjust route name based on your navigation)
+                      if (context.mounted) {
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          ContentsRouter
+                              .login, // Change to your login route
+                          (route) => false,
+                        );
+                      }
+                    },
+                    child: Text(
+                      'Sign Out',
+                      style: AppTextStyle.bodyMedium.copyWith(
+                        color: ColorManager.green,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+        );
+      },
       style: ElevatedButton.styleFrom(
         splashFactory: InkSplash.splashFactory,
         backgroundColor: Colors.transparent,

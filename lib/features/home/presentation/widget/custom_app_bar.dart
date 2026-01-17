@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/Colors/color_manager.dart';
+import 'package:food_delivery/core/shared/shared_preference_key.dart';
 import 'package:food_delivery/features/home/presentation/widget/city_selection_screen.dart';
 import 'package:food_delivery/features/home/presentation/widget/location_button.dart';
 import '../../../../core/shared/shared_preference.dart';
@@ -35,7 +36,10 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   void initState() {
     super.initState();
-    currentCity = AppPreferences.instance.selectedCity;
+    currentCity = AppPreferences.instance.getString(
+      key: SharedPreferenceKey.selectedCity,
+      defaultValue: "Cairo",
+    );
   }
 
   void _openCityPicker() async {
@@ -46,9 +50,12 @@ class _CustomAppBarState extends State<CustomAppBar> {
 
     if (newCity != null && newCity is String) {
       setState(() => currentCity = newCity);
-      
+
       // حفظها مرة واحدة بس وخلاص
-      await AppPreferences.instance.setSelectedCity(newCity);
+      await AppPreferences.instance.setString(
+        key: SharedPreferenceKey.selectedCity,
+        value: newCity,
+      );
     }
   }
 
