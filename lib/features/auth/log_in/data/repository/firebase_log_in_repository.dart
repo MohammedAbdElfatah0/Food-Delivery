@@ -1,9 +1,12 @@
 import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:food_delivery/core/shared/shared_preference_key.dart';
 import 'package:food_delivery/core/utils/error/failures.dart';
 import 'package:food_delivery/features/auth/log_in/domain/entities/log_in_entity.dart';
 import 'package:food_delivery/features/auth/log_in/domain/repository/log_in_repository.dart';
+
+import '../../../../../core/shared/shared_preference.dart';
 
 class FirebaseLogInRepository extends LogInRepository {
   @override
@@ -20,6 +23,10 @@ class FirebaseLogInRepository extends LogInRepository {
         return Left(ServerFailure('User not found after sign-in.'));
       }
       await user.reload();
+      AppPreferences.instance.setString(
+        key: SharedPreferenceKey.userId,
+        value: user.uid,
+      );
       return Right(
         LogInEntity(
           id: user.uid,
@@ -50,7 +57,9 @@ class FirebaseLogInRepository extends LogInRepository {
         case 'network-request-failed':
           return Left(FirebaseFailure('Network error. Check your connection.'));
         case 'operation-not-allowed':
-          return Left(FirebaseFailure('Password sign-in is disabled in Firebase.'));
+          return Left(
+            FirebaseFailure('Password sign-in is disabled in Firebase.'),
+          );
         default:
           return Left(
             FirebaseFailure(
@@ -62,30 +71,25 @@ class FirebaseLogInRepository extends LogInRepository {
       return Left(ServerFailure('Unexpected error: ${e.toString()}'));
     }
   }
+
   @override
-Future<Either<Failure, LogInEntity>> getCurrentUser() async {
-  try {
-    final User? user = FirebaseAuth.instance.currentUser;
+  Future<Either<Failure, LogInEntity>> getCurrentUser() async {
+    try {
+      final User? user = FirebaseAuth.instance.currentUser;
 
-    if (user != null) {
-      return Right(
-        LogInEntity(
-          id: user.uid,
-          name: user.displayName ?? '',
-          email: user.email ?? '',
-        ),
-      );
-    } else {
-      return Left(
-      FirebaseFailure( "No user is currently signed in."),
-      );
+      if (user != null) {
+        return Right(
+          LogInEntity(
+            id: user.uid,
+            name: user.displayName ?? '',
+            email: user.email ?? '',
+          ),
+        );
+      } else {
+        return Left(FirebaseFailure("No user is currently signed in."));
+      }
+    } catch (e) {
+      return Left(FirebaseFailure(e.toString()));
     }
-  } catch (e) {
-    return Left(
-      FirebaseFailure(e.toString()),
-    );
   }
-}
-
-
 }

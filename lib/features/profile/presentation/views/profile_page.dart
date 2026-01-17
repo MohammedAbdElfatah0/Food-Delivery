@@ -1,14 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_delivery/core/colors/color_manager.dart';
 import 'package:food_delivery/core/contents/images.dart';
+import 'package:food_delivery/core/model/user_model.dart';
 import 'package:food_delivery/core/router/contents_router.dart';
 import 'package:food_delivery/core/shared/shared_preference.dart';
 import 'package:food_delivery/core/shared/shared_preference_key.dart';
 import 'package:food_delivery/core/style/app_text_style.dart';
 
-class ProfilePage extends StatelessWidget {
+import '../../../../core/service/firebase_store_service.dart';
+
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
   static const _listProfile = [
     {"title": "Personal Date", "icon": FontAwesomeIcons.person},
@@ -20,6 +24,40 @@ class ProfilePage extends StatelessWidget {
     {"title": "Delete Account", "icon": FontAwesomeIcons.userMinus},
     {"title": "Add anther Account", "icon": FontAwesomeIcons.userPlus},
   ];
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  final FirebaseStoreService<UserModel> _firebaseStoreService =
+      FirebaseStoreService<UserModel>(
+        collectionPath: StoreKey.users.name,
+        firestore: FirebaseFirestore.instance,
+        fromMap: UserModel.fromMap,
+      );
+  UserModel? _userModel;
+  @override
+  void initState() {
+    super.initState();
+    _loadUser();
+  }
+
+  //todo cubit
+  Future<void> _loadUser() async {
+    final String userId = AppPreferences.instance.getString(
+      key: SharedPreferenceKey.userId,
+    ); // getter أنضف
+
+    if (userId == null || userId.isEmpty) return;
+
+    final user = await _firebaseStoreService.getOne(userId);
+
+    if (!mounted) return;
+
+    setState(() => _userModel = user);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -43,10 +81,10 @@ class ProfilePage extends StatelessWidget {
               ),
               SizedBox(height: MediaQuery.sizeOf(context).height * 0.005),
               ...List.generate(
-                _listProfile.length,
+                ProfilePage._listProfile.length,
                 (index) => _profile(
-                  title: _listProfile[index]["title"] as String,
-                  icon: _listProfile[index]["icon"] as IconData,
+                  title: ProfilePage._listProfile[index]["title"] as String,
+                  icon: ProfilePage._listProfile[index]["icon"] as IconData,
                 ),
               ),
               SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
@@ -61,10 +99,10 @@ class ProfilePage extends StatelessWidget {
               ),
               SizedBox(height: MediaQuery.sizeOf(context).height * 0.005),
               ...List.generate(
-                _listSupport.length,
+                ProfilePage._listSupport.length,
                 (index) => _profile(
-                  title: _listSupport[index]["title"] as String,
-                  icon: _listSupport[index]["icon"] as IconData,
+                  title: ProfilePage._listSupport[index]["title"] as String,
+                  icon: ProfilePage._listSupport[index]["icon"] as IconData,
                 ),
               ),
               SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
@@ -107,7 +145,7 @@ class ProfilePage extends StatelessWidget {
         ),
         SizedBox(height: MediaQuery.sizeOf(context).height * 0.005),
         Text(
-          "Mohammed Mohammed ",
+          _userModel?.name ?? "Unknown User",
           style: AppTextStyle.header6.copyWith(
             color: ColorManager.black,
             fontWeight: FontWeight.bold,
@@ -115,7 +153,7 @@ class ProfilePage extends StatelessWidget {
         ),
         SizedBox(height: MediaQuery.sizeOf(context).height * 0.001),
         Text(
-          "Mohammed Mohammed ",
+          _userModel?.email ?? "",
           style: AppTextStyle.bodyLarge.copyWith(
             color: ColorManager.grey,
             fontWeight: FontWeight.w500,
@@ -181,15 +219,14 @@ class ProfilePage extends StatelessWidget {
 
                       await AppPreferences.instance.clear();
                       await AppPreferences.instance.setBool(
-                        key:SharedPreferenceKey.seenOnBoarding,
+                        key: SharedPreferenceKey.seenOnBoarding,
                         value: true,
                       );
                       // Navigate to login page (adjust route name based on your navigation)
                       if (context.mounted) {
                         Navigator.pushNamedAndRemoveUntil(
                           context,
-                          ContentsRouter
-                              .login, // Change to your login route
+                          ContentsRouter.login, // Change to your login route
                           (route) => false,
                         );
                       }

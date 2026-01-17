@@ -40,6 +40,7 @@ class FirebaseStoreService<T extends FirestoreModel>
   @override
   Future<T?> getOne(String id) {
     return _firestore.collection(collectionPath).doc(id).get().then((doc) {
+      print(doc.data());
       if (doc.exists) {
         return fromMap(doc.data()!);
       } else {
