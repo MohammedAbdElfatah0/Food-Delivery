@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/di/servier_locator.dart';
 import '../../../cart/presentation/views/cart.dart';
 import '../../../chat/presentation/views/chat_page.dart';
 import '../../../home/presentation/view/home_page.dart';
+import '../../../profile/presentation/cubit/info_profile_cubit.dart';
 import '../../../profile/presentation/views/profile_page.dart';
 import '../cubit/change_page_cubit.dart';
 import '../widget/custom_bottom_nav_bar.dart';
@@ -20,8 +22,11 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ChangePageCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => ChangePageCubit()),
+        BlocProvider(create: (context) => sl<InfoProfileCubit>()..getProfile()),
+      ],
       child: BlocConsumer<ChangePageCubit, int>(
         listener: (context, index) {
           _pageController.jumpToPage(index);

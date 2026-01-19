@@ -1,52 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:food_delivery/core/colors/color_manager.dart';
-import 'package:food_delivery/core/model/user_model.dart';
-import 'package:food_delivery/core/shared/shared_preference.dart';
-import 'package:food_delivery/core/shared/shared_preference_key.dart';
 import 'package:food_delivery/core/style/app_text_style.dart';
 import 'package:food_delivery/features/profile/data/sources/profile_static_data.dart';
 
-import '../../../../core/service/firebase_store_service.dart';
 import '../widget/log_out_button.dart';
 import '../widget/profile_profile_and_info.dart';
 
-class ProfilePage extends StatefulWidget {
+class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
-
-  @override
-  State<ProfilePage> createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
-  final FirebaseStoreService<UserModel> _firebaseStoreService =
-      FirebaseStoreService<UserModel>(
-        collectionPath: StoreKey.users.name,
-        firestore: FirebaseFirestore.instance,
-        fromMap: UserModel.fromMap,
-      );
-  UserModel? _userModel;
-  @override
-  void initState() {
-    super.initState();
-    _loadUser();
-  }
-
-  //todo cubit
-  Future<void> _loadUser() async {
-    final String userId = AppPreferences.instance.getString(
-      key: SharedPreferenceKey.userId,
-    ); // getter أنضف
-
-    if (userId.isEmpty) return; //null safety
-
-    final user = await _firebaseStoreService.getOne(userId);
-
-    if (!mounted) return;
-
-    setState(() => _userModel = user);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +21,7 @@ class _ProfilePageState extends State<ProfilePage> {
               _appBar(),
               SizedBox(height: MediaQuery.sizeOf(context).height * 0.03),
               // todo stack ::::::::image edit photo
-              PhotoProfileAndInfo(userModel: _userModel),
+              PhotoProfileAndInfo(),
               SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
               Align(
                 alignment: AlignmentGeometry.centerLeft,
