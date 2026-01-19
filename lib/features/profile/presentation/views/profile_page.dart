@@ -1,17 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:food_delivery/core/colors/color_manager.dart';
-import 'package:food_delivery/core/contents/images.dart';
 import 'package:food_delivery/core/model/user_model.dart';
-import 'package:food_delivery/core/router/contents_router.dart';
 import 'package:food_delivery/core/shared/shared_preference.dart';
 import 'package:food_delivery/core/shared/shared_preference_key.dart';
 import 'package:food_delivery/core/style/app_text_style.dart';
 
 import '../../../../core/service/firebase_store_service.dart';
 import '../widget/log_out_button.dart';
+import '../widget/profile_profile_and_info.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -69,7 +67,8 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               _appBar(),
               SizedBox(height: MediaQuery.sizeOf(context).height * 0.03),
-              _photoProfileAndNameEmail(context),
+              // todo stack ::::::::image edit photo
+              PhotoProfileAndInfo(userModel: _userModel),
               SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
               Align(
                 alignment: AlignmentGeometry.centerLeft,
@@ -122,45 +121,6 @@ class _ProfilePageState extends State<ProfilePage> {
         "Profile Settings",
         style: AppTextStyle.header6.copyWith(fontWeight: FontWeight.w600),
       ),
-    );
-  }
-
-  // todo stack ::::::::image edit photo
-  Widget _photoProfileAndNameEmail(BuildContext context) {
-    return Column(
-      children: [
-        CircleAvatar(
-          maxRadius: MediaQuery.sizeOf(context).aspectRatio * 50 * 3,
-          minRadius: MediaQuery.sizeOf(context).aspectRatio * 50 * 1,
-          // radius: 50,
-          //todo connect image by device or give for firebase if not null
-          backgroundImage: AssetImage(ImageResources.drink),
-
-          // child: Text(
-          //   "M",
-          //   style: AppTextStyle.header4.copyWith(
-          //     fontWeight: FontWeight.bold,
-          //     color: ColorManager.black,
-          //   ),
-          // ),
-        ),
-        SizedBox(height: MediaQuery.sizeOf(context).height * 0.005),
-        Text(
-          _userModel?.name ?? "Unknown User",
-          style: AppTextStyle.header6.copyWith(
-            color: ColorManager.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        SizedBox(height: MediaQuery.sizeOf(context).height * 0.001),
-        Text(
-          _userModel?.email ?? "",
-          style: AppTextStyle.bodyLarge.copyWith(
-            color: ColorManager.grey,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
     );
   }
 
