@@ -10,7 +10,6 @@ class ProfileRomoteImplementRepository extends ProfileRomoteDataSource
   Future<UserModel?> fetchProfileInfo(String userID) async {
     try {
       final res = await service.getOne(userID);
-      print({"res": res});
       return res;
     } catch (e) {
       return null;
@@ -21,7 +20,7 @@ class ProfileRomoteImplementRepository extends ProfileRomoteDataSource
   Future<UserModel> getProfileInfo(String userID) async {
     final res = await fetchProfileInfo(userID);
     if (res == null) {
-      throw Exception('User not found for id: ' + userID);
+      throw Exception('User not found for id: $userID');
     }
     return res;
   }
