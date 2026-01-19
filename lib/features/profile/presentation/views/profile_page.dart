@@ -6,6 +6,7 @@ import 'package:food_delivery/core/model/user_model.dart';
 import 'package:food_delivery/core/shared/shared_preference.dart';
 import 'package:food_delivery/core/shared/shared_preference_key.dart';
 import 'package:food_delivery/core/style/app_text_style.dart';
+import 'package:food_delivery/features/profile/data/sources/profile_static_data.dart';
 
 import '../../../../core/service/firebase_store_service.dart';
 import '../widget/log_out_button.dart';
@@ -13,16 +14,6 @@ import '../widget/profile_profile_and_info.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
-  static const _listProfile = [
-    {"title": "Personal Date", "icon": FontAwesomeIcons.person},
-    {"title": "Setting", "icon": FontAwesomeIcons.gear},
-    {"title": "Extra Card", "icon": FontAwesomeIcons.creditCard},
-  ];
-  static const _listSupport = [
-    {"title": "Help Center", "icon": FontAwesomeIcons.circleInfo},
-    {"title": "Delete Account", "icon": FontAwesomeIcons.userMinus},
-    {"title": "Add anther Account", "icon": FontAwesomeIcons.userPlus},
-  ];
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -81,10 +72,10 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               SizedBox(height: MediaQuery.sizeOf(context).height * 0.005),
               ...List.generate(
-                ProfilePage._listProfile.length,
+                ProfileStaticData.listProfile.length,
                 (index) => _profile(
-                  title: ProfilePage._listProfile[index]["title"] as String,
-                  icon: ProfilePage._listProfile[index]["icon"] as IconData,
+                  title: ProfileStaticData.listProfile[index].title,
+                  icon: ProfileStaticData.listProfile[index].icon,
                 ),
               ),
               SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
@@ -99,10 +90,10 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               SizedBox(height: MediaQuery.sizeOf(context).height * 0.005),
               ...List.generate(
-                ProfilePage._listSupport.length,
+                ProfileStaticData.listSupport.length,
                 (index) => _profile(
-                  title: ProfilePage._listSupport[index]["title"] as String,
-                  icon: ProfilePage._listSupport[index]["icon"] as IconData,
+                  title: ProfileStaticData.listSupport[index].title,
+                  icon: ProfileStaticData.listSupport[index].icon,
                 ),
               ),
               SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
