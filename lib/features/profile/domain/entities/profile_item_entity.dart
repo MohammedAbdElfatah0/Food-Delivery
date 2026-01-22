@@ -6,4 +6,3 @@ class ProfileItemEntity {
 
   const ProfileItemEntity({required this.title, required this.icon});
 }
-//data_sources

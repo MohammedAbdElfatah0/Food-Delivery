@@ -38,6 +38,9 @@ class ProfilePage extends StatelessWidget {
                 (index) => _profile(
                   title: ProfileStaticData.listProfile[index].title,
                   icon: ProfileStaticData.listProfile[index].icon,
+                  ontap: (){
+                    //switch
+                  }
                 ),
               ),
               SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
@@ -77,17 +80,20 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _profile({required String title, required IconData icon}) {
-    return ListTile(
-      leading: Icon(icon, size: 21),
-      title: Padding(
-        padding: const EdgeInsets.only(left: 8),
-        child: Text(
-          title,
-          style: AppTextStyle.bodyLarge.copyWith(fontWeight: FontWeight.bold),
+  Widget _profile({required String title, required IconData icon, VoidCallback? ontap}) {
+    return GestureDetector(
+      onTap: ontap,
+      child: ListTile(
+        leading: Icon(icon, size: 21),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 8),
+          child: Text(
+            title,
+            style: AppTextStyle.bodyLarge.copyWith(fontWeight: FontWeight.bold),
+          ),
         ),
+        trailing: Icon(FontAwesomeIcons.angleRight),
       ),
-      trailing: Icon(FontAwesomeIcons.angleRight),
     );
   }
 }
