@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../cart/presentation/views/cart.dart';
-import '../../../chat/presentation/views/chat_page.dart';
 import '../../../home/presentation/view/home_page.dart';
 import '../../../profile/presentation/views/profile_page.dart';
 import '../cubit/change_page_cubit.dart';
@@ -35,7 +34,6 @@ class _MainScreenState extends State<MainScreen> {
               children: const [
                 HomePage(), // Your actual pages
                 CartPage(),
-                ChatPage(),
                 ProfilePage(),
               ],
             ),

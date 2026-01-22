@@ -40,10 +40,6 @@ class CustomBottomNavBar extends StatelessWidget {
               label: 'Cart',
             ),
             BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.commentDots),
-              label: 'Chat',
-            ),
-            BottomNavigationBarItem(
               icon: Icon(FontAwesomeIcons.user),
               label: 'Profile',
             ),
