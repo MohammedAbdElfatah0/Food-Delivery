@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery/core/contents/enum.dart' show SharedPreferenceKey;
 import 'package:food_delivery/core/router/contents_router.dart';
-import 'package:food_delivery/core/shared/shared_preference_key.dart';
 
 import '../../../../core/shared/shared_preference.dart';
 

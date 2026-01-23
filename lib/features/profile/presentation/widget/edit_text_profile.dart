@@ -22,7 +22,6 @@ class EditTextPrpfile extends StatelessWidget {
         SizedBox(height: 8),
         TextField(
           controller: controller,
-          cursorColor: ColorManager.primary,
           decoration: InputDecoration(
             enabledBorder: _buildBorder(),
             border: _buildBorder(),

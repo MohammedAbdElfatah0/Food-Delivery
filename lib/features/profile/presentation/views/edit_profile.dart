@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/core/Colors/color_manager.dart';
@@ -37,6 +39,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
+        elevation: 0,
+        backgroundColor: ColorManager.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
           onPressed: () {
@@ -139,6 +144,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
       ),
       onPressed: () {
         // TODO: Implement save functionality
+        log("save");
+        log("name: ${nameController.text}");
+        log("email: ${emailController.text}");
+        log("phone: ${phoneController.text}");
+        log("birth: ${birthController.text}");
+        log("gender: ${genderController.text}");
       },
       child: Text('Save', style: AppTextStyle.bodyLarge),
     );

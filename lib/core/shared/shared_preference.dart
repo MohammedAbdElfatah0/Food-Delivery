@@ -2,7 +2,7 @@
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'shared_preference_key.dart';
+import '../contents/enum.dart';
 
 class AppPreferences {
   // Singleton pattern

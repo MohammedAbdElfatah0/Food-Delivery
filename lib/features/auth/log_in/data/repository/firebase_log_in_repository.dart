@@ -1,11 +1,11 @@
 import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:food_delivery/core/shared/shared_preference_key.dart';
 import 'package:food_delivery/core/utils/error/failures.dart';
 import 'package:food_delivery/features/auth/log_in/domain/entities/log_in_entity.dart';
 import 'package:food_delivery/features/auth/log_in/domain/repository/log_in_repository.dart';
 
+import '../../../../../core/contents/enum.dart';
 import '../../../../../core/shared/shared_preference.dart';
 
 class FirebaseLogInRepository extends LogInRepository {

@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:food_delivery/core/shared/shared_preference.dart';
-import 'package:food_delivery/core/shared/shared_preference_key.dart';
 import 'package:food_delivery/features/profile/domain/use_case/get_profile_info.dart';
 
+import '../../../../core/contents/enum.dart';
 import '../../../../core/model/user_model.dart';
 
 part 'info_profile_state.dart';

@@ -5,9 +5,9 @@ import 'package:food_delivery/features/profile/presentation/cubit/info_profile_c
 import 'package:get_it/get_it.dart';
 
 import '../../features/profile/domain/use_case/get_profile_info.dart';
+import '../contents/enum.dart';
 import '../model/user_model.dart';
 import '../service/firebase_store_service.dart';
-import '../shared/shared_preference_key.dart';
 
 final sl = GetIt.instance;
 
