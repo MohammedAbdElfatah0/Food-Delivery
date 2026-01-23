@@ -10,8 +10,6 @@ class PhotoProfileAndInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<InfoProfileCubit>().getProfileInfo;
-
     return BlocBuilder<InfoProfileCubit, InfoProfileState>(
       builder: (context, state) {
         if (state is InfoProfileLoading) {

@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:food_delivery/core/colors/color_manager.dart';
+import 'package:food_delivery/core/router/contents_router.dart';
 import 'package:food_delivery/core/style/app_text_style.dart';
 import 'package:food_delivery/features/profile/data/sources/profile_static_data.dart';
 
@@ -40,6 +43,19 @@ class ProfilePage extends StatelessWidget {
                   icon: ProfileStaticData.listProfile[index].icon,
                   ontap: (){
                     //switch
+                    switch (index) {
+                      case 0:
+                      log("edit profile page");
+                        Navigator.pushNamed(context, ContentsRouter.editProfilePage);
+                        break;
+                      case 1:
+                        Navigator.pushNamed(context, '/address_page');
+                        break;
+                      case 2:
+                        Navigator.pushNamed(context, '/payment_page');
+                        break;
+                      default:
+                    }
                   }
                 ),
               ),

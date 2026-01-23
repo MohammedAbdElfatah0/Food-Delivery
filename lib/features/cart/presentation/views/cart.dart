@@ -134,7 +134,6 @@ class CartPage extends StatelessWidget {
         Container(
           padding: EdgeInsets.all(12),
           decoration: BoxDecoration(
-            
             color: ColorManager.white,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
@@ -165,17 +164,20 @@ class CartPage extends StatelessWidget {
           subText: "price",
           colorSubText: ColorManager.black,
           // count:,
-        ),_buildRowText(
+        ),
+        _buildRowText(
           text: "Delivery Fee",
           subText: "Free",
           colorSubText: ColorManager.black,
           // count:,
-        ),_buildRowText(
+        ),
+        _buildRowText(
           text: "Discount",
           subText: "number",
           colorSubText: ColorManager.primary,
           // count:,
-        ),_buildRowText(
+        ),
+        _buildRowText(
           text: "Total",
           subText: "price",
           colorSubText: ColorManager.black,

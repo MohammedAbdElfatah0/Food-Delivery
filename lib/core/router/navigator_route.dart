@@ -11,6 +11,8 @@ import 'package:food_delivery/features/home/presentation/view/details_card.dart'
 import 'package:food_delivery/features/home/presentation/view/home_page.dart';
 import 'package:food_delivery/features/onboarding/presentation/views/on_boarding_page.dart';
 
+import '../../features/profile/presentation/views/edit_profile.dart';
+
 class NavigatorRoute {
   // ignore: body_might_complete_normally_nullable
   static Route<dynamic>? generateRoute(RouteSettings settings) {
@@ -52,6 +54,11 @@ class NavigatorRoute {
       case ContentsRouter.resetPassword:
         return MaterialPageRoute(
           builder: (_) => ResetPassword(),
+          settings: settings,
+        );
+      case ContentsRouter.editProfilePage:
+        return MaterialPageRoute(
+          builder: (_) => EditProfilePage(),
           settings: settings,
         );
       case ContentsRouter.detailsCard:

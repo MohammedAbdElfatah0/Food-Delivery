@@ -32,6 +32,13 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           scaffoldBackgroundColor: Color(0xFffcfcfc),
           primaryColor: ColorManager.primary,
+          textSelectionTheme: TextSelectionThemeData(
+            cursorColor: ColorManager.primary, //cursor
+            selectionHandleColor: ColorManager.primary, // pointer of cursor
+            selectionColor: ColorManager.primary.withValues(
+              alpha: 0.3,
+            ), // shadow select
+          ),
           appBarTheme: const AppBarTheme(
             systemOverlayStyle: SystemUiOverlayStyle(
               statusBarIconBrightness:

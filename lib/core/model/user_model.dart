@@ -12,6 +12,7 @@ class UserModel extends FirestoreModel {
   final String gender;
   final String birthday;
   final DateTime createdAt;
+  final String? phone;
   UserModel({
     required this.id,
     required this.name,
@@ -21,6 +22,7 @@ class UserModel extends FirestoreModel {
     required this.gender,
     required this.birthday,
     required this.createdAt,
+    this.phone,
   });
 
   @override
@@ -32,6 +34,7 @@ class UserModel extends FirestoreModel {
       'photoUrl': photoUrl ?? "",
       'age': age,
       'gender': gender,
+      'phone': phone ?? "",
     };
   }
 
@@ -44,7 +47,9 @@ class UserModel extends FirestoreModel {
       age: map['age'] as int,
       gender: map['gender'] as String,
       birthday: map['birthday'] as String,
-      createdAt:  (map['createdAt'] as Timestamp).toDate(),
+      createdAt: (map['createdAt'] as Timestamp).toDate(),
+      phone: map['phone'] as String?,
     );
   }
 }
+
