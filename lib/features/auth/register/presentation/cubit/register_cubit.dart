@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/contents/enum.dart';
 import 'package:food_delivery/features/auth/register/domain/entity/register_entity.dart';
+
 import '../../domain/use_case/register_use_case.dart';
 
 part 'register_state.dart';
@@ -46,12 +47,11 @@ class RegisterCubit extends Cubit<RegisterState> {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
         birthday: birthday!,
-        gender: gender!,
+        gender: gender!.name,
       );
       result.fold(
-        (failure) => emit(
-          RegisterFailure('Registration failed: ${failure.message}'),
-        ),
+        (failure) =>
+            emit(RegisterFailure('Registration failed: ${failure.message}')),
         (user) {
           Navigator.of(context).pop();
           emit(RegisterSuccess(user));

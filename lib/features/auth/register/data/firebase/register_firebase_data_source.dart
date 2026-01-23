@@ -16,7 +16,7 @@ class FirebaseRegisterDataSource {
     required String email,
     required String password,
     required DateTime birthday,
-    required GENDER gender,
+    required String gender,
     required int age,
   }) async {
     try {

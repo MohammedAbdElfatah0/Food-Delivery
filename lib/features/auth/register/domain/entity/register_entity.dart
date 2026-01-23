@@ -1,11 +1,11 @@
-import 'package:food_delivery/core/contents/enum.dart';
+
 
 class RegisterEntity {
   final String id;
   final String name;
   final String email;
   final DateTime birthday;
-  final GENDER gender;
+  final String gender;
   final int age;
 
   RegisterEntity({

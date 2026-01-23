@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:food_delivery/core/contents/enum.dart';
 import 'package:food_delivery/features/auth/register/domain/entity/register_entity.dart';
 
 import '../../../../../core/utils/error/failures.dart';
@@ -10,6 +9,6 @@ abstract class RegisterRepository {
     required String email,
     required String password,
     required DateTime birthday,
-    required GENDER gender,
+    required String gender,
   });
 }
