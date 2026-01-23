@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery/core/contents/enum.dart';
 import 'package:food_delivery/core/style/app_text_style.dart';
 
+import '../../../../core/Colors/color_manager.dart';
+
 class GenderDropDown extends StatelessWidget {
   const GenderDropDown({super.key, this.selectedGender, this.onChange});
   final String? selectedGender;
@@ -23,8 +25,23 @@ class GenderDropDown extends StatelessWidget {
             ),
           ],
           onChanged: onChange,
+          decoration: InputDecoration(
+            border: _buildBorder(),
+            enabledBorder: _buildBorder(),
+            focusedBorder: _buildBorder(isFocused: true),
+          ),
         ),
       ],
+    );
+  }
+
+  OutlineInputBorder _buildBorder({bool isFocused = false}) {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(
+        color: isFocused ? ColorManager.primary : Colors.grey,
+        width: 1.5,
+      ),
     );
   }
 }

@@ -3,12 +3,14 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/core/Colors/color_manager.dart';
+import 'package:food_delivery/core/contents/enum.dart';
 import 'package:food_delivery/core/model/user_model.dart';
 import 'package:food_delivery/features/profile/presentation/widget/edit_text_profile.dart';
 
 import '../../../../core/di/servier_locator.dart';
 import '../../../../core/style/app_text_style.dart';
 import '../cubit/info_profile_cubit.dart';
+import '../widget/gender_drop_down.dart';
 import '../widget/profile_profile_and_info.dart';
 
 class EditProfilePage extends StatefulWidget {
@@ -86,7 +88,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     builder: (context, state) {
                       final UserModel? user =
                           state is InfoProfileSuccess ? state.userModel : null;
-
+                      final String selectedGender =
+                          user?.gender.name ?? GENDER.male.name;
                       return Column(
                         children: [
                           EditTextPrpfile(
@@ -114,11 +117,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 ) ??
                                 "",
                           ),
-                          EditTextPrpfile(
-                            text: "Gender",
-                            controller: genderController,
-                            hintText: user?.gender.name ?? "",
-                          ), //TODO:::::::::: change select enum::::::
+                          GenderDropDown(
+                            selectedGender: selectedGender,
+                            onChange: (gender) {
+                              setState(() {
+                                genderController.text = gender ?? '';
+                              });
+                            },
+                          ),
                         ],
                       );
                     },
