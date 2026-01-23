@@ -81,7 +81,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         0,
                         user.birthday.indexOf("T"),
                       );
-                      genderController.text = user.gender.name;
+                      genderController.text = user.gender;
                     }
                   },
                   child: BlocBuilder<InfoProfileCubit, InfoProfileState>(
@@ -89,7 +89,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       final UserModel? user =
                           state is InfoProfileSuccess ? state.userModel : null;
                       final String selectedGender =
-                          user?.gender.name ?? GENDER.male.name;
+                          user?.gender ?? GENDER.male.name;
                       return Column(
                         children: [
                           EditTextPrpfile(

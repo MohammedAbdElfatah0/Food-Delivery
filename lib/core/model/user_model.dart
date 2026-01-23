@@ -10,7 +10,7 @@ class UserModel extends FirestoreModel {
   final String email;
   final String? photoUrl;
   final int age;
-  final GENDER gender;
+  final String gender;
   final String birthday;
   final DateTime createdAt;
   final String? phone;
@@ -46,7 +46,7 @@ class UserModel extends FirestoreModel {
       email: map['email'] as String,
       photoUrl: map['photoUrl'] as String?,
       age: map['age'] as int,
-      gender: map['gender'] as GENDER,
+      gender: map['gender'] as String,
       birthday: map['birthday'] as String,
       createdAt: (map['createdAt'] as Timestamp).toDate(),
       phone: map['phone'] as String?,

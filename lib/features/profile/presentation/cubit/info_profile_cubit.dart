@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:food_delivery/core/shared/shared_preference.dart';
@@ -30,6 +32,7 @@ class InfoProfileCubit extends Cubit<InfoProfileState> {
         return;
       }
       final user = await getProfileInfo(userID);
+
       userModel = user;
       emit(InfoProfileSuccess(userModel!));
     } catch (e) {

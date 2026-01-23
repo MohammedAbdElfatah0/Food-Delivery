@@ -11,6 +11,7 @@ class GenderDropDown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text("Gender", style: AppTextStyle.bodyLarge),
         DropdownButtonFormField(
@@ -31,13 +32,14 @@ class GenderDropDown extends StatelessWidget {
             focusedBorder: _buildBorder(isFocused: true),
           ),
         ),
+        SizedBox(height: 10),
       ],
     );
   }
 
   OutlineInputBorder _buildBorder({bool isFocused = false}) {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(8),
       borderSide: BorderSide(
         color: isFocused ? ColorManager.primary : Colors.grey,
         width: 1.5,
