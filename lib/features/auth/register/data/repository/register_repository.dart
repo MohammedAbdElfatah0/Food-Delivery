@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:food_delivery/core/contents/enum.dart';
 import 'package:food_delivery/core/utils/error/failures.dart';
 import 'package:food_delivery/features/auth/register/data/firebase/register_firebase_data_source.dart';
 import 'package:food_delivery/features/auth/register/domain/entity/register_entity.dart';
@@ -15,7 +16,7 @@ class RegisterRepositoryImpl implements RegisterRepository {
     required String email,
     required String password,
     required DateTime birthday,
-    required String gender,
+    required GENDER gender,
   }) async {
     try {
       final age = _calculateAge(

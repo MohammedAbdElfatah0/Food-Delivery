@@ -10,6 +10,7 @@ import 'package:food_delivery/features/auth/widget/custom_method_sign_in.dart';
 import 'package:food_delivery/features/auth/widget/custom_test_form_filed.dart';
 import 'package:food_delivery/features/auth/widget/custom_text_login.dart';
 import 'package:food_delivery/features/auth/widget/header.dart';
+import '../../../../../core/contents/enum.dart';
 import '../cubit/register_cubit.dart';
 
 class Register extends StatefulWidget {
@@ -214,24 +215,24 @@ class _RegisterState extends State<Register> {
                       const SizedBox(height: 14),
                       header('Gender'),
                       const SizedBox(height: 8),
-                      DropdownButtonFormField<String>(
+                      DropdownButtonFormField<GENDER>(
                         elevation: 4,
-
                         focusColor: ColorManager.white,
                         dropdownColor: ColorManager.white,
-                        initialValue: cubit.gender,
+                        initialValue: cubit.gender, // GENDER?
                         hint: const Text('Select Gender'),
-                        items:
-                            ['Male', 'Female', 'Other']
-                                .map(
-                                  (g) => DropdownMenuItem(
-                                    value: g,
-                                    child: Text(g),
-                                  ),
-                                )
-                                .toList(),
+                        items: const [
+                          DropdownMenuItem(
+                            value: GENDER.male,
+                            child: Text('Male'),
+                          ),
+                          DropdownMenuItem(
+                            value: GENDER.female,
+                            child: Text('Female'),
+                          ),
+                        ],
                         onChanged: (value) {
-                          cubit.updateGender(value);
+                          cubit.updateGender(value); // updateGender(GENDER?)
                         },
                         validator:
                             (value) =>

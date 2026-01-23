@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery/core/contents/enum.dart';
 import 'package:food_delivery/features/auth/register/domain/entity/register_entity.dart';
 import '../../domain/use_case/register_use_case.dart';
 
@@ -18,7 +19,7 @@ class RegisterCubit extends Cubit<RegisterState> {
   final FocusNode passwordFocusNode = FocusNode();
   final FocusNode confirmPasswordFocusNode = FocusNode();
   DateTime? birthday;
-  String? gender;
+  GENDER? gender;
 
   RegisterCubit(this._useCase) : super(RegisterInitial());
 
@@ -66,7 +67,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     emit(RegisterUpdated()); // Trigger rebuild if needed
   }
 
-  void updateGender(String? newGender) {
+  void updateGender(GENDER? newGender) {
     gender = newGender;
     emit(RegisterUpdated());
   }

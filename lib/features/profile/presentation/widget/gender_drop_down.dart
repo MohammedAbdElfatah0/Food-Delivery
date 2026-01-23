@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/core/contents/enum.dart';
 import 'package:food_delivery/core/style/app_text_style.dart';
 
 class GenderDropDown extends StatelessWidget {
@@ -12,8 +13,14 @@ class GenderDropDown extends StatelessWidget {
         Text("Gender", style: AppTextStyle.bodyLarge),
         DropdownButtonFormField(
           items: [
-            DropdownMenuItem(value: "Male", child: Text("Male")),
-            DropdownMenuItem(value: "Female", child: Text("Female")),
+            DropdownMenuItem(
+              value: GENDER.male.name,
+              child: Text(GENDER.male.name),
+            ),
+            DropdownMenuItem(
+              value: GENDER.female.name,
+              child: Text(GENDER.female.name),
+            ),
           ],
           onChanged: onChange,
         ),

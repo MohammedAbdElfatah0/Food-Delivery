@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:food_delivery/core/contents/enum.dart';
 
 import '../service/firestore_model.dart';
 
@@ -9,7 +10,7 @@ class UserModel extends FirestoreModel {
   final String email;
   final String? photoUrl;
   final int age;
-  final String gender;
+  final GENDER gender;
   final String birthday;
   final DateTime createdAt;
   final String? phone;
@@ -45,7 +46,7 @@ class UserModel extends FirestoreModel {
       email: map['email'] as String,
       photoUrl: map['photoUrl'] as String?,
       age: map['age'] as int,
-      gender: map['gender'] as String,
+      gender: map['gender'] as GENDER,
       birthday: map['birthday'] as String,
       createdAt: (map['createdAt'] as Timestamp).toDate(),
       phone: map['phone'] as String?,

@@ -79,7 +79,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         0,
                         user.birthday.indexOf("T"),
                       );
-                      genderController.text = user.gender;
+                      genderController.text = user.gender.name;
                     }
                   },
                   child: BlocBuilder<InfoProfileCubit, InfoProfileState>(
@@ -117,7 +117,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           EditTextPrpfile(
                             text: "Gender",
                             controller: genderController,
-                            hintText: user?.gender ?? "",
+                            hintText: user?.gender.name ?? "",
                           ), //TODO:::::::::: change select enum::::::
                         ],
                       );
