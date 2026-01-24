@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_delivery/core/widget/loading.dart';
 import 'package:food_delivery/features/profile/presentation/cubit/info_profile_cubit.dart';
 import '../../../../core/Colors/color_manager.dart';
 import '../../../../core/contents/images.dart';
@@ -13,7 +14,7 @@ class PhotoProfileAndInfo extends StatelessWidget {
     return BlocBuilder<InfoProfileCubit, InfoProfileState>(
       builder: (context, state) {
         if (state is InfoProfileLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: Loading());
         } else if (state is InfoProfileFialure) {
           return const SizedBox();
         } else if (state is InfoProfileSuccess) {

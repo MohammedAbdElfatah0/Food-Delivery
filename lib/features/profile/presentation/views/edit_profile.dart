@@ -6,6 +6,7 @@ import 'package:food_delivery/core/Colors/color_manager.dart';
 import 'package:food_delivery/core/contents/enum.dart';
 import 'package:food_delivery/core/model/user_model.dart';
 import 'package:food_delivery/core/shared/shared_preference.dart';
+import 'package:food_delivery/core/widget/loading.dart';
 import 'package:food_delivery/features/profile/presentation/widget/edit_text_profile.dart';
 
 import '../../../../core/contents/images.dart';
@@ -218,7 +219,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           },
           child:
               state is EditProfileLoading
-                  ? const CircularProgressIndicator()
+                  ? const Loading()
                   : Text('Save', style: AppTextStyle.bodyLarge),
         );
       },

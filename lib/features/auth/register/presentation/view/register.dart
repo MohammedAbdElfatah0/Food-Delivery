@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/core/Colors/color_manager.dart';
 import 'package:food_delivery/core/contents/text_string.dart';
 import 'package:food_delivery/core/utils/helper/validation_text_field.dart';
+import 'package:food_delivery/core/widget/loading.dart';
 import 'package:food_delivery/features/auth/widget/custom_button_auth.dart';
 import 'package:food_delivery/features/auth/widget/custom_divider.dart';
 import 'package:food_delivery/features/auth/widget/custom_header_auth.dart';
@@ -37,7 +38,7 @@ class _RegisterState extends State<Register> {
                     context: context,
                     barrierDismissible: false,
                     builder:
-                        (_) => const Center(child: CircularProgressIndicator()),
+                        (_) => const Center(child: Loading()),
                   );
                 } else if (state is RegisterSuccess) {
                   if (Navigator.canPop(context)) {

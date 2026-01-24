@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery/core/widget/loading.dart';
 import 'package:food_delivery/features/auth/log_in/presentation/view/login.dart';
 import 'package:food_delivery/features/botton_nav_bar/presentation/views/main_page.dart';
 
@@ -13,7 +14,7 @@ class Auth extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Material(
-            child: Center(child: CircularProgressIndicator()),
+            child: Center(child: Loading()),
           );
         } else if (snapshot.hasError) {
           return Center(child: Text('Something went wrong: ${snapshot.error}'));
