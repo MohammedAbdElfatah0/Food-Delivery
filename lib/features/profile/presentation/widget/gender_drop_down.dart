@@ -15,6 +15,11 @@ class GenderDropDown extends StatelessWidget {
       children: [
         Text("Gender", style: AppTextStyle.bodyLarge),
         DropdownButtonFormField(
+          value:
+              (selectedGender == GENDER.male.name ||
+                      selectedGender == GENDER.female.name)
+                  ? selectedGender
+                  : null,
           items: [
             DropdownMenuItem(
               value: GENDER.male.name,

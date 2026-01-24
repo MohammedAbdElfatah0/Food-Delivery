@@ -14,7 +14,6 @@ import '../../../../core/style/app_text_style.dart';
 import '../cubit/edit_profile_cubit.dart';
 import '../cubit/info_profile_cubit.dart';
 import '../widget/gender_drop_down.dart';
-import '../widget/profile_profile_and_info.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -88,105 +87,93 @@ class _EditProfilePageState extends State<EditProfilePage> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight:
-                      MediaQuery.of(context).size.height *
-                      0.85, // Column يغطي ارتفاع الشاشة
-                ),
-                child: IntrinsicHeight(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CircleAvatar(
-                        maxRadius:
-                            MediaQuery.sizeOf(context).aspectRatio * 50 * 3,
-                        minRadius:
-                            MediaQuery.sizeOf(context).aspectRatio * 50 * 1,
-                        // radius: 50,
-                        //todo connect image by device or give for firebase if not null
-                        backgroundImage: AssetImage(ImageResources.drink),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    maxRadius: MediaQuery.sizeOf(context).aspectRatio * 50 * 3,
+                    minRadius: MediaQuery.sizeOf(context).aspectRatio * 50 * 1,
+                    // radius: 50,
+                    //todo connect image by device or give for firebase if not null
+                    backgroundImage: AssetImage(ImageResources.drink),
 
-                        // child: Text(
-                        //   "M",
-                        //   style: AppTextStyle.header4.copyWith(
-                        //     fontWeight: FontWeight.bold,
-                        //     color: ColorManager.black,
-                        //   ),
-                        // ),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.sizeOf(context).height * 0.005,
-                      ),
-
-                      BlocListener<InfoProfileCubit, InfoProfileState>(
-                        listener: (context, state) {
-                          if (state is InfoProfileSuccess) {
-                            final user = state.userModel;
-
-                            nameController.text = user.name;
-                            emailController.text = user.email;
-                            phoneController.text = user.phone ?? "";
-                            birthController.text = user.birthday.substring(
-                              0,
-                              user.birthday.indexOf("T"),
-                            );
-                            genderController.text = user.gender;
-                            ageController.text = user.age.toString();
-                          }
-                        },
-                        child: BlocBuilder<InfoProfileCubit, InfoProfileState>(
-                          builder: (context, state) {
-                            final UserModel? user =
-                                state is InfoProfileSuccess
-                                    ? state.userModel
-                                    : null;
-
-                            return Column(
-                              children: [
-                                EditTextPrpfile(
-                                  text: "Full Name",
-                                  controller: nameController,
-                                  hintText: user?.name ?? "",
-                                ),
-                                EditTextPrpfile(
-                                  text: "Email",
-                                  controller: emailController,
-                                  hintText: user?.email ?? "",
-                                ),
-                                EditTextPrpfile(
-                                  text: "Phone",
-                                  controller: phoneController,
-                                  hintText: user?.phone ?? "No Phone",
-                                ),
-                                EditTextPrpfile(
-                                  text: "Birth Date",
-                                  controller: birthController,
-                                  hintText:
-                                      user?.birthday.substring(
-                                        0,
-                                        user.birthday.indexOf("T"),
-                                      ) ??
-                                      "",
-                                ),
-                                GenderDropDown(
-                                  selectedGender: genderController.text,
-                                  onChange: (gender) {
-                                    setState(() {
-                                      genderController.text = gender ?? '';
-                                    });
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-                      Spacer(),
-                      _buildSaveButton(),
-                    ],
+                    // child: Text(
+                    //   "M",
+                    //   style: AppTextStyle.header4.copyWith(
+                    //     fontWeight: FontWeight.bold,
+                    //     color: ColorManager.black,
+                    //   ),
+                    // ),
                   ),
-                ),
+                  SizedBox(height: MediaQuery.sizeOf(context).height * 0.005),
+
+                  BlocListener<InfoProfileCubit, InfoProfileState>(
+                    listener: (context, state) {
+                      if (state is InfoProfileSuccess) {
+                        final user = state.userModel;
+
+                        nameController.text = user.name;
+                        emailController.text = user.email;
+                        phoneController.text = user.phone ?? "";
+                        birthController.text = user.birthday.substring(
+                          0,
+                          user.birthday.indexOf("T"),
+                        );
+                        genderController.text = user.gender;
+                        ageController.text = user.age.toString();
+                      }
+                    },
+                    child: BlocBuilder<InfoProfileCubit, InfoProfileState>(
+                      builder: (context, state) {
+                        final UserModel? user =
+                            state is InfoProfileSuccess
+                                ? state.userModel
+                                : null;
+
+                        return Column(
+                          children: [
+                            EditTextPrpfile(
+                              text: "Full Name",
+                              controller: nameController,
+                              hintText: user?.name ?? "",
+                            ),
+                            EditTextPrpfile(
+                              text: "Email",
+                              controller: emailController,
+                              hintText: user?.email ?? "",
+                            ),
+                            EditTextPrpfile(
+                              text: "Phone",
+                              controller: phoneController,
+                              hintText: user?.phone ?? "No Phone",
+                            ),
+                            EditTextPrpfile(
+                              text: "Birth Date",
+                              controller: birthController,
+                              hintText:
+                                  user?.birthday.substring(
+                                    0,
+                                    user.birthday.indexOf("T"),
+                                  ) ??
+                                  "",
+                            ),
+                            GenderDropDown(
+                              selectedGender: genderController.text,
+                              onChange: (gender) {
+                                setState(() {
+                                  genderController.text = gender ?? '';
+                                });
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                  // Spacer(),
+                  SizedBox(height: MediaQuery.sizeOf(context).height * 0.05),
+                  _buildSaveButton(),
+                ],
               ),
             ),
           ),
