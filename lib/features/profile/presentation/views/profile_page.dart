@@ -1,11 +1,13 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:food_delivery/core/colors/color_manager.dart';
 import 'package:food_delivery/core/router/contents_router.dart';
 import 'package:food_delivery/core/style/app_text_style.dart';
 import 'package:food_delivery/features/profile/data/sources/profile_static_data.dart';
+import 'package:food_delivery/features/profile/presentation/cubit/info_profile_cubit.dart';
 
 import '../widget/log_out_button.dart';
 import '../widget/profile_profile_and_info.dart';
@@ -41,12 +43,23 @@ class ProfilePage extends StatelessWidget {
                 (index) => _profile(
                   title: ProfileStaticData.listProfile[index].title,
                   icon: ProfileStaticData.listProfile[index].icon,
-                  ontap: (){
+                  ontap: () async {
                     //switch
                     switch (index) {
                       case 0:
-                      log("edit profile page");
-                        Navigator.pushNamed(context, ContentsRouter.editProfilePage);
+                        log("edit profile page");
+                        final isUpdated = await Navigator.pushNamed(
+                          context,
+                          ContentsRouter.editProfilePage,
+                        );
+                        if (isUpdated == true) {
+                          // Refresh profile data if needed
+                          log("Profile updated successfully");
+                          if (context.mounted) {
+                            context.read<InfoProfileCubit>().clearCache();
+                            context.read<InfoProfileCubit>().getProfile();
+                          }
+                        }
                         break;
                       case 1:
                         Navigator.pushNamed(context, '/address_page');
@@ -56,7 +69,7 @@ class ProfilePage extends StatelessWidget {
                         break;
                       default:
                     }
-                  }
+                  },
                 ),
               ),
               SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
@@ -96,7 +109,11 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _profile({required String title, required IconData icon, VoidCallback? ontap}) {
+  Widget _profile({
+    required String title,
+    required IconData icon,
+    VoidCallback? ontap,
+  }) {
     return GestureDetector(
       onTap: ontap,
       child: ListTile(

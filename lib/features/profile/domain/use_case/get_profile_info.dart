@@ -6,7 +6,8 @@ class GetProfileInfo {
 
   GetProfileInfo(this._profileRepository);
   
-  Future<UserModel> call(String userID) {
-    return _profileRepository.getProfileInfo(userID);
+  Future<UserModel> call(String userID) async {
+    final result = await _profileRepository.getProfileInfo(userID);
+    return result.fold((l) => throw Exception(l), (r) => r);
   }
 }

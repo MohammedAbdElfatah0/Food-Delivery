@@ -39,4 +39,8 @@ class InfoProfileCubit extends Cubit<InfoProfileState> {
       emit(InfoProfileFialure(e.toString()));
     }
   }
+
+  void clearCache() {
+    userModel = null;
+  }
 }
