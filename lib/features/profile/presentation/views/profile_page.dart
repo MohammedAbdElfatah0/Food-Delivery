@@ -8,6 +8,7 @@ import 'package:food_delivery/core/router/contents_router.dart';
 import 'package:food_delivery/core/style/app_text_style.dart';
 import 'package:food_delivery/features/profile/data/sources/profile_static_data.dart';
 import 'package:food_delivery/features/profile/presentation/cubit/info_profile_cubit.dart';
+import 'package:food_delivery/features/profile/presentation/widget/delete_account.dart';
 
 import '../widget/log_out_button.dart';
 import '../widget/profile_profile_and_info.dart';
@@ -17,6 +18,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log("build");
     return SafeArea(
       child: SingleChildScrollView(
         child: Padding(
@@ -88,6 +90,26 @@ class ProfilePage extends StatelessWidget {
                 (index) => _profile(
                   title: ProfileStaticData.listSupport[index].title,
                   icon: ProfileStaticData.listSupport[index].icon,
+                  ontap: () {
+                    log(index.toString());
+                    switch (index) {
+                      case 0:
+                        // TODO: Handle this case.
+                        break;
+                      case 1:
+                        // delete account
+                        log('delete');
+                        showDialog(
+                          context: context,
+                          builder: (_) => const DeleteAccount(),
+                        );
+                        break;
+                      case 2:
+                        break;
+
+                      default:
+                    }
+                  },
                 ),
               ),
               SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
