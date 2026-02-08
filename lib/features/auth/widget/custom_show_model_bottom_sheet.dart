@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery/core/Colors/color_manager.dart';
 import 'package:food_delivery/core/router/contents_router.dart';
 
+import '../../../core/widget/show_snack_bar.dart';
+
 class ForgotPasswordBottomSheet extends StatefulWidget {
   @override
   State<ForgotPasswordBottomSheet> createState() =>
@@ -114,27 +116,19 @@ class _ForgotPasswordBottomSheetState extends State<ForgotPasswordBottomSheet> {
               ),
             ),
             onPressed: () {
-              if (selectedOption == "whatsapp") {
-                if (widget.titlePhone != null) {
-                  Navigator.pushNamed(
-                    context,
-                    ContentsRouter.otpView,
-                    arguments:
-                        widget.titlePhone, //TODO:: give data from last screen
-                  );
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("there is no phone number")),
-                  );
-                }
-              } else {
-                Navigator.pushNamed(
-                  context,
-                  ContentsRouter.otpView,
-                  arguments:
-                      widget.titleEmail, 
-                );
+              if ((selectedOption == "whatsapp" && widget.titlePhone == null)) {
+               AppSnackBar.error(context, message: "there is no phone number");
+                return;
               }
+              Navigator.pop(context);
+              Navigator.pushNamed(
+                context,
+                ContentsRouter.otpView,
+                arguments:
+                    selectedOption == "whatsapp"
+                        ? widget.titlePhone
+                        : widget.titleEmail,
+              );
             },
             child: Text(
               "Continue",
