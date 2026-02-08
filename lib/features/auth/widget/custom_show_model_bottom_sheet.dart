@@ -115,22 +115,25 @@ class _ForgotPasswordBottomSheetState extends State<ForgotPasswordBottomSheet> {
               ),
             ),
             onPressed: () {
-              // Handle reset password
               if (selectedOption == "whatsapp") {
-                // Call API to send reset via WhatsApp
-                //TODO logic otp
-                Navigator.pushNamed(
-                  context,
-                  ContentsRouter.otpView,
-                  arguments: "phone", //TODO:: give data from last screen
-                ); //change to otp
+                if (widget.titlePhone != null) {
+                  Navigator.pushNamed(
+                    context,
+                    ContentsRouter.otpView,
+                    arguments:
+                        widget.titlePhone, //TODO:: give data from last screen
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("there is no phone number")),
+                  );
+                }
               } else {
-                // Call API to send reset via Email
-                //TODO logic otp
                 Navigator.pushNamed(
                   context,
                   ContentsRouter.otpView,
-                  arguments: "email", //TODO:: give data from last screen
+                  arguments:
+                      widget.titleEmail, 
                 );
               }
             },

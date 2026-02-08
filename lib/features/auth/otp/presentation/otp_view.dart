@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_delivery/core/contents/text_string.dart';
 import 'package:food_delivery/features/auth/widget/custom_app_bar.dart';
 import 'package:food_delivery/features/auth/widget/custom_button_auth.dart';
 import 'package:food_delivery/features/auth/widget/custom_header_auth.dart';
+import 'package:food_delivery/core/mail/mail.dart';
+import 'package:food_delivery/core/utils/otp_generator.dart';
 import '../../../../core/router/contents_router.dart';
 
 class OtpView extends StatefulWidget {
@@ -21,8 +24,11 @@ class _OtpViewState extends State<OtpView> with SingleTickerProviderStateMixin {
   );
   final List<FocusNode> _focusNodes = List.generate(4, (_) => FocusNode());
   String _otpCode = '';
+  String _generatedOTP = '';
+  DateTime? _otpExpiryTime;
   bool _isCorrect = false;
   bool _isError = false;
+  bool _isExpired = false;
 
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
@@ -49,8 +55,29 @@ class _OtpViewState extends State<OtpView> with SingleTickerProviderStateMixin {
         _animationController.stop();
       }
     });
+    // Generate and send OTP
+    _generateAndSendOTP();
     // Start timer
     _startTimer();
+  }
+
+  Future<void> _generateAndSendOTP() async {
+    final String email = ModalRoute.of(context)!.settings.arguments as String;
+    _generatedOTP = OTPGenerator.generateOTP();
+    _otpExpiryTime = DateTime.now().add(Duration(minutes: 3));
+    log(_generatedOTP);
+
+    bool sent = await MailService.sendOTP(email, _generatedOTP);
+
+    if (sent) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('OTP sent to $email')));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to send OTP. Please try again.')),
+      );
+    }
   }
 
   void _startTimer() {
@@ -75,10 +102,8 @@ class _OtpViewState extends State<OtpView> with SingleTickerProviderStateMixin {
         _canResend = false;
       });
       _startTimer();
-      // Add your API call or logic to resend OTP here
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('OTP Resent!')));
+      // Generate and send new OTP
+      _generateAndSendOTP();
     }
   }
 
@@ -97,10 +122,27 @@ class _OtpViewState extends State<OtpView> with SingleTickerProviderStateMixin {
 
   void _verifyOTP() {
     _otpCode = _controllers.map((c) => c.text).join();
-    if (_otpCode == '9627') {
+
+    // Check if OTP is expired
+    if (_otpExpiryTime != null && DateTime.now().isAfter(_otpExpiryTime!)) {
+      setState(() {
+        _isExpired = true;
+        _isError = true;
+      });
+      HapticFeedback.vibrate();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('OTP has expired. Please request a new one.')),
+      );
+      return;
+    }
+
+    if (_otpCode == _generatedOTP) {
+      log(_otpCode);
+      log(_generatedOTP);
       setState(() {
         _isCorrect = true;
         _isError = false;
+        _isExpired = false;
       });
       _animationController.forward(from: 0.0);
       ScaffoldMessenger.of(
@@ -113,6 +155,7 @@ class _OtpViewState extends State<OtpView> with SingleTickerProviderStateMixin {
       setState(() {
         _isCorrect = false;
         _isError = true;
+        _isExpired = false;
       });
       _animationController.stop();
       HapticFeedback.vibrate();
@@ -158,7 +201,9 @@ class _OtpViewState extends State<OtpView> with SingleTickerProviderStateMixin {
                       decoration: BoxDecoration(
                         border: Border.all(
                           color:
-                              _isError
+                              _isExpired
+                                  ? Colors.orange
+                                  : _isError
                                   ? Colors.red
                                   : (_isCorrect ? Colors.green : Colors.grey),
                           width: 2,
@@ -199,9 +244,11 @@ class _OtpViewState extends State<OtpView> with SingleTickerProviderStateMixin {
               if (!_canResend)
                 Padding(
                   padding: EdgeInsets.only(bottom: 10),
-                  child: Text(
-                    'Resend OTP in ${_secondsRemaining}s',
-                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                  child: Center(
+                    child: Text(
+                      'Resend OTP in ${_secondsRemaining}s',
+                      style: TextStyle(fontSize: 16, color: Colors.grey),
+                    ),
                   ),
                 ),
               if (_canResend)

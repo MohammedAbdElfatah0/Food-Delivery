@@ -7,9 +7,11 @@ import 'package:food_delivery/my_app.dart';
 import 'core/contents/enum.dart';
 import 'core/di/servier_locator.dart';
 import 'core/shared/shared_preference.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: "assets/.env");
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await AppPreferences.instance.init();
   await setupServiceLocator();
