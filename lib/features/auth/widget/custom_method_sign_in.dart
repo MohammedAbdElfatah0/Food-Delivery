@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomMethodSignIn extends StatelessWidget {
   const CustomMethodSignIn({super.key});
@@ -12,10 +13,12 @@ class CustomMethodSignIn extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       spacing: 30,
       children: [
-        customIcon(icon: Icons.apple_sharp),
-        customIcon(icon: Icons.facebook_sharp),
-        //TODO::change icon
-        customIcon(icon: Icons.facebook),
+        //TODO : logic sign in with apple
+        customIcon(icon: FontAwesomeIcons.apple),
+        //TODO : logic sign in with facebook
+        customIcon(icon: FontAwesomeIcons.facebook),
+        //TODO : logic sign in with google
+        customIcon(icon: FontAwesomeIcons.google),
       ],
     );
   }

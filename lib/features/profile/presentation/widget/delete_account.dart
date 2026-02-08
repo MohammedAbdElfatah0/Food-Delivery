@@ -32,6 +32,7 @@ class DeleteAccount extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
+            //TODO delete account
             log('Delete account');
           },
           child: Text(
