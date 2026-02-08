@@ -5,6 +5,7 @@ import 'package:food_delivery/features/profile/presentation/cubit/info_profile_c
 import 'package:get_it/get_it.dart';
 
 import '../../features/profile/domain/use_case/get_profile_info.dart';
+import '../../features/profile/domain/use_case/get_user_by_email.dart';
 import '../../features/profile/domain/use_case/update_profile.dart';
 import '../../features/profile/presentation/cubit/edit_profile_cubit.dart';
 import '../contents/enum.dart';
@@ -21,6 +22,7 @@ Future<void> setupServiceLocator() async {
   // UseCases
   sl.registerLazySingleton(() => GetProfileInfo(sl()));
   sl.registerLazySingleton(() => UpdateProfile(sl()));
+  sl.registerLazySingleton(() => GetUserByEmail(sl()));
 
   // Repositories
   sl.registerLazySingleton<ProfileRepository>(
@@ -28,7 +30,8 @@ Future<void> setupServiceLocator() async {
   );
 
   sl.registerLazySingleton<ProfileRomoteImplementRepository>(
-    () => ProfileRomoteImplementRepository(sl<FirebaseStoreService<UserModel>>()),
+    () =>
+        ProfileRomoteImplementRepository(sl<FirebaseStoreService<UserModel>>()),
   );
 
   // Firebase service

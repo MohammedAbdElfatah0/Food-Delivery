@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_delivery/core/model/user_model.dart';
@@ -64,6 +66,29 @@ class ProfileRomoteImplementRepository extends ProfileRomoteDataSource
       return right(unit);
     } catch (e) {
       return left(e.toString());
+    }
+  }
+
+  @override
+  Future<Either<String, UserModel>> getUserByEmail(String email) async {
+    try {
+      final querySnapshot =
+          await service.firestore
+              .collection(service.collectionPath)
+              .where('email', isEqualTo: email)
+              .limit(1)
+              .get();
+      if (querySnapshot.docs.isEmpty) {
+        return left('User not found with email: $email');
+      }
+
+      final userDoc = querySnapshot.docs.first;
+      final userData = userDoc.data();
+      final userModel = service.fromMap(userData);
+
+      return right(userModel);
+    } catch (e) {
+      return left('Error searching for user by email: ${e.toString()}');
     }
   }
 }

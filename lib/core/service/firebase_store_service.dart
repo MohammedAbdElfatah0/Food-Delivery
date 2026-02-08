@@ -16,6 +16,8 @@ class FirebaseStoreService<T extends FirestoreModel>
     required this.fromMap,
   }) : _firestore = firestore;
 
+  FirebaseFirestore get firestore => _firestore;
+
   @override
   Future<void> add(T model) {
     return _firestore

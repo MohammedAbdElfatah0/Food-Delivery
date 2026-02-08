@@ -1,15 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/Colors/color_manager.dart';
 import 'package:food_delivery/core/router/contents_router.dart';
+import 'package:food_delivery/core/service/firestore_type_service.dart';
 
 class ForgotPasswordBottomSheet extends StatefulWidget {
   @override
   State<ForgotPasswordBottomSheet> createState() =>
       _ForgotPasswordBottomSheetState();
+  final String titleEmail;
+  final String? titlePhone;
+
+  const ForgotPasswordBottomSheet({
+    super.key,
+    required this.titleEmail,
+    this.titlePhone,
+  });
 }
 
 class _ForgotPasswordBottomSheetState extends State<ForgotPasswordBottomSheet> {
   String selectedOption = "whatsapp"; // default selected option
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +65,7 @@ class _ForgotPasswordBottomSheetState extends State<ForgotPasswordBottomSheet> {
                 children: [
                   Icon(Icons.messenger, color: ColorManager.green),
                   SizedBox(width: 10),
-                  Expanded(child: Text("+12 8347 2838 28")),
+                  Expanded(child: Text(widget.titlePhone ?? "No there phone")),
                   if (selectedOption == "whatsapp")
                     Icon(Icons.check_circle, color: ColorManager.primary),
                 ],
@@ -82,7 +96,7 @@ class _ForgotPasswordBottomSheetState extends State<ForgotPasswordBottomSheet> {
                 children: [
                   Icon(Icons.email, color: ColorManager.blue),
                   SizedBox(width: 10),
-                  Expanded(child: Text("Albertstevano@gmail.com")),
+                  Expanded(child: Text(widget.titleEmail)),
                   if (selectedOption == "email")
                     Icon(Icons.check_circle, color: ColorManager.primary),
                 ],
@@ -108,7 +122,7 @@ class _ForgotPasswordBottomSheetState extends State<ForgotPasswordBottomSheet> {
                 Navigator.pushNamed(
                   context,
                   ContentsRouter.otpView,
-                  arguments: "phone",//TODO:: give data from last screen
+                  arguments: "phone", //TODO:: give data from last screen
                 ); //change to otp
               } else {
                 // Call API to send reset via Email
@@ -116,7 +130,7 @@ class _ForgotPasswordBottomSheetState extends State<ForgotPasswordBottomSheet> {
                 Navigator.pushNamed(
                   context,
                   ContentsRouter.otpView,
-                  arguments: "email",//TODO:: give data from last screen
+                  arguments: "email", //TODO:: give data from last screen
                 );
               }
             },
