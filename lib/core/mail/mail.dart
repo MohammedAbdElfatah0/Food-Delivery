@@ -30,7 +30,7 @@ class MailService {
               </div>
             ''';
 
-      final sendReport = await send(message, smtpServer);
+      await send(message, smtpServer);
       return true;
     } on MailerException catch (e) {
       print('Failed to send OTP: ');

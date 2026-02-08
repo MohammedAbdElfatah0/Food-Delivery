@@ -1,8 +1,9 @@
-class TextString {
+abstract class TextString {
   static const String next = "Next";
   static const String skip = "Skip";
   static const String submit = "submit";
   static const String getStart = "Get Start";
+  static const String otpVerify = "OTP Verify";
   static const String antherMethodSignin = "or Sign in with";
   static const String login = "login";
   static const String continues = "Continue";

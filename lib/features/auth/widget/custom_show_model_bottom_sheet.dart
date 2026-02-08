@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/Colors/color_manager.dart';
 import 'package:food_delivery/core/router/contents_router.dart';
-import 'package:food_delivery/core/service/firestore_type_service.dart';
 
 class ForgotPasswordBottomSheet extends StatefulWidget {
   @override
