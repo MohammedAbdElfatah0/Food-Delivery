@@ -19,7 +19,10 @@ class _FoodItemImageState extends State<FoodItemImage> {
       child: Stack(
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25),
+              topRight: Radius.circular(25),
+            ),
             child: Image.asset(
               ImageResources.ordinaryBurgers,
               height: 300,

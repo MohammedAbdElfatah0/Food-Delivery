@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:food_delivery/core/colors/color_manager.dart';
 import 'package:food_delivery/core/style/app_text_style.dart';
 import 'package:food_delivery/core/utils/helper/format_price.dart';
@@ -12,7 +13,7 @@ class CustomGridItem extends StatelessWidget {
     return Container(
       decoration: _buildContainerDecoration(),
       child: Column(
-        spacing: 10,
+        spacing: MediaQuery.sizeOf(context).height * 0.005,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           FoodItemImage(),
@@ -22,7 +23,7 @@ class CustomGridItem extends StatelessWidget {
             child: _buildRating(),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 21.0),
+            padding: const EdgeInsets.symmetric(horizontal: 18.0),
             child: _buildPrice(),
           ),
         ],
@@ -70,6 +71,17 @@ class CustomGridItem extends StatelessWidget {
         style: AppTextStyle.bodyLarge.copyWith(
           color: ColorManager.primary,
           fontWeight: FontWeight.bold,
+        ),
+      ),
+      Spacer(),
+      IconButton(
+        onPressed: () {
+          //todo add list of shopping items
+        },
+        icon: const Icon(
+          FontAwesomeIcons.cartShopping,
+          size: 18,
+          color: ColorManager.primary,
         ),
       ),
     ],

@@ -100,7 +100,7 @@ class _DetailsCardState extends State<DetailsCard> {
   Widget _price({required int price}) {
     //todo change state price
     return Text(
-      "\$ ${price.withComma}",
+      "\$ ${price.withComma} /Piece",
       style: AppTextStyle.header5.copyWith(
         color: ColorManager.primary,
         fontWeight: FontWeight.bold,
@@ -135,7 +135,7 @@ class _DetailsCardState extends State<DetailsCard> {
           // Delivery Time
           Icon(FontAwesomeIcons.solidClock, size: iconSize, color: iconColor),
           const SizedBox(width: 6),
-          Text("20 - 40", style: textStyle),
+          Text("20 - 40 min", style: textStyle),
 
           const Spacer(), // pushes rating to the end
           // Rating
