@@ -106,20 +106,20 @@ class FirebaseLogInRepository extends LogInRepository {
       );
       log('####@#userCredential: ${userCredential.user!.uid}');
       log(
-        '####@#userCredential: name:${userCredential.user?.displayName}, image:${userCredential.user?.photoURL}, email:${userCredential.user?.email}',
+        '####@#userCredential: name:${userCredential.user?.displayName}, image:${user.photoUrl }, email:${userCredential.user?.email}',
       );
       UserGoogle userGoogle = UserGoogle(
         id: userCredential.user!.uid,
         name: userCredential.user!.displayName ?? '',
         email: userCredential.user!.email ?? '',
-        photoUrl: userCredential.user!.photoURL ?? '',
+        photoUrl: userCredential.user!.providerData.first.photoURL ?? '',
         gender: '',
         birthday: '',
         createdAt: DateTime.now(),
         phone: userCredential.user!.phoneNumber ?? '',
         provider: 'google',
       );
-      _fireStoreService.add(userGoogle);
+      await _fireStoreService.add(userGoogle);
       return Right(userGoogle);
     } else {
       return Left(FirebaseFailure('Google sign-in was cancelled.'));

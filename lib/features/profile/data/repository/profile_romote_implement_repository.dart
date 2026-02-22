@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_delivery/core/model/user_model.dart';
@@ -22,6 +24,7 @@ class ProfileRomoteImplementRepository extends ProfileRomoteDataSource
 
   @override
   Future<Either<String, UserModel>> getProfileInfo(String userID) async {
+    log('####@#userID: $userID');
     final res = await fetchProfileInfo(userID);
     if (res == null) {
       return left('User not found for id: $userID');

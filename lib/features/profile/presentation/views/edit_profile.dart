@@ -116,10 +116,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         nameController.text = user.name;
                         emailController.text = user.email;
                         phoneController.text = user.phone ?? "";
-                        birthController.text = user.birthday.substring(
-                          0,
-                          user.birthday.indexOf("T"),
-                        );
+                        birthController.text =
+                            user.birthday.contains('T')
+                                ? user.birthday.substring(
+                                  0,
+                                  user.birthday.indexOf('T'),
+                                )
+                                : user.birthday;
                         genderController.text = user.gender;
                         ageController.text = user.age.toString();
                       }
@@ -152,11 +155,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               text: "Birth Date",
                               controller: birthController,
                               hintText:
-                                  user?.birthday.substring(
-                                    0,
-                                    user.birthday.indexOf("T"),
-                                  ) ??
-                                  "",
+                                  user == null
+                                      ? ""
+                                      : (user.birthday.contains('T')
+                                          ? user.birthday.substring(
+                                            0,
+                                            user.birthday.indexOf('T'),
+                                          )
+                                          : user.birthday),
                             ),
                             GenderDropDown(
                               selectedGender: genderController.text,

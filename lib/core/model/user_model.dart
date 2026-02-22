@@ -35,22 +35,33 @@ class UserModel extends FirestoreModel {
       'photoUrl': photoUrl ?? "",
       'age': age,
       'gender': gender,
+      'birthday': birthday,
+      'createdAt': createdAt.toIso8601String(),
       'phone': phone ?? "",
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
+    final dynamic createdAtRaw = map['createdAt'];
+    DateTime createdAt;
+    if (createdAtRaw is Timestamp) {
+      createdAt = createdAtRaw.toDate();
+    } else if (createdAtRaw is String) {
+      createdAt = DateTime.tryParse(createdAtRaw) ?? DateTime.now();
+    } else {
+      createdAt = DateTime.now();
+    }
+
     return UserModel(
-      id: map['userID'] as String,
-      name: map['name'] as String,
-      email: map['email'] as String,
+      id: (map['id'] ?? map['userID'] ?? '') as String,
+      name: (map['name'] ?? '') as String,
+      email: (map['email'] ?? '') as String,
       photoUrl: map['photoUrl'] as String?,
-      age: map['age'] as int,
-      gender: map['gender'] as String,
-      birthday: map['birthday'] as String,
-      createdAt: (map['createdAt'] as Timestamp).toDate(),
+      age: (map['age'] ?? 0) is int ? (map['age'] ?? 0) as int : 0,
+      gender: (map['gender'] ?? '') as String,
+      birthday: (map['birthday'] ?? '') as String,
+      createdAt: createdAt,
       phone: map['phone'] as String?,
     );
   }
 }
-
