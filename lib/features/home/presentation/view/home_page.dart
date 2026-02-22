@@ -29,13 +29,7 @@ class HomePage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            AnnotatedRegion<SystemUiOverlayStyle>(
-              value: SystemUiOverlayStyle(
-                statusBarIconBrightness: Brightness.light, // Android
-                statusBarBrightness: Brightness.light, // iOS
-              ),
-              child: const FoodDeliveryAppBar(),
-            ),
+            const FoodDeliveryAppBar(),
             const SizedBox(height: 20),
             _buildCategoryHeader(context),
             const SizedBox(height: 10),
@@ -147,12 +141,14 @@ class HomePage extends StatelessWidget {
         return GestureDetector(
           onTap: () {
             //form api will give all info
+            //send model to details card
             Navigator.pushNamed(
               context,
               ContentsRouter.detailsCard,
               arguments: {"price": 2500},
             );
           },
+          //give data and index what show
           child: const CustomGridItem(),
         );
       },

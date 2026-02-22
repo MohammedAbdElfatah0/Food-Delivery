@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:food_delivery/core/contents/enum.dart';
 import 'package:food_delivery/core/utils/error/failures.dart';
 import 'package:food_delivery/features/auth/register/domain/entity/register_entity.dart';
 

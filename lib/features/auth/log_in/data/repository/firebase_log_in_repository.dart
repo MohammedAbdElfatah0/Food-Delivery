@@ -4,19 +4,24 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_delivery/core/utils/error/failures.dart';
 import 'package:food_delivery/features/auth/log_in/domain/entities/log_in_entity.dart';
 import 'package:food_delivery/features/auth/log_in/domain/repository/log_in_repository.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../../../core/contents/enum.dart';
 import '../../../../../core/shared/shared_preference.dart';
 
 class FirebaseLogInRepository extends LogInRepository {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
   @override
-  Future<Either<Failure, LogInEntity>> logIn(
+  Future<Either<Failure, LogInEntity>> logInEmail(
     String email,
     String password,
   ) async {
     try {
-      final userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+      final userCredential = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
       final user = userCredential.user;
       if (user == null) {
@@ -73,23 +78,29 @@ class FirebaseLogInRepository extends LogInRepository {
   }
 
   @override
-  Future<Either<Failure, LogInEntity>> getCurrentUser() async {
-    try {
-      final User? user = FirebaseAuth.instance.currentUser;
-
-      if (user != null) {
-        return Right(
-          LogInEntity(
-            id: user.uid,
-            name: user.displayName ?? '',
-            email: user.email ?? '',
-          ),
-        );
-      } else {
-        return Left(FirebaseFailure("No user is currently signed in."));
-      }
-    } catch (e) {
-      return Left(FirebaseFailure(e.toString()));
+  Future<Either<Failure, LogInEntity>> logInGoogle() async {
+    final user = await _googleSignIn.signIn();
+    if (user != null) {
+      final authentication = await user.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: authentication.accessToken,
+        idToken: authentication.idToken,
+      );
+      final userCredential = await _auth.signInWithCredential(credential);
+      log(
+        '####@#userCredential: name:${userCredential.user?.displayName}, image:${userCredential.user?.photoURL}',
+      );
+      //TODO::save user in firestore
+      //check user exists or not
+      return Right(
+        LogInEntity(
+          id: userCredential.user!.uid,
+          name: userCredential.user!.displayName ?? '',
+          email: userCredential.user!.email ?? '',
+        ),
+      );
+    } else {
+      return Left(FirebaseFailure('Google sign-in was cancelled.'));
     }
   }
 }

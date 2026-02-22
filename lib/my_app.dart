@@ -25,29 +25,33 @@ class MyApp extends StatelessWidget {
         ),
       ],
 
-      child: MaterialApp(
-        title: "Food Delivery App",
-        initialRoute: start,
-        onGenerateRoute: NavigatorRoute.generateRoute,
-        theme: ThemeData(
-          scaffoldBackgroundColor: Color(0xFffcfcfc),
-          primaryColor: ColorManager.primary,
-          textSelectionTheme: TextSelectionThemeData(
-            cursorColor: ColorManager.primary, //cursor
-            selectionHandleColor: ColorManager.primary, // pointer of cursor
-            selectionColor: ColorManager.primary.withValues(
-              alpha: 0.3,
-            ), // shadow select
-          ),
-          appBarTheme: const AppBarTheme(
-            systemOverlayStyle: SystemUiOverlayStyle(
-              statusBarIconBrightness:
-                  Brightness.light, // White icons on Android
-              statusBarBrightness: Brightness.light, // White icons on iOS
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle(
+          statusBarColor: Colors.grey.withAlpha(
+            150,
+          ), // Make status bar transparent
+          statusBarIconBrightness: Brightness.light, // White icons on Android
+          statusBarBrightness:
+              Brightness
+                  .dark, // Dark status bar for iOS (opposite of icon brightness)
+        ),
+        child: MaterialApp(
+          title: "Food Delivery App",
+          initialRoute: start,
+          onGenerateRoute: NavigatorRoute.generateRoute,
+          theme: ThemeData(
+            scaffoldBackgroundColor: Color(0xFffcfcfc),
+            primaryColor: ColorManager.primary,
+            textSelectionTheme: TextSelectionThemeData(
+              cursorColor: ColorManager.primary, //cursor
+              selectionHandleColor: ColorManager.primary, // pointer of cursor
+              selectionColor: ColorManager.primary.withValues(
+                alpha: 0.3,
+              ), // shadow select
             ),
           ),
+          debugShowCheckedModeBanner: false,
         ),
-        debugShowCheckedModeBanner: false,
       ),
     );
   }
