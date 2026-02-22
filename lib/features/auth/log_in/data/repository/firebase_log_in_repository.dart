@@ -1,7 +1,12 @@
 import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:food_delivery/core/service/firebase_store_service.dart';
 import 'package:food_delivery/core/utils/error/failures.dart';
+import 'package:food_delivery/features/auth/domain/entities/user_entity.dart';
+import 'package:food_delivery/features/auth/log_in/data/model/user_google.dart';
 import 'package:food_delivery/features/auth/log_in/domain/entities/log_in_entity.dart';
 import 'package:food_delivery/features/auth/log_in/domain/repository/log_in_repository.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -10,8 +15,14 @@ import '../../../../../core/contents/enum.dart';
 import '../../../../../core/shared/shared_preference.dart';
 
 class FirebaseLogInRepository extends LogInRepository {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseStoreService _fireStoreService =
+      FirebaseStoreService<UserEntity>(
+        firestore: FirebaseFirestore.instance,
+        collectionPath: 'users',
+        fromMap: (map) => UserEntity.fromMap(map),
+      );
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Future<Either<Failure, LogInEntity>> logInEmail(
     String email,
@@ -78,7 +89,7 @@ class FirebaseLogInRepository extends LogInRepository {
   }
 
   @override
-  Future<Either<Failure, LogInEntity>> logInGoogle() async {
+  Future<Either<Failure, UserGoogle>> logInGoogle() async {
     final user = await _googleSignIn.signIn();
     if (user != null) {
       final authentication = await user.authentication;
@@ -88,17 +99,21 @@ class FirebaseLogInRepository extends LogInRepository {
       );
       final userCredential = await _auth.signInWithCredential(credential);
       log(
-        '####@#userCredential: name:${userCredential.user?.displayName}, image:${userCredential.user?.photoURL}',
+        '####@#userCredential: name:${userCredential.user?.displayName}, image:${userCredential.user?.photoURL}, email:${userCredential.user?.email}',
       );
-      //TODO::save user in firestore
-      //check user exists or not
-      return Right(
-        LogInEntity(
-          id: userCredential.user!.uid,
-          name: userCredential.user!.displayName ?? '',
-          email: userCredential.user!.email ?? '',
-        ),
+      UserGoogle userGoogle = UserGoogle(
+        id: userCredential.user!.uid,
+        name: userCredential.user!.displayName ?? '',
+        email: userCredential.user!.email ?? '',
+        photoUrl: userCredential.user!.photoURL ?? '',
+        gender: '',
+        birthday: '',
+        createdAt: DateTime.now(),
+        phone: userCredential.user!.phoneNumber ?? '',
+        provider: 'google',
       );
+      _fireStoreService.add(userGoogle);
+      return Right(userGoogle);
     } else {
       return Left(FirebaseFailure('Google sign-in was cancelled.'));
     }

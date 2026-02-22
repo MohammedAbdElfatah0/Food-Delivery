@@ -4,8 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/core/Colors/color_manager.dart';
 import 'package:food_delivery/core/router/navigator_route.dart';
 import 'package:food_delivery/features/auth/log_in/data/repository/firebase_log_in_repository.dart';
+import 'package:food_delivery/features/auth/log_in/domain/use_case/login_google_usecase.dart';
 import 'package:food_delivery/features/auth/log_in/domain/use_case/login_usecase.dart';
 import 'package:food_delivery/features/auth/log_in/presentation/cubit/login/login_cubit.dart';
+import 'package:food_delivery/features/auth/log_in/presentation/cubit/google_login/google_login_cubit.dart';
 import 'package:food_delivery/features/onboarding/presentation/cubit/on_boarding_cubit.dart';
 
 class MyApp extends StatelessWidget {
@@ -21,6 +23,14 @@ class MyApp extends StatelessWidget {
           create:
               (context) => LoginCubit(
                 logInUseCase: LogInInUseCase(FirebaseLogInRepository()),
+              ),
+        ),
+        BlocProvider(
+          create:
+              (context) => GoogleLoginCubit(
+                loginGoogleUsecase: LoginGoogleUsecase(
+                  FirebaseLogInRepository(),
+                ),
               ),
         ),
       ],
