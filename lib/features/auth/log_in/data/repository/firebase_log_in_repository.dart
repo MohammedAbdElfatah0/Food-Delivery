@@ -23,6 +23,7 @@ class FirebaseLogInRepository extends LogInRepository {
       );
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   Future<Either<Failure, LogInEntity>> logInEmail(
     String email,
@@ -98,6 +99,12 @@ class FirebaseLogInRepository extends LogInRepository {
         idToken: authentication.idToken,
       );
       final userCredential = await _auth.signInWithCredential(credential);
+      //save id in shared preferences
+      await AppPreferences.instance.setString(
+        key: SharedPreferenceKey.userId,
+        value: userCredential.user!.uid,
+      );
+      log('####@#userCredential: ${userCredential.user!.uid}');
       log(
         '####@#userCredential: name:${userCredential.user?.displayName}, image:${userCredential.user?.photoURL}, email:${userCredential.user?.email}',
       );
