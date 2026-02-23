@@ -50,6 +50,15 @@ class FirebaseStoreService<T extends FirestoreModel>
     });
   }
 
+  Future<List<T?>> getManyByCategory(String value, {int limit = 4}) {
+    return _firestore
+        .collection(collectionPath)
+        .where('category', isEqualTo: value)
+        .limit(limit)
+        .get()
+        .then((doc) => doc.docs.map((e) => fromMap(e.data())).toList());
+  }
+
   @override
   Future<void> update(T model) {
     return _firestore
