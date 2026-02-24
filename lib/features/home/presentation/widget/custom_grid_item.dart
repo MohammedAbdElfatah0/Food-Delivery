@@ -46,12 +46,16 @@ class CustomGridItem extends StatelessWidget {
     borderRadius: BorderRadius.circular(25),
   );
 
-  Widget _buildTitle() => Text(
-    product.title,
-    style: TextStyle(
-      color: ColorManager.black,
-      fontSize: 16,
-      fontWeight: FontWeight.w600,
+  Widget _buildTitle() => Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 2),
+    child: Text(
+      product.title,
+      style: AppTextStyle.bodyMedium.copyWith(
+        color: ColorManager.black,
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        overflow: TextOverflow.ellipsis,
+      ),
     ),
   );
 

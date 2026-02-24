@@ -7,6 +7,7 @@ import 'package:food_delivery/core/contents/images.dart';
 import 'package:food_delivery/core/router/contents_router.dart';
 import 'package:food_delivery/core/style/app_text_style.dart';
 import 'package:food_delivery/core/di/servier_locator.dart';
+import 'package:food_delivery/core/widget/loading.dart';
 import 'package:food_delivery/features/home/presentation/cubit/product/product.cubit.dart';
 import 'package:food_delivery/features/home/presentation/cubit/product/product.status.dart';
 import 'package:food_delivery/features/home/presentation/widget/food_delivery_app_bar.dart';
@@ -49,7 +50,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<ProductCubit>(),
+      create:
+          (context) =>
+              sl<ProductCubit>()..getProductsByCategory(categories[0].name),
       child: Scaffold(
         backgroundColor: ColorManager.white.withAlpha(249),
         body: SingleChildScrollView(
@@ -60,7 +63,6 @@ class _HomePageState extends State<HomePage> {
               _buildCategoryHeader(context),
               const SizedBox(height: 10),
               _buildCategoryList(),
-              const SizedBox(height: 20),
               _buildGridView(context),
               const SizedBox(height: 20),
             ],
@@ -100,7 +102,7 @@ class _HomePageState extends State<HomePage> {
   //todo when buttom of ant item the category change with using bloc it's best
   Widget _buildCategoryList() {
     return SizedBox(
-      height: 100,
+      height: 90,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
@@ -166,7 +168,12 @@ class _HomePageState extends State<HomePage> {
     return BlocBuilder<ProductCubit, ProductStatus>(
       builder: (context, state) {
         if (state is ProductLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: MediaQuery.of(context).size.height / 5.5,
+            ),
+            child: const Loading(),
+          );
         }
 
         if (state is ProductSuccess) {
