@@ -21,10 +21,7 @@ class CustomGridItem extends StatelessWidget {
         children: [
           FoodItemImage(imagePath: product.urlImage ?? ""),
           _buildTitle(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 21.0),
-            child: _buildRating(),
-          ),
+
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 18.0),
             child: _buildPrice(),
