@@ -1,9 +1,12 @@
-import 'package:flutter/material.dart';
+import 'dart:developer';
 
-import '../../../../core/contents/images.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:food_delivery/core/widget/loading.dart';
 
 class FoodItemImage extends StatefulWidget {
-  const FoodItemImage({super.key});
+  const FoodItemImage({super.key, required this.imagePath});
+  final String imagePath;
 
   @override
   // ignore: library_private_types_in_public_api
@@ -15,6 +18,7 @@ class _FoodItemImageState extends State<FoodItemImage> {
 
   @override
   Widget build(BuildContext context) {
+    log("IMAGE URL => ${widget.imagePath}");
     return Expanded(
       child: Stack(
         children: [
@@ -23,11 +27,16 @@ class _FoodItemImageState extends State<FoodItemImage> {
               topLeft: Radius.circular(25),
               topRight: Radius.circular(25),
             ),
-            child: Image.asset(
-              ImageResources.ordinaryBurgers,
+            // child: Image.network(widget.imagePath, fit: BoxFit.cover),
+            child: CachedNetworkImage(
+              imageUrl: widget.imagePath,
+              fadeInDuration: Duration(milliseconds: 300),
               height: 300,
+              width: 300,
               fit: BoxFit.cover,
-              cacheHeight: 150,
+              placeholder: (context, url) => Center(child: Loading()),
+              errorWidget:
+                  (context, url, error) => const Icon(Icons.broken_image),
             ),
           ),
           Positioned(

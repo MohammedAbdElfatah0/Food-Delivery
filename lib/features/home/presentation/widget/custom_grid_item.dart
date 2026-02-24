@@ -5,8 +5,11 @@ import 'package:food_delivery/core/style/app_text_style.dart';
 import 'package:food_delivery/core/utils/helper/format_price.dart';
 import 'package:food_delivery/features/home/presentation/widget/food_item_image.dart';
 
+import '../../../../core/model/product_model.dart';
+
 class CustomGridItem extends StatelessWidget {
-  const CustomGridItem({super.key});
+  const CustomGridItem({super.key, required this.product});
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,7 @@ class CustomGridItem extends StatelessWidget {
         spacing: MediaQuery.sizeOf(context).height * 0.005,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          FoodItemImage(),
+          FoodItemImage(imagePath: product.urlImage ?? ""),
           _buildTitle(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 21.0),
@@ -44,7 +47,7 @@ class CustomGridItem extends StatelessWidget {
   );
 
   Widget _buildTitle() => Text(
-    'Ordinary Burgers',
+    product.title,
     style: TextStyle(
       color: ColorManager.black,
       fontSize: 16,
@@ -57,7 +60,7 @@ class CustomGridItem extends StatelessWidget {
       Spacer(),
       Icon(Icons.star, color: ColorManager.primary, size: 21),
       Text(
-        '4.5',
+        product.rating.toString(),
         style: AppTextStyle.bodyMedium.copyWith(fontWeight: FontWeight.w600),
       ),
     ],
@@ -67,7 +70,7 @@ class CustomGridItem extends StatelessWidget {
     mainAxisAlignment: MainAxisAlignment.start,
     children: [
       Text(
-        '\$${2500.withComma}',
+        '\$${product.price.withComma}',
         style: AppTextStyle.bodyLarge.copyWith(
           color: ColorManager.primary,
           fontWeight: FontWeight.bold,
