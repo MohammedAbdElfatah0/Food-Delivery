@@ -1,12 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:food_delivery/core/colors/color_manager.dart';
 import 'package:food_delivery/core/contents/images.dart';
+import 'package:food_delivery/core/model/product_model.dart';
 import 'package:food_delivery/core/style/app_text_style.dart';
 import 'package:food_delivery/core/utils/helper/format_price.dart';
 import 'package:food_delivery/features/home/presentation/cubit/cart/cart.cubit.dart';
 import 'package:food_delivery/features/home/presentation/widget/botton_bar_detail_card.dart';
+
+import '../../../../core/widget/loading.dart';
 
 class DetailsCard extends StatefulWidget {
   const DetailsCard({super.key});
@@ -20,10 +24,10 @@ class _DetailsCardState extends State<DetailsCard> {
   @override
   Widget build(BuildContext context) {
     //it's model of cart todo:::
-    final Map<String, dynamic> arg =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final ProductModel product =
+        ModalRoute.of(context)!.settings.arguments as ProductModel;
     return BlocProvider(
-      create: (context) => CartCubit(price: arg['price']),
+      create: (context) => CartCubit(price: product.price as int),
       child: Scaffold(
         body: CustomScrollView(
           slivers: [
@@ -54,10 +58,15 @@ class _DetailsCardState extends State<DetailsCard> {
               ],
               //add animation hero
               flexibleSpace: FlexibleSpaceBar(
-                background: Image.asset(
-                  ImageResources.ordinaryBurgers,
+                background: CachedNetworkImage(
+                  imageUrl: product.urlImage!,
+                  fadeInDuration: Duration(milliseconds: 300),
+                  height: 300,
+                  width: 300,
                   fit: BoxFit.cover,
-                  filterQuality: FilterQuality.medium,
+                  placeholder: (context, url) => Center(child: Loading()),
+                  errorWidget:
+                      (context, url, error) => const Icon(Icons.broken_image),
                 ),
               ),
             ),
@@ -68,13 +77,19 @@ class _DetailsCardState extends State<DetailsCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: MediaQuery.sizeOf(context).height * 0.008),
-                    _header(),
+                    _header(title: product.title),
                     SizedBox(height: MediaQuery.sizeOf(context).height * 0.008),
-                    _price(price: arg['price']),
+                    _price(price: product.price as int),
                     SizedBox(height: MediaQuery.sizeOf(context).height * 0.016),
-                    _detailsWork(context),
+                    _detailsWork(
+                      context,
+                      avgCookingTime: product.avgCookingTime as List<dynamic>,
+                      rating: product.rating as num,
+                      isDelivered: product.isDelivered,
+                      priceDelivery: product.priceDelivery as int,
+                    ),
                     SizedBox(height: MediaQuery.sizeOf(context).height * 0.032),
-                    _description(),
+                    _description(description: product.description),
                     SizedBox(height: MediaQuery.sizeOf(context).height * 0.032),
 
                     // Spacer(),
@@ -89,12 +104,8 @@ class _DetailsCardState extends State<DetailsCard> {
     );
   }
 
-  Widget _header() {
-    return Text(
-      'Burger With Meat ',
-      style: AppTextStyle.header4,
-      textAlign: TextAlign.start,
-    );
+  Widget _header({required String title}) {
+    return Text(title, style: AppTextStyle.header4, textAlign: TextAlign.start);
   }
 
   Widget _price({required int price}) {
@@ -108,7 +119,13 @@ class _DetailsCardState extends State<DetailsCard> {
     );
   }
 
-  Widget _detailsWork(BuildContext context) {
+  Widget _detailsWork(
+    BuildContext context, {
+    required List<dynamic> avgCookingTime,
+    required num rating,
+    required bool isDelivered,
+    required int priceDelivery,
+  }) {
     final double iconSize = 18;
     final Color iconColor = ColorManager.primary;
     final TextStyle textStyle = TextStyle(
@@ -129,25 +146,30 @@ class _DetailsCardState extends State<DetailsCard> {
           // Free Delivery
           Icon(FontAwesomeIcons.dollarSign, size: iconSize, color: iconColor),
           const SizedBox(width: 6), // small consistent spacing
-          Text("Free Delivery", style: textStyle),
+          Text(
+            isDelivered
+                ? "Delivery: ${priceDelivery.withComma} "
+                : "Free Delivery",
+            style: textStyle,
+          ),
 
           const Spacer(), // pushes next section to center/right
           // Delivery Time
           Icon(FontAwesomeIcons.solidClock, size: iconSize, color: iconColor),
           const SizedBox(width: 6),
-          Text("20 - 40 min", style: textStyle),
+          Text("${avgCookingTime.join("-")} min", style: textStyle),
 
           const Spacer(), // pushes rating to the end
           // Rating
           Icon(FontAwesomeIcons.solidStar, size: iconSize, color: iconColor),
           const SizedBox(width: 6),
-          Text("4.5", style: textStyle),
+          Text(rating.toString(), style: textStyle),
         ],
       ),
     );
   }
 
-  Widget _description() {
+  Widget _description({required String description}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -156,7 +178,7 @@ class _DetailsCardState extends State<DetailsCard> {
           style: AppTextStyle.bodyLarge.copyWith(fontWeight: FontWeight.bold),
         ),
         Text(
-          "Burger With Meat is a typical food from our restaurant that is much in demand by many people, this is very recommended for you.",
+          description,
           style: AppTextStyle.bodyMedium.copyWith(fontWeight: FontWeight.w400),
         ),
       ],
