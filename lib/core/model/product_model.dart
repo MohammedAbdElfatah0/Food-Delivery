@@ -29,4 +29,15 @@ class ProductModel implements FirestoreModel {
       'imageUrl': imageUrl ?? "",
     };
   }
+
+  factory ProductModel.fromMap(Map<String, dynamic> map) {
+    return ProductModel(
+      id: (map['id'] ?? '') as String,
+      name: (map['name'] ?? '') as String,
+      description: (map['description'] ?? '') as String,
+      price: (map['price'] ?? '') as String,
+      category: (map['category'] ?? '') as String,
+      imageUrl: map['imageUrl'] as String?,
+    );
+  }
 }

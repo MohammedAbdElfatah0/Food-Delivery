@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/core/colors/color_manager.dart';
 import 'package:food_delivery/core/contents/images.dart';
 import 'package:food_delivery/core/router/contents_router.dart';
 import 'package:food_delivery/core/style/app_text_style.dart';
+import 'package:food_delivery/core/di/servier_locator.dart';
+import 'package:food_delivery/features/home/presentation/cubit/product/product.cubit.dart';
 import 'package:food_delivery/features/home/presentation/widget/food_delivery_app_bar.dart';
 
 import '../../domain/entity/entity_category.dart';
@@ -24,20 +27,23 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorManager.white.withAlpha(249),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const FoodDeliveryAppBar(),
-            const SizedBox(height: 20),
-            _buildCategoryHeader(context),
-            const SizedBox(height: 10),
-            _buildCategoryList(),
-            const SizedBox(height: 20),
-            _buildGridView(context),
-            const SizedBox(height: 20),
-          ],
+    return BlocProvider(
+      create: (context) => sl<ProductCubit>(),
+      child: Scaffold(
+        backgroundColor: ColorManager.white.withAlpha(249),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const FoodDeliveryAppBar(),
+              const SizedBox(height: 20),
+              _buildCategoryHeader(context),
+              const SizedBox(height: 10),
+              _buildCategoryList(),
+              const SizedBox(height: 20),
+              _buildGridView(context),
+              const SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );
