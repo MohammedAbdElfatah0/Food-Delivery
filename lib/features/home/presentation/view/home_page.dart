@@ -14,6 +14,7 @@ import 'package:food_delivery/features/home/presentation/widget/food_delivery_ap
 
 import '../../domain/entity/entity_category.dart';
 import '../widget/custom_grid_item.dart';
+import '../widget/custom_grid_view_builder.dart';
 
 // Category model for better data management
 
@@ -84,7 +85,7 @@ class _HomePageState extends State<HomePage> {
           ),
           TextButton(
             onPressed: () {
-              // TODO: Implement show all functionality
+              Navigator.pushNamed(context, ContentsRouter.allProduct);
             },
             child: Text(
               'Show all',
@@ -99,7 +100,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  //todo when buttom of ant item the category change with using bloc it's best
   Widget _buildCategoryList() {
     return SizedBox(
       height: 90,
@@ -179,30 +179,9 @@ class _HomePageState extends State<HomePage> {
         if (state is ProductSuccess) {
           final products = state.products;
 
-          return GridView.builder(
-            shrinkWrap: true,
+          return CustomGridViewBuilder(
+            products: products,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: products.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 25,
-              crossAxisSpacing: 15,
-              childAspectRatio: 1 / 1.5,
-            ),
-            itemBuilder: (context, index) {
-              final product = products[index];
-
-              return GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    ContentsRouter.detailsCard,
-                    arguments: product,
-                  );
-                },
-                child: CustomGridItem(product: product),
-              );
-            },
           );
         }
 

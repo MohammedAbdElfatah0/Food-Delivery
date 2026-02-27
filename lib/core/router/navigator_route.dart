@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/core/router/contents_router.dart';
-import 'package:food_delivery/features/auth/presentation/views/auth.dart';
-import 'package:food_delivery/features/auth/forget_password/presentation/forget_password.dart';
-import 'package:food_delivery/features/auth/log_in/presentation/view/login.dart';
-import 'package:food_delivery/features/auth/otp/presentation/otp_view.dart';
-import 'package:food_delivery/features/auth/reset_password/presentation/reset_password.dart';
-import 'package:food_delivery/features/auth/register/presentation/view/register_screen.dart';
-import 'package:food_delivery/features/botton_nav_bar/presentation/views/main_page.dart';
-import 'package:food_delivery/features/home/presentation/view/details_card.dart';
-import 'package:food_delivery/features/home/presentation/view/home_page.dart';
-import 'package:food_delivery/features/onboarding/presentation/views/on_boarding_page.dart';
-
+import '../../features/auth/presentation/views/auth.dart';
+import '../../features/auth/forget_password/presentation/forget_password.dart';
+import '../../features/auth/log_in/presentation/view/login.dart';
+import '../../features/auth/otp/presentation/otp_view.dart';
+import '../../features/auth/reset_password/presentation/reset_password.dart';
+import '../../features/auth/register/presentation/view/register_screen.dart';
+import '../../features/botton_nav_bar/presentation/views/main_page.dart';
+import '../../features/home/presentation/view/details_card.dart';
+import '../../features/home/presentation/view/home_page.dart';
+import '../../features/onboarding/presentation/views/on_boarding_page.dart';
+import '../../features/home/presentation/view/all_product.dart';
 import '../../features/profile/presentation/views/edit_profile.dart';
 
 class NavigatorRoute {
@@ -64,6 +64,11 @@ class NavigatorRoute {
       case ContentsRouter.detailsCard:
         return MaterialPageRoute(
           builder: (_) => DetailsCard(),
+          settings: settings,
+        );
+      case ContentsRouter.allProduct:
+        return MaterialPageRoute(
+          builder: (_) => AllProduct(),
           settings: settings,
         );
     }

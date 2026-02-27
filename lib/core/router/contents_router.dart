@@ -9,6 +9,7 @@ class ContentsRouter {
   static const String auth = "/auth";
 
   static const String home = "/home";
+  static const String allProduct = "/allProduct";
   
   static const String detailsCard = "/details card";
   //profile pages

@@ -13,6 +13,7 @@ class ProductCubit extends Cubit<ProductStatus> {
 
   final GetAllProduct _getAllProduct;
   final GetProductByCategory _getProductByCategory;
+  List<ProductModel> _allProducts = [];
 
   Future<void> _loadProducts(
     Future<Either<Failure, List<ProductModel>>> Function() loader,
@@ -21,19 +22,16 @@ class ProductCubit extends Cubit<ProductStatus> {
 
     final result = await loader();
 
-    result.fold(
-      (l) => emit(ProductError(message: l.message)),
-      (r) => emit(ProductSuccess(products: r)),
-    );
+    result.fold((failure) => emit(ProductError(message: failure.message)), (
+      product,
+    ) {
+      _allProducts = product;
+      emit(ProductSuccess(products: product));
+    });
   }
 
   //1-method get all products
   Future<void> getAllProducts() async {
-    //loading
-    //get all products from repository
-    //success
-    //error
-
     try {
       emit(ProductLoading());
       await _loadProducts(() => _getAllProduct());
@@ -50,5 +48,19 @@ class ProductCubit extends Cubit<ProductStatus> {
     } catch (e) {
       emit(ProductError(message: e.toString()));
     }
+  }
+
+  void searchProduct(String query) {
+    if (query.isEmpty) {
+      emit(ProductSuccess(products: _allProducts));
+      return;
+    }
+
+    final filtered =
+        _allProducts.where((product) {
+          return product.title.toLowerCase().contains(query.toLowerCase());
+        }).toList();
+
+    emit(ProductSuccess(products: filtered));
   }
 }
