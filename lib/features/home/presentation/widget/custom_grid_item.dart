@@ -56,17 +56,6 @@ class CustomGridItem extends StatelessWidget {
     ),
   );
 
-  Widget _buildRating() => Row(
-    children: [
-      Spacer(),
-      Icon(Icons.star, color: ColorManager.primary, size: 21),
-      Text(
-        product.rating.toString(),
-        style: AppTextStyle.bodyMedium.copyWith(fontWeight: FontWeight.w600),
-      ),
-    ],
-  );
-
   Widget _buildPrice() => Row(
     mainAxisAlignment: MainAxisAlignment.start,
     children: [

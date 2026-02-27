@@ -177,9 +177,12 @@ class _HomePageState extends State<HomePage> {
         if (state is ProductSuccess) {
           final products = state.products;
 
-          return CustomGridViewBuilder(
-            products: products,
-            physics: const NeverScrollableScrollPhysics(),
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: CustomGridViewBuilder(
+              products: products,
+              physics: const NeverScrollableScrollPhysics(),
+            ),
           );
         }
 
