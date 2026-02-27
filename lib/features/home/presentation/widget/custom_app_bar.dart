@@ -3,6 +3,7 @@ import 'package:food_delivery/core/Colors/color_manager.dart';
 import 'package:food_delivery/features/home/presentation/widget/city_selection_screen.dart';
 import 'package:food_delivery/features/home/presentation/widget/location_button.dart';
 import '../../../../core/contents/enum.dart';
+import '../../../../core/router/contents_router.dart';
 import '../../../../core/shared/shared_preference.dart';
 
 class CustomAppBar extends StatefulWidget {
@@ -19,6 +20,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
     return IconButton(
       onPressed: () {
         //todo::navagate to notification screen
+        Navigator.pushNamed(context, ContentsRouter.notificationScreen);
       },
       icon: Icon(Icons.notifications, color: ColorManager.white, size: 32),
     );

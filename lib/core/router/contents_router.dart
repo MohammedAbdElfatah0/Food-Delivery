@@ -10,7 +10,8 @@ class ContentsRouter {
 
   static const String home = "/home";
   static const String allProduct = "/allProduct";
-  
+  static const String notificationScreen = "/notification_screen";
+
   static const String detailsCard = "/details card";
   //profile pages
   static const String editProfilePage = "/edit_profile_page";
