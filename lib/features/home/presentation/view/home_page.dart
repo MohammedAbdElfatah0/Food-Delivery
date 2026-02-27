@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery/core/colors/color_manager.dart';
 import 'package:food_delivery/core/contents/enum.dart';
 import 'package:food_delivery/core/contents/images.dart';
+import 'package:food_delivery/core/di/servier_locator.dart';
 import 'package:food_delivery/core/router/contents_router.dart';
 import 'package:food_delivery/core/style/app_text_style.dart';
-import 'package:food_delivery/core/di/servier_locator.dart';
 import 'package:food_delivery/core/widget/loading.dart';
 import 'package:food_delivery/features/home/presentation/cubit/product/product.cubit.dart';
 import 'package:food_delivery/features/home/presentation/cubit/product/product.status.dart';
 import 'package:food_delivery/features/home/presentation/widget/food_delivery_app_bar.dart';
 
 import '../../domain/entity/entity_category.dart';
-import '../widget/custom_grid_item.dart';
 import '../widget/custom_grid_view_builder.dart';
 
 // Category model for better data management

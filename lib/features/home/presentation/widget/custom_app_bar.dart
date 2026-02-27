@@ -15,15 +15,6 @@ class CustomAppBar extends StatefulWidget {
 class _CustomAppBarState extends State<CustomAppBar> {
   String currentCity = 'Cairo';
 
-  Widget searchAppBar() {
-    return IconButton(
-      onPressed: () {
-        //todo::navagate to search screen
-      },
-      icon: Icon(Icons.search_rounded, color: ColorManager.white, size: 32),
-    );
-  }
-
   Widget notificationAppBar() {
     return IconButton(
       onPressed: () {
@@ -50,8 +41,6 @@ class _CustomAppBarState extends State<CustomAppBar> {
 
     if (newCity != null && newCity is String) {
       setState(() => currentCity = newCity);
-
-      // حفظها مرة واحدة بس وخلاص
       await AppPreferences.instance.setString(
         key: SharedPreferenceKey.selectedCity,
         value: newCity,
@@ -71,9 +60,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
         ), //colum search
         //search
         Spacer(),
-        searchAppBar(),
-        //notification
-        SizedBox(width: 16),
+
         notificationAppBar(),
       ],
     );
