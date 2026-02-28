@@ -12,9 +12,12 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: "assets/.env");
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await AppPreferences.instance.init();
+  await Future.wait([
+    dotenv.load(fileName: "assets/.env"),
+    Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
+    AppPreferences.instance.init(),
+  ]);
+
   await setupServiceLocator();
   final seenOnBoarding = AppPreferences.instance.getBool(
     key: SharedPreferenceKey.seenOnBoarding,
