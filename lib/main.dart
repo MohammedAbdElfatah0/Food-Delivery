@@ -6,6 +6,7 @@ import 'package:food_delivery/my_app.dart';
 
 import 'core/contents/enum.dart';
 import 'core/di/servier_locator.dart';
+import 'core/service/firebase_message_service.dart';
 import 'core/shared/shared_preference.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -15,7 +16,9 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await AppPreferences.instance.init();
   await setupServiceLocator();
-  final seenOnBoarding = AppPreferences.instance.getBool(key: SharedPreferenceKey.seenOnBoarding);
+  final seenOnBoarding = AppPreferences.instance.getBool(
+    key: SharedPreferenceKey.seenOnBoarding,
+  );
   String start;
   if (!seenOnBoarding) {
     start = ContentsRouter.onBoarding;
@@ -23,4 +26,5 @@ void main() async {
     start = ContentsRouter.auth;
   }
   runApp(MyApp(start: start));
+  await FirebaseMessageService().init();
 }
